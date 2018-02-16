@@ -69,12 +69,12 @@ class MainVC: UIViewController {
  
     
 }
-
+// This is a test
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return count
+        return count + 1
     }
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -90,7 +90,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         self.index = indexPath.item
-    
+        
         performSegue(withIdentifier: "SongSegue", sender: self)
         
     }
