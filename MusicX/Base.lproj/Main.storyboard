@@ -289,24 +289,52 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zcf-rT-THx">
+                                <rect key="frame" x="142" y="571" width="113" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="25" id="lQK-EO-Vxd"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
+                                <rect key="frame" x="39" y="694" width="347" height="22"/>
+                                <color key="thumbTintColor" red="0.54281463107866501" green="0.34313482564650222" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="thumb" value="bl"/>
+                                </userDefinedRuntimeAttributes>
+                                <variation key="displayGamut=P3-heightClass=compact-widthClass=compact">
+                                    <color key="thumbTintColor" red="1" green="0.56239638541121528" blue="0.34966197261445031" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </variation>
+                                <connections>
+                                    <action selector="slider:" destination="JNB-b5-bGn" eventType="valueChanged" id="esa-vH-4OP"/>
+                                </connections>
+                            </slider>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="centerX" secondItem="IqE-hY-xX0" secondAttribute="centerX" id="4hs-L1-iGa"/>
                             <constraint firstItem="22R-1O-0sc" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="20" id="6gS-pA-iYX"/>
+                            <constraint firstItem="isK-bO-1CY" firstAttribute="bottom" secondItem="Zyy-Ge-cxD" secondAttribute="bottom" constant="20" id="A4L-66-CGh"/>
+                            <constraint firstItem="Zyy-Ge-cxD" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="41" id="Asa-bn-2Vv"/>
                             <constraint firstItem="7Tn-Qu-MdF" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="31" id="EzL-aa-7Lg"/>
                             <constraint firstItem="kCa-ly-L8Q" firstAttribute="top" secondItem="3Gw-tP-Lbl" secondAttribute="bottom" constant="35" id="IJe-hC-nIB"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="top" secondItem="isK-bO-1CY" secondAttribute="top" constant="48" id="LeK-NZ-VIW"/>
                             <constraint firstItem="7Tn-Qu-MdF" firstAttribute="top" secondItem="22R-1O-0sc" secondAttribute="bottom" constant="259" id="Msv-jH-BA7"/>
                             <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="7Tn-Qu-MdF" secondAttribute="trailing" constant="30" id="NRx-sq-kQD"/>
+                            <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="Zcf-rT-THx" secondAttribute="trailing" constant="159" id="UPj-86-t6U"/>
                             <constraint firstItem="kCa-ly-L8Q" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="W9K-31-4l4"/>
+                            <constraint firstItem="Zcf-rT-THx" firstAttribute="top" secondItem="kCa-ly-L8Q" secondAttribute="bottom" constant="19" id="Wcq-FP-dBk"/>
                             <constraint firstItem="3Gw-tP-Lbl" firstAttribute="top" secondItem="RuJ-Jh-P6X" secondAttribute="bottom" constant="32" id="X6L-DH-VlH"/>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="top" secondItem="7Tn-Qu-MdF" secondAttribute="bottom" constant="8" id="XvJ-2l-nP8"/>
                             <constraint firstItem="22R-1O-0sc" firstAttribute="top" secondItem="isK-bO-1CY" secondAttribute="top" id="ZRY-nA-KUn"/>
+                            <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="Zyy-Ge-cxD" secondAttribute="trailing" constant="30" id="c37-5o-0yr"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" id="e4u-fH-9EG"/>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="top" secondItem="IqE-hY-xX0" secondAttribute="bottom" constant="58" id="lqU-Xq-c2z"/>
                             <constraint firstItem="3Gw-tP-Lbl" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="ov4-RP-hmg"/>
                             <constraint firstItem="O27-kf-JK2" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="qpL-tR-ypk"/>
+                            <constraint firstItem="Zcf-rT-THx" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="142" id="ufP-4H-KWd"/>
                             <constraint firstItem="O27-kf-JK2" firstAttribute="top" secondItem="kCa-ly-L8Q" secondAttribute="bottom" constant="70" id="vgO-75-53W"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="centerX" secondItem="isK-bO-1CY" secondAttribute="centerX" id="yPS-9N-tpm"/>
                         </constraints>
@@ -319,9 +347,12 @@
                         <outlet property="nameOfSong" destination="jxA-h7-hQD" id="cWD-jD-UM1"/>
                         <outlet property="platSingBtn" destination="WYf-gl-iLr" id="pc5-Oh-D3W"/>
                         <outlet property="progressView" destination="kCa-ly-L8Q" id="7u9-tB-4kx"/>
+                        <outlet property="slider" destination="Zyy-Ge-cxD" id="OU3-QT-3px"/>
+                        <outlet property="timeLbl" destination="Zcf-rT-THx" id="RcP-2w-lw5"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yvl-oa-Zoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="JNB-b5-bGn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="688.40579710144937" y="32.608695652173914"/>
         </scene>
@@ -329,6 +360,7 @@
     <resources>
         <image name="1" width="128" height="128"/>
         <image name="2057adc9de6eda8" width="800" height="355"/>
+        <image name="bl" width="22" height="22"/>
         <image name="headphones-with-soundwave-spikes-in-navy-blue" width="178" height="60"/>
         <image name="ic_chevron_left_48px" width="48" height="48"/>
         <image name="ic_chevron_right_48px" width="48" height="48"/>

@@ -15,6 +15,8 @@ class SongVC: UIViewController {
     
     var audioPlayer = AVAudioPlayer()
     
+    @IBOutlet weak var slider: UISlider!
+    @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var nameOfSong: UILabel!
@@ -45,8 +47,7 @@ class SongVC: UIViewController {
 //        self.audioView.meteringLevelBarCornerRadius = 0.0
        
       //  getSongFromTheNetwork()
-        
-        
+       
          imageUrl = stringURls[index]
          name = names[index]
          audioUrl = audioArray[index]
@@ -85,6 +86,9 @@ class SongVC: UIViewController {
             getSongFromTheNetwork(completed: { (success) in
                 if success {
                     self.playSongFunc()
+                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateViewProgress), userInfo: nil, repeats: true)
+                    self.updateViewProgress()
+
                 }
             })
             isPlaying = true
@@ -105,6 +109,8 @@ class SongVC: UIViewController {
             getSongFromTheNetwork(completed: { (success) in
                 if success {
                     self.playSongFunc()
+                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateViewProgress), userInfo: nil, repeats: true)
+                    self.updateViewProgress()
                 }
             })
 
@@ -152,11 +158,25 @@ class SongVC: UIViewController {
         do {
             self.audioPlayer = try AVAudioPlayer(data: dataAudio)
             self.audioPlayer.play()
+
         } catch {
             print(error)
             }
         }
     }
+    
+    
+    @objc func updateViewProgress(){
+        if audioPlayer.isPlaying {
+            DispatchQueue.main.async {
+                let time = Float(self.audioPlayer.currentTime/self.audioPlayer.duration)
+                self.progressView.setProgress(time, animated: true)
+                self.timeLbl.text = "\(self.audioPlayer.currentTime)"
+            }
+        }
+    }
+    
+    
     
     func updateSongVC(index: Int)
     {
