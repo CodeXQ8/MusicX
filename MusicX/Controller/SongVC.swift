@@ -25,7 +25,11 @@ class SongVC: UIViewController {
     var stringURls = [String]()
     var names = [String]()
     var audioArray = [String]()
-    var index : Int = 0 
+    var index : Int = 0
+    var ArrayOfData : Dictionary<String,Data> = [:]
+    var ArrayOfUrlChecking = [URL]()
+    
+   
     
     var imageUrl = String()
     var name = String()
@@ -36,10 +40,11 @@ class SongVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.audioView.meteringLevelBarWidth = 4.0
-        self.audioView.meteringLevelBarInterItem = 1.0
-        self.audioView.meteringLevelBarCornerRadius = 0.0
-        
+//        self.audioView.meteringLevelBarWidth = 4.0
+//        self.audioView.meteringLevelBarInterItem = 1.0
+//        self.audioView.meteringLevelBarCornerRadius = 0.0
+       
+      //  getSongFromTheNetwork()
         
         
          imageUrl = stringURls[index]
@@ -50,16 +55,10 @@ class SongVC: UIViewController {
         
     }
     
-    func getImage(imageURL : String?) -> Data {
-        let url = URL(string: imageUrl)
-        do {
-            let data = try Data(contentsOf: url!)
-            return data
-        } catch {
-            print(error)
-        }
-     return Data()
+    override func viewDidAppear(_ animated: Bool) {
+        // let songs = getSongFromTheNetwork()
     }
+    
  
     @IBAction func leftBtn(_ sender: Any) {
         if index > 0{
@@ -68,7 +67,12 @@ class SongVC: UIViewController {
         }
         self.index = self.index - 1
         updateSongVC(index: self.index)
-        playSongFunc()
+        getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                }
+            })
+            
     }
     }
     
@@ -77,15 +81,12 @@ class SongVC: UIViewController {
     @IBAction func playSong(_ sender: Any) {
         if isPlaying == false {
             self.platSingBtn.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
-            playSongFunc()
-         //   self.progressView.progress = Float(self.audioPlayer.currentTime)
-//                self.audioView.audioVisualizationMode = .write
-//                self.audioPlayer.isMeteringEnabled = true            // Enable metering
-//                self.audioPlayer.updateMeters()
-//                let avgPower = self.audioPlayer.averagePower(forChannel: 0)
-//                self.audioView.addMeteringLevel(avgPower)
-                // self.audioView.play(for: 5.0)
             
+            getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                }
+            })
             isPlaying = true
         } else {
             self.platSingBtn.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
@@ -101,11 +102,61 @@ class SongVC: UIViewController {
             }
         self.index = self.index + 1
         updateSongVC(index: self.index)
-        playSongFunc()
+            getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                }
+            })
+
         }
     
     }
     
+    
+
+
+    // cache each data that is playing
+    func getSongFromTheNetwork(completed: @escaping (Bool) ->Void ) {
+
+       
+            let audioURL1 = URL(string: self.audioArray[self.index])
+            if !self.ArrayOfUrlChecking.contains(audioURL1!){
+                self.ArrayOfUrlChecking.append(audioURL1!)
+                DispatchQueue.main.async {
+                    
+                
+            URLSession.shared.dataTask(with: audioURL1!, completionHandler: { (data, urlResponse, error) in
+                if error != nil {
+                    print(error)
+                }else {
+                
+                    self.ArrayOfData["\(self.index)"] = data
+                   completed(true)
+                }
+            }
+        ).resume()
+                }
+            } else {
+                completed(true)
+        }
+    }
+    
+    
+    
+    // try to create an array that hold each downloaded songs so we don't download it every time
+    func playSongFunc(){
+        
+       // let audioUrl = URL(string: self.audioArray[self.index])
+        
+        if  let dataAudio = ArrayOfData["\(self.index)"] {
+        do {
+            self.audioPlayer = try AVAudioPlayer(data: dataAudio)
+            self.audioPlayer.play()
+        } catch {
+            print(error)
+            }
+        }
+    }
     
     func updateSongVC(index: Int)
     {
@@ -114,25 +165,6 @@ class SongVC: UIViewController {
         self.imgView.sd_setImage(with:URL(string: self.imageUrl) )
         
     }
-
-    // try to create an array that hold each downloaded songs so we don't download it every time
-    func playSongFunc(){
-        
-        let audioUrl = URL(string: self.audioArray[self.index])
-        
-        URLSession.shared.dataTask(with: audioUrl!) { (data, response, error) in
-            do {
-                self.audioPlayer = try AVAudioPlayer(data: data!)
-  
-                self.audioPlayer.play()
-            } catch {
-                print(error)
-            }
-        }.resume()
-       
-        
-    }
-    
     
     func getSaveFileUrl(audioUrl: URL) -> URL{
         let documentURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
@@ -153,8 +185,30 @@ class SongVC: UIViewController {
         return audioPlayer
     }
     
-    
+    func getImage(imageURL : String?) -> Data {
+        let url = URL(string: imageUrl)
+        do {
+            let data = try Data(contentsOf: url!)
+            return data
+        } catch {
+            print(error)
+        }
+        return Data()
+    }
+
 }
+
+
+
+//   self.progressView.progress = Float(self.audioPlayer.currentTime)
+//                self.audioView.audioVisualizationMode = .write
+//                self.audioPlayer.isMeteringEnabled = true            // Enable metering
+//                self.audioPlayer.updateMeters()
+//                let avgPower = self.audioPlayer.averagePower(forChannel: 0)
+//                self.audioView.addMeteringLevel(avgPower)
+// self.audioView.play(for: 5.0)
+
+
 
 
 
