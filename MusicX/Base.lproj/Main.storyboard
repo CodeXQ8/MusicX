@@ -298,16 +298,15 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
-                                <rect key="frame" x="39" y="694" width="347" height="22"/>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
+                                <rect key="frame" x="39" y="695" width="347" height="22"/>
                                 <color key="thumbTintColor" red="0.54281463107866501" green="0.34313482564650222" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="thumb" value="bl"/>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="thumbHighlited" value="bl"/>
                                 </userDefinedRuntimeAttributes>
-                                <variation key="displayGamut=P3-heightClass=compact-widthClass=compact">
-                                    <color key="thumbTintColor" red="1" green="0.56239638541121528" blue="0.34966197261445031" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </variation>
                                 <connections>
+                                    <action selector="slider:" destination="tOY-gr-yvy" eventType="valueChanged" id="doE-AR-Hyo"/>
                                     <action selector="slider:" destination="JNB-b5-bGn" eventType="valueChanged" id="esa-vH-4OP"/>
                                 </connections>
                             </slider>

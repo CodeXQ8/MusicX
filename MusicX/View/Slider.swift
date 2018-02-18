@@ -8,12 +8,18 @@
 
 import UIKit
 
-@IBDesignable
-class Slider: UISlider {
+@IBDesignable class Slider: UISlider {
     
+
     @IBInspectable var thumb : UIImage?{
         didSet{
            setThumbImage(thumb, for: .normal)
+        }
+    }
+    
+    @IBInspectable var thumbHighlited : UIImage?{
+        didSet{
+            setThumbImage(thumbHighlited, for: .highlighted)
         }
     }
 

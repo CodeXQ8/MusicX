@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-
 import SoundWave
 
 class SongVC: UIViewController {
@@ -31,7 +30,7 @@ class SongVC: UIViewController {
     var ArrayOfData : Dictionary<String,Data> = [:]
     var ArrayOfUrlChecking = [URL]()
     
-   
+   var mytimer = Timer()
     
     var imageUrl = String()
     var name = String()
@@ -39,6 +38,7 @@ class SongVC: UIViewController {
     
     var isPlaying : Bool = false
     
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -47,6 +47,15 @@ class SongVC: UIViewController {
 //        self.audioView.meteringLevelBarCornerRadius = 0.0
        
       //  getSongFromTheNetwork()
+        
+
+
+          //  self.audioView.play(for: 5.0)
+            //            self.audioPlayer.isMeteringEnabled = true            // Enable metering
+            //            self.audioPlayer.updateMeters()
+            //          let avgPower = self.audioPlayer.averagePower(forChannel: 0)
+        
+
        
          imageUrl = stringURls[index]
          name = names[index]
@@ -71,6 +80,7 @@ class SongVC: UIViewController {
         getSongFromTheNetwork(completed: { (success) in
                 if success {
                     self.playSongFunc()
+                    self.StartTimer()
                 }
             })
             
@@ -86,8 +96,8 @@ class SongVC: UIViewController {
             getSongFromTheNetwork(completed: { (success) in
                 if success {
                     self.playSongFunc()
-                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateViewProgress), userInfo: nil, repeats: true)
-                    self.updateViewProgress()
+                    self.StartTimer()
+
 
                 }
             })
@@ -106,11 +116,13 @@ class SongVC: UIViewController {
             }
         self.index = self.index + 1
         updateSongVC(index: self.index)
+
             getSongFromTheNetwork(completed: { (success) in
                 if success {
                     self.playSongFunc()
-                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateViewProgress), userInfo: nil, repeats: true)
-                    self.updateViewProgress()
+                    self.StartTimer()
+//                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
+//                  //  self.updateSliderValue()
                 }
             })
 
@@ -119,7 +131,16 @@ class SongVC: UIViewController {
     }
     
     
-
+    func StartTimer(){
+        DispatchQueue.main.async {
+            self.mytimer =   Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
+            self.mytimer.fire()
+            self.updateSliderValue()
+        }
+    }
+    
+    
+    
 
     // cache each data that is playing
     func getSongFromTheNetwork(completed: @escaping (Bool) ->Void ) {
@@ -157,7 +178,21 @@ class SongVC: UIViewController {
         if  let dataAudio = ArrayOfData["\(self.index)"] {
         do {
             self.audioPlayer = try AVAudioPlayer(data: dataAudio)
+
+            
+            self.audioPlayer.prepareToPlay()
             self.audioPlayer.play()
+            // Sound Wave
+            DispatchQueue.main.async {
+                self.audioView.meteringLevelBarWidth = 5.0
+                self.audioView.meteringLevelBarInterItem = 1.0
+                self.audioView.meteringLevelBarCornerRadius = 0.0
+                self.audioView.audioVisualizationMode = .read
+                
+                self.audioView.meteringLevelsArray = [0.5, 0.4,0.3,0.6,0.8,0.1]
+            //    self.audioView.play(for: self.audioPlayer.duration)
+               // self.audioView.addMeteringLevel(Float(self.audioPlayer.currentTime/self.audioPlayer.duration))
+            }
 
         } catch {
             print(error)
@@ -165,15 +200,35 @@ class SongVC: UIViewController {
         }
     }
     
+    @IBAction func slider(_ sender: Any) {
+        audioPlayer.currentTime = TimeInterval(slider.value)
+    }
+    
+    
+    @objc func updateSliderValue(){
+
+        DispatchQueue.main.async {
+            self.slider.minimumValue = 0
+            self.slider.maximumValue = Float(self.audioPlayer.duration)
+            self.slider.value = Float(self.audioPlayer.currentTime)
+            self.timeLbl.text = "\(self.audioPlayer.currentTime)"
+            NSLog("Hi")
+        }
+        
+            
+        
+    }
+    
     
     @objc func updateViewProgress(){
-        if audioPlayer.isPlaying {
+
             DispatchQueue.main.async {
                 let time = Float(self.audioPlayer.currentTime/self.audioPlayer.duration)
                 self.progressView.setProgress(time, animated: true)
                 self.timeLbl.text = "\(self.audioPlayer.currentTime)"
+                 NSLog("Hi I am ViewProgress")
             }
-        }
+        
     }
     
     
@@ -220,13 +275,6 @@ class SongVC: UIViewController {
 
 
 
-//   self.progressView.progress = Float(self.audioPlayer.currentTime)
-//                self.audioView.audioVisualizationMode = .write
-//                self.audioPlayer.isMeteringEnabled = true            // Enable metering
-//                self.audioPlayer.updateMeters()
-//                let avgPower = self.audioPlayer.averagePower(forChannel: 0)
-//                self.audioView.addMeteringLevel(avgPower)
-// self.audioView.play(for: 5.0)
 
 
 
