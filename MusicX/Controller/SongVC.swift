@@ -12,8 +12,9 @@ import SoundWave
 
 class SongVC: UIViewController {
     
-    var audioPlayer = AVAudioPlayer()
-    
+    var adioPlayer = AVAudioPlayer()
+    var audioplayerItem : AVPlayerItem!
+    var player : AVPlayer?
     
     
     //  @IBOutlet weak var audioView: DrawWaveForm!
@@ -61,16 +62,14 @@ class SongVC: UIViewController {
     // cache each data that is playing
     func getSongFromTheNetwork(completed: @escaping (Bool) ->Void ) {
         
-        
         let audioURL1 = URL(string: self.audioArray[self.index])
         if !self.ArrayOfUrlChecking.contains(audioURL1!){
             self.ArrayOfUrlChecking.append(audioURL1!)
             DispatchQueue.main.async {
-                
-                
+
                 URLSession.shared.dataTask(with: audioURL1!, completionHandler: { (data, urlResponse, error) in
                     if error != nil {
-                        print(error)
+                        print("error while getting songs from the network")
                     }else {
                         
                         self.ArrayOfData["\(self.index)"] = data
@@ -90,41 +89,39 @@ class SongVC: UIViewController {
     // try to create an array that hold each downloaded songs so we don't download it every time
     func playSongFunc(){
   
-        if  let dataAudio = ArrayOfData["\(self.index)"] {
-            do {
-                self.audioPlayer = try AVAudioPlayer(data: dataAudio)
-                self.audioPlayer.prepareToPlay()
-                self.audioPlayer.play()
+      //  if  let dataAudio = ArrayOfData["\(self.index)"] {
+        
+            let url = URL(string: audioArray[self.index])
+            self.audioplayerItem =  AVPlayerItem(url: url! )
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
   
-            } catch {
-                print(error)
-            }
-        }
+
+        
     }
     
     @IBAction func slider(_ sender: Any) {
-        audioPlayer.currentTime = TimeInterval(slider.value)
+      //  var sliderValue = CMTimeMake(, <#T##timescale: Int32##Int32#>)
+      //  player?.currentItem?.seek(to: <#T##CMTime#>, completionHandler: nil)= TimeInterval(slider.value)
     }
     
     
     @objc func updateSliderValue(){
         
+        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+        let currentTime = CMTimeGetSeconds((self.player?.currentItem?.currentTime())!)
+        
         DispatchQueue.main.async {
             self.slider.minimumValue = 0
-            self.slider.maximumValue = Float(self.audioPlayer.duration)
-            self.slider.value = Float(self.audioPlayer.currentTime)
-            self.timeLbl.text = "\(Int(self.audioPlayer.currentTime))"
+            self.slider.maximumValue = Float(duration)
+            self.slider.value = Float(currentTime)
+            self.timeLbl.text = "\(Int(currentTime))"
         }
         
         
         
     }
-    
-    
-    
-    
-    
-    
+
     func updateSongVC(index: Int)
     {
         self.nameOfSong.text = names[index]
@@ -150,16 +147,7 @@ class SongVC: UIViewController {
     
     
     
-    func getSong(url : String) -> AVAudioPlayer {
-        let audioUrl = URL(string: url)
-        do {
-            let dataUrl = try Data(contentsOf: audioUrl!)
-            self.audioPlayer = try AVAudioPlayer(data: dataUrl)
-        } catch {
-            print(error)
-        }
-        return audioPlayer
-    }
+
     
     func getImage(imageURL : String?) -> Data {
         let url = URL(string: imageUrl)
@@ -177,8 +165,8 @@ class SongVC: UIViewController {
     // MARK : - Button Actions
     
     @IBAction func backBtn(_ sender: Any) {
-        if audioPlayer.isPlaying {
-        audioPlayer.stop()
+        if player?.rate != 0 {
+        self.player?.pause()
         }
         dismiss(animated: true, completion: nil)
     }
@@ -186,17 +174,17 @@ class SongVC: UIViewController {
     
     @IBAction func leftBtn(_ sender: Any) {
         if index > 0{
-            if self.isPlaying {
-                self.audioPlayer.stop()
+            if player?.rate != 0 {
+                self.player?.pause()
             }
             self.index = self.index - 1
             updateSongVC(index: self.index)
-            getSongFromTheNetwork(completed: { (success) in
-                if success {
+        //    getSongFromTheNetwork(completed: { (success) in
+         //       if success {
                     self.playSongFunc()
                     self.StartTimer()
-                }
-            })
+        //        }
+      //      })
             
         }
     }
@@ -206,18 +194,18 @@ class SongVC: UIViewController {
         if isPlaying == false {
             self.platSingBtn.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
             
-            getSongFromTheNetwork(completed: { (success) in
-                if success {
+          //  getSongFromTheNetwork(completed: { (success) in
+            //    if success {
                     self.playSongFunc()
                     self.StartTimer()
                     
                     
-                }
-            })
+              //  }
+           // })
             isPlaying = true
         } else {
             self.platSingBtn.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
-            self.audioPlayer.stop()
+            self.player?.pause()
             isPlaying = false
         }
     }
@@ -226,19 +214,17 @@ class SongVC: UIViewController {
     @IBAction func rightBtn(_ sender: Any) {
         if index + 1 <= stringURls.count{
             if self.isPlaying {
-                self.audioPlayer.stop()
+               self.player?.pause()
             }
             self.index = self.index + 1
             updateSongVC(index: self.index)
             
-            getSongFromTheNetwork(completed: { (success) in
-                if success {
+         //   getSongFromTheNetwork(completed: { (success) in
+              //  if success {
                     self.playSongFunc()
                     self.StartTimer()
-                    //                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
-                    //                  //  self.updateSliderValue()
-                }
-            })
+         //       }
+         //   })
             
         }
     }
@@ -317,4 +303,16 @@ class SongVC: UIViewController {
 //            NSLog("Hi I am ViewProgress")
 //        }
 //
+//    }
+
+
+//    func getSong(url : String) -> AVAudioPlayer {
+//        let audioUrl = URL(string: url)
+//        do {
+//            let dataUrl = try Data(contentsOf: audioUrl!)
+//            self.audioPlayer = try AVAudioPlayer(data: dataUrl)
+//        } catch {
+//            print(error)
+//        }
+//        return audioPlayer
 //    }
