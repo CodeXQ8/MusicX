@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -195,12 +196,6 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kCa-ly-L8Q">
-                                <rect key="frame" x="41" y="550" width="332" height="2"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="332" id="6a5-8b-EeF"/>
-                                </constraints>
-                            </progressView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="RuJ-Jh-P6X">
                                 <rect key="frame" x="65" y="380" width="284" height="53"/>
                                 <subviews>
@@ -262,6 +257,18 @@
                                         <state key="normal" image="ic_favorite_48px"/>
                                     </button>
                                 </subviews>
+                                <constraints>
+                                    <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="13P-ce-V5q"/>
+                                    <constraint firstItem="A2I-JM-WO3" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="8bL-Gg-L7z"/>
+                                    <constraint firstItem="caP-9h-mmj" firstAttribute="firstBaseline" secondItem="A2I-JM-WO3" secondAttribute="firstBaseline" id="JdO-K6-MrB"/>
+                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="Jum-qg-CMb"/>
+                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="baseline" secondItem="A2I-JM-WO3" secondAttribute="baseline" id="Uyi-6e-vVJ"/>
+                                    <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="A2I-JM-WO3" secondAttribute="baseline" id="cON-Kn-cJh"/>
+                                    <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="Lfh-vB-jkw" secondAttribute="baseline" id="eSf-xd-lyb"/>
+                                    <constraint firstItem="A2I-JM-WO3" firstAttribute="firstBaseline" secondItem="NTv-cr-oJi" secondAttribute="firstBaseline" id="gnt-sk-je7"/>
+                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="firstBaseline" secondItem="A2I-JM-WO3" secondAttribute="firstBaseline" id="ltU-EJ-aj2"/>
+                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="firstBaseline" secondItem="caP-9h-mmj" secondAttribute="firstBaseline" id="rzv-6E-Tm9"/>
+                                </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22R-1O-0sc">
                                 <rect key="frame" x="20" y="20" width="45" height="40"/>
@@ -271,10 +278,10 @@
                                 </constraints>
                                 <state key="normal" image="layers-3"/>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="MjF-05-can"/>
+                                    <action selector="backBtn:" destination="tOY-gr-yvy" eventType="touchUpInside" id="Vy1-93-zdK"/>
                                 </connections>
                             </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="2057adc9de6eda8" translatesAutoresizingMaskIntoConstraints="NO" id="IqE-hY-xX0">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Music_13-512" translatesAutoresizingMaskIntoConstraints="NO" id="IqE-hY-xX0">
                                 <rect key="frame" x="0.0" y="68" width="414" height="254"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="254" id="uCd-jl-pvy"/>
@@ -299,7 +306,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
-                                <rect key="frame" x="39" y="695" width="347" height="22"/>
+                                <rect key="frame" x="39" y="523" width="347" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="1Xw-b1-3eh"/>
+                                </constraints>
                                 <color key="thumbTintColor" red="0.54281463107866501" green="0.34313482564650222" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="thumb" value="bl"/>
@@ -315,50 +325,47 @@
                         <constraints>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="centerX" secondItem="IqE-hY-xX0" secondAttribute="centerX" id="4hs-L1-iGa"/>
                             <constraint firstItem="22R-1O-0sc" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="20" id="6gS-pA-iYX"/>
-                            <constraint firstItem="isK-bO-1CY" firstAttribute="bottom" secondItem="Zyy-Ge-cxD" secondAttribute="bottom" constant="20" id="A4L-66-CGh"/>
-                            <constraint firstItem="Zyy-Ge-cxD" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="41" id="Asa-bn-2Vv"/>
+                            <constraint firstItem="Zyy-Ge-cxD" firstAttribute="top" secondItem="3Gw-tP-Lbl" secondAttribute="bottom" constant="8" id="Ey7-15-g6h"/>
                             <constraint firstItem="7Tn-Qu-MdF" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="31" id="EzL-aa-7Lg"/>
-                            <constraint firstItem="kCa-ly-L8Q" firstAttribute="top" secondItem="3Gw-tP-Lbl" secondAttribute="bottom" constant="35" id="IJe-hC-nIB"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="top" secondItem="isK-bO-1CY" secondAttribute="top" constant="48" id="LeK-NZ-VIW"/>
                             <constraint firstItem="7Tn-Qu-MdF" firstAttribute="top" secondItem="22R-1O-0sc" secondAttribute="bottom" constant="259" id="Msv-jH-BA7"/>
                             <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="7Tn-Qu-MdF" secondAttribute="trailing" constant="30" id="NRx-sq-kQD"/>
+                            <constraint firstItem="Zcf-rT-THx" firstAttribute="top" secondItem="Zyy-Ge-cxD" secondAttribute="bottom" constant="27" id="Q68-IL-KbW"/>
                             <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="Zcf-rT-THx" secondAttribute="trailing" constant="159" id="UPj-86-t6U"/>
-                            <constraint firstItem="kCa-ly-L8Q" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="W9K-31-4l4"/>
-                            <constraint firstItem="Zcf-rT-THx" firstAttribute="top" secondItem="kCa-ly-L8Q" secondAttribute="bottom" constant="19" id="Wcq-FP-dBk"/>
                             <constraint firstItem="3Gw-tP-Lbl" firstAttribute="top" secondItem="RuJ-Jh-P6X" secondAttribute="bottom" constant="32" id="X6L-DH-VlH"/>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="top" secondItem="7Tn-Qu-MdF" secondAttribute="bottom" constant="8" id="XvJ-2l-nP8"/>
                             <constraint firstItem="22R-1O-0sc" firstAttribute="top" secondItem="isK-bO-1CY" secondAttribute="top" id="ZRY-nA-KUn"/>
-                            <constraint firstItem="isK-bO-1CY" firstAttribute="trailing" secondItem="Zyy-Ge-cxD" secondAttribute="trailing" constant="30" id="c37-5o-0yr"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" id="e4u-fH-9EG"/>
                             <constraint firstItem="RuJ-Jh-P6X" firstAttribute="top" secondItem="IqE-hY-xX0" secondAttribute="bottom" constant="58" id="lqU-Xq-c2z"/>
+                            <constraint firstItem="Zyy-Ge-cxD" firstAttribute="leading" secondItem="O27-kf-JK2" secondAttribute="leading" id="okN-R3-Bsk"/>
                             <constraint firstItem="3Gw-tP-Lbl" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="ov4-RP-hmg"/>
+                            <constraint firstItem="O27-kf-JK2" firstAttribute="top" secondItem="Zcf-rT-THx" secondAttribute="bottom" constant="26" id="q86-Pb-mnI"/>
                             <constraint firstItem="O27-kf-JK2" firstAttribute="centerX" secondItem="FX8-6f-OUT" secondAttribute="centerX" id="qpL-tR-ypk"/>
                             <constraint firstItem="Zcf-rT-THx" firstAttribute="leading" secondItem="isK-bO-1CY" secondAttribute="leading" constant="142" id="ufP-4H-KWd"/>
-                            <constraint firstItem="O27-kf-JK2" firstAttribute="top" secondItem="kCa-ly-L8Q" secondAttribute="bottom" constant="70" id="vgO-75-53W"/>
                             <constraint firstItem="IqE-hY-xX0" firstAttribute="centerX" secondItem="isK-bO-1CY" secondAttribute="centerX" id="yPS-9N-tpm"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="isK-bO-1CY"/>
                     </view>
                     <connections>
-                        <outlet property="audioView" destination="7Tn-Qu-MdF" id="aEb-IQ-MYx"/>
+                        <outlet property="audioView" destination="7Tn-Qu-MdF" id="Sg3-ph-6GF"/>
                         <outlet property="duration" destination="AQ6-T7-8vn" id="gfu-wR-3bn"/>
                         <outlet property="imgView" destination="IqE-hY-xX0" id="30y-G2-sov"/>
                         <outlet property="nameOfSong" destination="jxA-h7-hQD" id="cWD-jD-UM1"/>
                         <outlet property="platSingBtn" destination="WYf-gl-iLr" id="pc5-Oh-D3W"/>
-                        <outlet property="progressView" destination="kCa-ly-L8Q" id="7u9-tB-4kx"/>
                         <outlet property="slider" destination="Zyy-Ge-cxD" id="OU3-QT-3px"/>
                         <outlet property="timeLbl" destination="Zcf-rT-THx" id="RcP-2w-lw5"/>
+                        <segue destination="BYZ-38-t0r" kind="show" id="Pkp-td-r9d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yvl-oa-Zoo" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="JNB-b5-bGn" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="688.40579710144937" y="32.608695652173914"/>
+            <point key="canvasLocation" x="612" y="33"/>
         </scene>
     </scenes>
     <resources>
         <image name="1" width="128" height="128"/>
-        <image name="2057adc9de6eda8" width="800" height="355"/>
+        <image name="Music_13-512" width="512" height="512"/>
         <image name="bl" width="22" height="22"/>
         <image name="headphones-with-soundwave-spikes-in-navy-blue" width="178" height="60"/>
         <image name="ic_chevron_left_48px" width="48" height="48"/>

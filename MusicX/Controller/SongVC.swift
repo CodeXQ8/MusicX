@@ -14,6 +14,12 @@ class SongVC: UIViewController {
     
     var audioPlayer = AVAudioPlayer()
     
+    
+    
+    //  @IBOutlet weak var audioView: DrawWaveForm!
+    
+    @IBOutlet weak var audioView: AudioVisualizationView!
+    
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
     @IBOutlet weak var progressView: UIProgressView!
@@ -21,7 +27,7 @@ class SongVC: UIViewController {
     @IBOutlet weak var nameOfSong: UILabel!
     @IBOutlet weak var duration: UILabel!
     
-    @IBOutlet weak var audioView: AudioVisualizationView!
+    // @IBOutlet weak var audioView: AudioVisualizationView!
     
     var stringURls = [String]()
     var names = [String]()
@@ -30,7 +36,7 @@ class SongVC: UIViewController {
     var ArrayOfData : Dictionary<String,Data> = [:]
     var ArrayOfUrlChecking = [URL]()
     
-   var mytimer = Timer()
+    var mytimer = Timer()
     
     var imageUrl = String()
     var name = String()
@@ -38,164 +44,60 @@ class SongVC: UIViewController {
     
     var isPlaying : Bool = false
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        self.audioView.meteringLevelBarWidth = 4.0
-//        self.audioView.meteringLevelBarInterItem = 1.0
-//        self.audioView.meteringLevelBarCornerRadius = 0.0
-       
-      //  getSongFromTheNetwork()
-        
-
-
-          //  self.audioView.play(for: 5.0)
-            //            self.audioPlayer.isMeteringEnabled = true            // Enable metering
-            //            self.audioPlayer.updateMeters()
-            //          let avgPower = self.audioPlayer.averagePower(forChannel: 0)
-        
-
-       
-         imageUrl = stringURls[index]
-         name = names[index]
-         audioUrl = audioArray[index]
+        imageUrl = stringURls[index]
+        name = names[index]
+        audioUrl = audioArray[index]
         imgView.sd_setImage(with: URL(string: imageUrl))
         nameOfSong.text = name
+   
+        
         
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        // let songs = getSongFromTheNetwork()
-    }
-    
- 
-    @IBAction func leftBtn(_ sender: Any) {
-        if index > 0{
-        if self.isPlaying {
-            self.audioPlayer.stop()
-        }
-        self.index = self.index - 1
-        updateSongVC(index: self.index)
-        getSongFromTheNetwork(completed: { (success) in
-                if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-                }
-            })
-            
-    }
-    }
-    
-    @IBOutlet weak var platSingBtn: UIButton!
-    
-    @IBAction func playSong(_ sender: Any) {
-        if isPlaying == false {
-            self.platSingBtn.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
-            
-            getSongFromTheNetwork(completed: { (success) in
-                if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-
-
-                }
-            })
-            isPlaying = true
-        } else {
-            self.platSingBtn.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
-            self.audioPlayer.stop()
-            isPlaying = false
-        }
-    }
-    
-    @IBAction func rightBtn(_ sender: Any) {
-        if index + 1 <= stringURls.count{
-            if self.isPlaying {
-                self.audioPlayer.stop()
-            }
-        self.index = self.index + 1
-        updateSongVC(index: self.index)
-
-            getSongFromTheNetwork(completed: { (success) in
-                if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-//                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
-//                  //  self.updateSliderValue()
-                }
-            })
-
-        }
-    
-    }
-    
-    
-    func StartTimer(){
-        DispatchQueue.main.async {
-            self.mytimer =   Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
-            self.mytimer.fire()
-            self.updateSliderValue()
-        }
-    }
-    
-    
-    
 
     // cache each data that is playing
     func getSongFromTheNetwork(completed: @escaping (Bool) ->Void ) {
-
-       
-            let audioURL1 = URL(string: self.audioArray[self.index])
-            if !self.ArrayOfUrlChecking.contains(audioURL1!){
-                self.ArrayOfUrlChecking.append(audioURL1!)
-                DispatchQueue.main.async {
-                    
+        
+        
+        let audioURL1 = URL(string: self.audioArray[self.index])
+        if !self.ArrayOfUrlChecking.contains(audioURL1!){
+            self.ArrayOfUrlChecking.append(audioURL1!)
+            DispatchQueue.main.async {
                 
-            URLSession.shared.dataTask(with: audioURL1!, completionHandler: { (data, urlResponse, error) in
-                if error != nil {
-                    print(error)
-                }else {
                 
-                    self.ArrayOfData["\(self.index)"] = data
-                   completed(true)
+                URLSession.shared.dataTask(with: audioURL1!, completionHandler: { (data, urlResponse, error) in
+                    if error != nil {
+                        print(error)
+                    }else {
+                        
+                        self.ArrayOfData["\(self.index)"] = data
+                        completed(true)
+                    }
                 }
+                    ).resume()
             }
-        ).resume()
-                }
-            } else {
-                completed(true)
+        } else {
+            completed(true)
         }
     }
+    
     
     
     
     // try to create an array that hold each downloaded songs so we don't download it every time
     func playSongFunc(){
-        
-       // let audioUrl = URL(string: self.audioArray[self.index])
-        
+  
         if  let dataAudio = ArrayOfData["\(self.index)"] {
-        do {
-            self.audioPlayer = try AVAudioPlayer(data: dataAudio)
-
-            
-            self.audioPlayer.prepareToPlay()
-            self.audioPlayer.play()
-            // Sound Wave
-            DispatchQueue.main.async {
-                self.audioView.meteringLevelBarWidth = 5.0
-                self.audioView.meteringLevelBarInterItem = 1.0
-                self.audioView.meteringLevelBarCornerRadius = 0.0
-                self.audioView.audioVisualizationMode = .read
-                
-                self.audioView.meteringLevelsArray = [0.5, 0.4,0.3,0.6,0.8,0.1]
-            //    self.audioView.play(for: self.audioPlayer.duration)
-               // self.audioView.addMeteringLevel(Float(self.audioPlayer.currentTime/self.audioPlayer.duration))
-            }
-
-        } catch {
-            print(error)
+            do {
+                self.audioPlayer = try AVAudioPlayer(data: dataAudio)
+                self.audioPlayer.prepareToPlay()
+                self.audioPlayer.play()
+  
+            } catch {
+                print(error)
             }
         }
     }
@@ -206,30 +108,20 @@ class SongVC: UIViewController {
     
     
     @objc func updateSliderValue(){
-
+        
         DispatchQueue.main.async {
             self.slider.minimumValue = 0
             self.slider.maximumValue = Float(self.audioPlayer.duration)
             self.slider.value = Float(self.audioPlayer.currentTime)
-            self.timeLbl.text = "\(self.audioPlayer.currentTime)"
-            NSLog("Hi")
+            self.timeLbl.text = "\(Int(self.audioPlayer.currentTime))"
         }
         
-            
+        
         
     }
     
     
-    @objc func updateViewProgress(){
-
-            DispatchQueue.main.async {
-                let time = Float(self.audioPlayer.currentTime/self.audioPlayer.duration)
-                self.progressView.setProgress(time, animated: true)
-                self.timeLbl.text = "\(self.audioPlayer.currentTime)"
-                 NSLog("Hi I am ViewProgress")
-            }
-        
-    }
+    
     
     
     
@@ -239,6 +131,15 @@ class SongVC: UIViewController {
         self.imageUrl = stringURls[index]
         self.imgView.sd_setImage(with:URL(string: self.imageUrl) )
         
+    }
+    
+    
+    func StartTimer(){
+        DispatchQueue.main.async {
+            self.mytimer =   Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
+            self.mytimer.fire()
+            self.updateSliderValue()
+        }
     }
     
     func getSaveFileUrl(audioUrl: URL) -> URL{
@@ -270,16 +171,82 @@ class SongVC: UIViewController {
         }
         return Data()
     }
+    
+    
+    
+    // MARK : - Button Actions
+    
+    @IBAction func backBtn(_ sender: Any) {
+        if audioPlayer.isPlaying {
+        audioPlayer.stop()
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
+    @IBAction func leftBtn(_ sender: Any) {
+        if index > 0{
+            if self.isPlaying {
+                self.audioPlayer.stop()
+            }
+            self.index = self.index - 1
+            updateSongVC(index: self.index)
+            getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                    self.StartTimer()
+                }
+            })
+            
+        }
+    }
+    
+    @IBOutlet weak var platSingBtn: UIButton!
+    @IBAction func playSong(_ sender: Any) {
+        if isPlaying == false {
+            self.platSingBtn.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
+            
+            getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                    self.StartTimer()
+                    
+                    
+                }
+            })
+            isPlaying = true
+        } else {
+            self.platSingBtn.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
+            self.audioPlayer.stop()
+            isPlaying = false
+        }
+    }
+    
+    
+    @IBAction func rightBtn(_ sender: Any) {
+        if index + 1 <= stringURls.count{
+            if self.isPlaying {
+                self.audioPlayer.stop()
+            }
+            self.index = self.index + 1
+            updateSongVC(index: self.index)
+            
+            getSongFromTheNetwork(completed: { (success) in
+                if success {
+                    self.playSongFunc()
+                    self.StartTimer()
+                    //                    Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(SongVC.updateSliderValue), userInfo: nil, repeats: true)
+                    //                  //  self.updateSliderValue()
+                }
+            })
+            
+        }
+    }
 
+    
+    
+    
 }
-
-
-
-
-
-
-
-
 //        let destination: DownloadRequest.DownloadFileDestination = { _, _ in
 //            let directoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 //            let file = directoryURL.appendingPathComponent(audioUrl, isDirectory: false)
@@ -305,3 +272,49 @@ class SongVC: UIViewController {
 //            let file = directoryURL.appendingPathComponent(audioUrl, isDirectory: false)
 //            return (file, [.createIntermediateDirectories, .removePreviousFile])
 //        }
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////
+//
+//                    self.audioView.meteringLevelBarWidth = 2.0
+//                    self.audioView.meteringLevelBarInterItem = 1.0
+//                    self.audioView.meteringLevelBarCornerRadius = 5.0
+//                    self.audioView.audioVisualizationMode = .read
+//                    self.audioView.meteringLevelsArray = [0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43 ,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43,0.4, 0.1, 0.4, 0.2, 0.5, 0.6, 0.1, 0.0, 0.6, 0.43 ]
+//
+//    self.audioView.play(for: self.audioPlayer.duration)
+// self.audioView.addMeteringLevel(Float(self.audioPlayer.currentTime/self.audioPlayer.duration))
+
+
+
+//                DispatchQueue.main.async {
+//
+//                    let audioUrl3 = URL(string:self.audioUrl)
+//                    //let url =  URL.init(fileURLWithPath: Bundle.main.path(forResource: "a", ofType: "mp3")!)
+//                    do {
+//                        let myAudioFile = try AVAudioFile(forReading: audioUrl3!)
+//                        let myAudioFormat = AVAudioFormat(commonFormat: .pcmFormatFloat32, sampleRate: myAudioFile.fileFormat.sampleRate, channels: myAudioFile.fileFormat.channelCount, interleaved: false)//Format of the file
+//
+//                        //   let myAudioFrameCount = UInt32(myAudioFile.length)
+//                        let myAudioBuffer = AVAudioPCMBuffer(pcmFormat: myAudioFormat!, frameCapacity: UInt32(myAudioFile.length))
+//                        try! myAudioFile.read(into: myAudioBuffer!)
+//                        ReadFile.arrayFloatValues = Array(UnsafeBufferPointer(start: myAudioBuffer?.floatChannelData?[0], count:Int(String(describing: myAudioBuffer?.frameLength))!))
+//
+//
+//                    } catch {
+//                        print(error)
+//                    }
+//
+//                }
+
+//    @objc func updateViewProgress(){
+//
+//        DispatchQueue.main.async {
+//            let time = Float(self.audioPlayer.currentTime/self.audioPlayer.duration)
+//            self.progressView.setProgress(time, animated: true)
+//            self.timeLbl.text = "\(Int(self.audioPlayer.currentTime))"
+//            NSLog("Hi I am ViewProgress")
+//        }
+//
+//    }
