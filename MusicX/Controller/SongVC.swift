@@ -8,18 +8,18 @@
 
 import UIKit
 import AVFoundation
-import SoundWave
+import RealmSwift
 
 class SongVC: UIViewController {
     
     var adioPlayer = AVAudioPlayer()
     var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
-    
-    
+    let realm = try! Realm()
+    var locationURL = String().self
     //  @IBOutlet weak var audioView: DrawWaveForm!
     
-    @IBOutlet weak var audioView: AudioVisualizationView!
+  
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
@@ -55,7 +55,7 @@ class SongVC: UIViewController {
         imgView.sd_setImage(with: URL(string: imageUrl))
         nameOfSong.text = name
    
-        
+      //  loadSongs()
         
     }
 
@@ -145,20 +145,35 @@ class SongVC: UIViewController {
         return fileURL!
     }
     
-    
+    func saveTODisk() {
+        let audioURL1 = URL(string: audioUrl)
+        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
+
+            locationURL = destinationUrl.path
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            print("The file already exists at path")
+        } else {
+            URLSession.shared.downloadTask(with: audioURL1!, completionHandler: { (location, responce, error) in
+                if error == nil {
+                    do {
+                        // after downloading your file you need to move it to your destination url
+                        try FileManager.default.moveItem(at: location!, to: destinationUrl)
+     
+                        print("File moved to documents folder")
+                    } catch let error as NSError {
+                        print(error.localizedDescription)
+                    }
+
+                }
+            }).resume()
+        }
+    }
     
 
     
-    func getImage(imageURL : String?) -> Data {
-        let url = URL(string: imageUrl)
-        do {
-            let data = try Data(contentsOf: url!)
-            return data
-        } catch {
-            print(error)
-        }
-        return Data()
-    }
+    
+
     
     
     
@@ -198,8 +213,6 @@ class SongVC: UIViewController {
             //    if success {
                     self.playSongFunc()
                     self.StartTimer()
-                    
-                    
               //  }
            // })
             isPlaying = true
@@ -228,7 +241,35 @@ class SongVC: UIViewController {
             
         }
     }
-
+    
+    @IBAction func saveSongBtn(_ sender: Any) {
+        print(Realm.Configuration.defaultConfiguration.fileURL)
+        
+        saveTODisk()
+        
+        let song = RealmData()
+     //  let url = URL(string: audioArray[index])
+        do {
+           // song.songsData = try Data(contentsOf: url!)
+            song.index = locationURL
+            song.nameOfSong = names[index]
+            
+            try realm.write {
+                realm.add(song)
+            }
+        }catch
+        {
+            print("error saving data to realm")
+        }
+        
+    }
+    
+    func loadSongs() {
+        
+        let songs = realm.objects(RealmData.self).filter("NewSong7")
+        print(songs)
+    }
+    
     
     
     
@@ -316,3 +357,16 @@ class SongVC: UIViewController {
 //        }
 //        return audioPlayer
 //    }
+
+//
+//    func getImage(imageURL : String?) -> Data {
+//        let url = URL(string: imageUrl)
+//        do {
+//            let data = try Data(contentsOf: url!)
+//            return data
+//        } catch {
+//            print(error)
+//        }
+//        return Data()
+//    }
+
