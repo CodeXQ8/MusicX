@@ -12,11 +12,12 @@ import RealmSwift
 
 class SongVC: UIViewController {
     
-//    var adioPlayer = AVAudioPlayer()
+    //    var adioPlayer = AVAudioPlayer()
     var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
     let realm = try! Realm()
     var locationURL = String().self
+    var destinationURLString = String()
     var songs : Results<RealmData>!
     var songID = 0
     
@@ -55,9 +56,9 @@ class SongVC: UIViewController {
         imageUrl = stringURls[index]
         name = names[index]
         audioUrl = audioArray[index]
-        imgView.loadGif(name: "Play-1")
-      
-      //  imgView.sd_setImage(with: URL(string: imageUrl))
+       // imgView.loadGif(name: "Play-1")
+        
+       imgView.sd_setImage(with: URL(string: imageUrl))
         nameOfSong.text = name
         
         loadSongs()
@@ -94,16 +95,71 @@ class SongVC: UIViewController {
     // try to create an array that hold each downloaded songs so we don't download it every time
     func playSongFunc(){
         
-        //  if  let dataAudio = ArrayOfData["\(self.index)"] {
         
-        let url = URL(string: audioArray[self.index])
-        self.audioplayerItem =  AVPlayerItem(url: url! )
-        self.player = AVPlayer(playerItem: self.audioplayerItem)
-        self.player?.play()
+        // you can create function to get nameOfSong
+//        var nameOfFile = " "
+//        for songTemp in songs {
+//            if songTemp.songID == index{
+//
+//                nameOfFile = songTemp.nameOfFile
+//                print("\(nameOfFile) IIIIII")
+//                break
+        //            }
+        //        }
+        //
+        //        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        //        let destinationUrl = documentsDirectoryURL.appendingPathComponent((nameOfFile))
+        
+        
+        let audioURL1 = URL(string: audioUrl)
+        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            print("The file already exists and it will play without network")
+            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+        } else {
+            let audioURL1 = URL(string: audioUrl)
+            self.audioplayerItem =  AVPlayerItem(url: audioURL1!)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+        }
+        
+//        self.audioplayerItem =  AVPlayerItem(url: audioURL1)
+//        self.player = AVPlayer(playerItem: self.audioplayerItem)
+//        self.player?.play()
+        
         
         
         
     }
+    
+    
+    func getSongPath() -> String{
+        var songPath = " "
+        for songTemp in songs {
+            if songTemp.songID == index{
+                
+                songPath = songTemp.index
+                print("\(songPath) IIIIII")
+                break
+            }
+            
+        }
+        
+        //        let song = RealmData()
+        //        do {
+        //            try realm.write {
+        //
+        //            }
+        //        } catch {
+        //            print(" can't get songs path")
+        //        }
+        return songPath
+    }
+    
+    
     
     @IBAction func slider(_ sender: Any) {
         let seconds : Int64 = Int64(slider.value)
@@ -124,6 +180,7 @@ class SongVC: UIViewController {
             let (h,m,s) = self.secondsToHoursMinutesSeconds(seconds: Int(currentTime))
             self.timeLbl.text = "\(m):\(s)"
         }
+        
         
         
         
@@ -161,6 +218,7 @@ class SongVC: UIViewController {
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
         
         locationURL = destinationUrl.path
+        destinationURLString = destinationUrl.absoluteString
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists at path")
         } else {
@@ -295,7 +353,7 @@ class SongVC: UIViewController {
         do {
             
             song.nameOfSong = names[index]
-            song.index = locationURL
+            song.index = destinationURLString
             song.songID = songID
             let fileName = (locationURL as NSString).lastPathComponent
             song.nameOfFile = fileName
@@ -443,4 +501,32 @@ class SongVC: UIViewController {
 
 //  let url = URL(string: audioArray[index])
 // song.songsData = try Data(contentsOf: url!)
+
+
+//
+//func playSongFunc(){
+//
+//    //  if  let dataAudio = ArrayOfData["\(self.index)"] {
+//    //        let songPath = getSongPath()
+//    //        //let url = URL.init(fileURLWithPath: songPath)
+//    //        let url1 :URL = Bundle.main.url(forResource: "mishary-rashid-alafasy-001-al-fatiha-30-7477", withExtension: "mp3")!
+//    //        print(url1)
+//    //            //URL(fileURLWithPath: songPath)
+//    //        let url = URL(fileURLWithPath: "file:///Users/Nayef/Library/Developer/CoreSimulator/Devices/CAE37049-7FFC-45B8-9E47-E16FD5482C91/data/Containers/Bundle/Application/C93A53B2-51D4-4DF3-9F3F-592E924D2947/MusicX.app/mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3")
+//    //        let assest = AVAsset(url: url)
+//    //        //let url = URL(string: audioArray[self.index])
+//    ////        self.audioplayerItem =  AVPlayerItem(url: url )
+//    //
+//    let audioURL1 = URL(string: audioUrl)
+//    let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+//    let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
+//
+//    self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
+//    self.player = AVPlayer(playerItem: self.audioplayerItem)
+//    self.player?.play()
+//
+//
+//
+//
+//}
 

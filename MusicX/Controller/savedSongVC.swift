@@ -39,7 +39,7 @@ class savedSongVC: UIViewController {
     func getpath(){
         var paths = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)
         let audioPath = paths[0]
-        print(audioPath)
+        print(paths)
     }
        var i = 0
     @IBAction func playSONG(_ sender: Any) {
