@@ -54,26 +54,7 @@ class savedSongVC: UIViewController {
     }
     
     
-    func deleteFilesFromDirectory(){
-        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
-        let dirFile = paths[0]
-       
-
-        let filePath = "\(dirFile)/\(songs[i].nameOfFile)"
-        if FileManager.default.fileExists(atPath: filePath)
-        {
-              print("File Exisit")
-            do {
-                try  FileManager.default.removeItem(atPath: filePath)
-                print("File is removed")
-            } catch {
-                print(error)
-            }
-          
-        } else {
-            print("File does not exist")
-        }
-    }
+    
     
     func loadData() {
         songs = realm.objects(RealmData.self)

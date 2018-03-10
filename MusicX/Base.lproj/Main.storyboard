@@ -222,18 +222,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="O27-kf-JK2">
-                                <rect key="frame" x="41" y="622" width="332" height="50"/>
+                                <rect key="frame" x="88" y="622" width="238" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lfh-vB-jkw">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="aZZ-f2-TK9"/>
-                                            <constraint firstAttribute="height" constant="50" id="tMF-5S-RZH"/>
-                                        </constraints>
-                                        <state key="normal" image="ic_library_music_48px"/>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caP-9h-mmj">
-                                        <rect key="frame" x="94" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="sun-Pa-AlL"/>
                                             <constraint firstAttribute="height" constant="50" id="w6d-cr-59d"/>
@@ -244,15 +236,18 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A2I-JM-WO3">
-                                        <rect key="frame" x="188" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="94" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="ATi-pV-zEW"/>
                                             <constraint firstAttribute="height" constant="50" id="YzE-ID-Mzn"/>
                                         </constraints>
-                                        <state key="normal" image="ic_video_library_48px"/>
+                                        <state key="normal" image="ic_delete_forever_48px"/>
+                                        <connections>
+                                            <action selector="deleteBtn:" destination="tOY-gr-yvy" eventType="touchUpInside" id="taS-pV-5JV"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NTv-cr-oJi">
-                                        <rect key="frame" x="282" y="0.0" width="50" height="50"/>
+                                        <rect key="frame" x="188" y="0.0" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="N7i-wc-1bI"/>
                                             <constraint firstAttribute="width" constant="50" id="wrP-EJ-LTn"/>
@@ -267,13 +262,8 @@
                                     <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="13P-ce-V5q"/>
                                     <constraint firstItem="A2I-JM-WO3" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="8bL-Gg-L7z"/>
                                     <constraint firstItem="caP-9h-mmj" firstAttribute="firstBaseline" secondItem="A2I-JM-WO3" secondAttribute="firstBaseline" id="JdO-K6-MrB"/>
-                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="baseline" secondItem="NTv-cr-oJi" secondAttribute="baseline" id="Jum-qg-CMb"/>
-                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="baseline" secondItem="A2I-JM-WO3" secondAttribute="baseline" id="Uyi-6e-vVJ"/>
                                     <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="A2I-JM-WO3" secondAttribute="baseline" id="cON-Kn-cJh"/>
-                                    <constraint firstItem="caP-9h-mmj" firstAttribute="baseline" secondItem="Lfh-vB-jkw" secondAttribute="baseline" id="eSf-xd-lyb"/>
                                     <constraint firstItem="A2I-JM-WO3" firstAttribute="firstBaseline" secondItem="NTv-cr-oJi" secondAttribute="firstBaseline" id="gnt-sk-je7"/>
-                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="firstBaseline" secondItem="A2I-JM-WO3" secondAttribute="firstBaseline" id="ltU-EJ-aj2"/>
-                                    <constraint firstItem="Lfh-vB-jkw" firstAttribute="firstBaseline" secondItem="caP-9h-mmj" secondAttribute="firstBaseline" id="rzv-6E-Tm9"/>
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="22R-1O-0sc">
@@ -312,7 +302,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
-                                <rect key="frame" x="39" y="523" width="347" height="22"/>
+                                <rect key="frame" x="86" y="523" width="347" height="22"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="1Xw-b1-3eh"/>
                                 </constraints>
@@ -470,12 +460,11 @@
         <image name="headphones-with-soundwave-spikes-in-navy-blue" width="178" height="60"/>
         <image name="ic_chevron_left_48px" width="48" height="48"/>
         <image name="ic_chevron_right_48px" width="48" height="48"/>
+        <image name="ic_delete_forever_48px" width="48" height="48"/>
         <image name="ic_favorite_48px" width="48" height="48"/>
-        <image name="ic_library_music_48px" width="48" height="48"/>
         <image name="ic_play_arrow_48px" width="48" height="48"/>
         <image name="ic_queue_48px" width="48" height="48"/>
         <image name="ic_slow_motion_video_48px" width="48" height="48"/>
-        <image name="ic_video_library_48px" width="48" height="48"/>
         <image name="layers-3" width="24" height="24"/>
     </resources>
     <inferredMetricsTieBreakers>

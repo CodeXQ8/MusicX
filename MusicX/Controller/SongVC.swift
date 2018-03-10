@@ -18,9 +18,11 @@ class SongVC: UIViewController {
     let realm = try! Realm()
     var locationURL = String().self
     var songs : Results<RealmData>!
+    var songID = 0
+    
     //  @IBOutlet weak var audioView: DrawWaveForm!
     
-  
+    
     
     @IBOutlet weak var slider: UISlider!
     @IBOutlet weak var timeLbl: UILabel!
@@ -55,11 +57,11 @@ class SongVC: UIViewController {
         audioUrl = audioArray[index]
         imgView.sd_setImage(with: URL(string: imageUrl))
         nameOfSong.text = name
-   
-      //  loadSongs()
+        
+        loadSongs()
         
     }
-
+    
     // cache each data that is playing
     func getSongFromTheNetwork(completed: @escaping (Bool) ->Void ) {
         
@@ -67,7 +69,7 @@ class SongVC: UIViewController {
         if !self.ArrayOfUrlChecking.contains(audioURL1!){
             self.ArrayOfUrlChecking.append(audioURL1!)
             DispatchQueue.main.async {
-
+                
                 URLSession.shared.dataTask(with: audioURL1!, completionHandler: { (data, urlResponse, error) in
                     if error != nil {
                         print("error while getting songs from the network")
@@ -89,21 +91,21 @@ class SongVC: UIViewController {
     
     // try to create an array that hold each downloaded songs so we don't download it every time
     func playSongFunc(){
-  
-      //  if  let dataAudio = ArrayOfData["\(self.index)"] {
         
-            let url = URL(string: audioArray[self.index])
-            self.audioplayerItem =  AVPlayerItem(url: url! )
-            self.player = AVPlayer(playerItem: self.audioplayerItem)
-            self.player?.play()
-  
-
+        //  if  let dataAudio = ArrayOfData["\(self.index)"] {
+        
+        let url = URL(string: audioArray[self.index])
+        self.audioplayerItem =  AVPlayerItem(url: url! )
+        self.player = AVPlayer(playerItem: self.audioplayerItem)
+        self.player?.play()
+        
+        
         
     }
     
     @IBAction func slider(_ sender: Any) {
-      //  var sliderValue = CMTimeMake(, <#T##timescale: Int32##Int32#>)
-      //  player?.currentItem?.seek(to: <#T##CMTime#>, completionHandler: nil)= TimeInterval(slider.value)
+        //  var sliderValue = CMTimeMake(, <#T##timescale: Int32##Int32#>)
+        //  player?.currentItem?.seek(to: <#T##CMTime#>, completionHandler: nil)= TimeInterval(slider.value)
     }
     
     
@@ -122,7 +124,7 @@ class SongVC: UIViewController {
         
         
     }
-
+    
     func updateSongVC(index: Int)
     {
         self.nameOfSong.text = names[index]
@@ -150,8 +152,8 @@ class SongVC: UIViewController {
         let audioURL1 = URL(string: audioUrl)
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
-
-            locationURL = destinationUrl.path
+        
+        locationURL = destinationUrl.path
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists at path")
         } else {
@@ -160,21 +162,55 @@ class SongVC: UIViewController {
                     do {
                         // after downloading your file you need to move it to your destination url
                         try FileManager.default.moveItem(at: location!, to: destinationUrl)
-     
                         print("File moved to documents folder")
                     } catch let error as NSError {
                         print(error.localizedDescription)
                     }
-
+                    
                 }
             }).resume()
         }
     }
     
-
+    func deleteFilesFromDirectory(){
+        let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
+        let dirFile = paths[0]
+        
+        // let name = songs?[index].nameOfSong ?? print("can't deletate")
+        var nameOfFile = "" 
+        for songTemp in songs {
+            if songTemp.songID == index{
+                
+                nameOfFile = songTemp.nameOfFile
+                print(songTemp.nameOfFile)
+                break
+            }
+        }
+        
+        let filePath = "\(dirFile)/\(nameOfFile)"
+        if FileManager.default.fileExists(atPath: filePath)
+        {
+            print("File Exisit")
+            do {
+                try  FileManager.default.removeItem(atPath: filePath)
+                print("File is removed")
+            } catch {
+                print(error)
+            }
+            
+        } else {
+            print("File does not exist")
+        }
+    }
     
     
-
+    func loadSongs() {
+        
+        songs = realm.objects(RealmData.self)
+        print(songs)
+    }
+    
+    
     
     
     
@@ -182,7 +218,7 @@ class SongVC: UIViewController {
     
     @IBAction func backBtn(_ sender: Any) {
         if player?.rate != 0 {
-        self.player?.pause()
+            self.player?.pause()
         }
         dismiss(animated: true, completion: nil)
     }
@@ -195,12 +231,12 @@ class SongVC: UIViewController {
             }
             self.index = self.index - 1
             updateSongVC(index: self.index)
-        //    getSongFromTheNetwork(completed: { (success) in
-         //       if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-        //        }
-      //      })
+            //    getSongFromTheNetwork(completed: { (success) in
+            //       if success {
+            self.playSongFunc()
+            self.StartTimer()
+            //        }
+            //      })
             
         }
     }
@@ -210,12 +246,12 @@ class SongVC: UIViewController {
         if isPlaying == false {
             self.platSingBtn.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
             
-          //  getSongFromTheNetwork(completed: { (success) in
+            //  getSongFromTheNetwork(completed: { (success) in
             //    if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-              //  }
-           // })
+            self.playSongFunc()
+            self.StartTimer()
+            //  }
+            // })
             isPlaying = true
         } else {
             self.platSingBtn.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
@@ -228,17 +264,17 @@ class SongVC: UIViewController {
     @IBAction func rightBtn(_ sender: Any) {
         if index + 1 <= stringURls.count{
             if self.isPlaying {
-               self.player?.pause()
+                self.player?.pause()
             }
             self.index = self.index + 1
             updateSongVC(index: self.index)
             
-         //   getSongFromTheNetwork(completed: { (success) in
-              //  if success {
-                    self.playSongFunc()
-                    self.StartTimer()
-         //       }
-         //   })
+            //   getSongFromTheNetwork(completed: { (success) in
+            //  if success {
+            self.playSongFunc()
+            self.StartTimer()
+            //       }
+            //   })
             
         }
     }
@@ -246,22 +282,30 @@ class SongVC: UIViewController {
     @IBAction func saveSongBtn(_ sender: Any) {
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        
-        
-        
         saveTODisk()
-        
+        songID = index
         let song = RealmData()
-     //  let url = URL(string: audioArray[index])
         do {
-           // song.songsData = try Data(contentsOf: url!)
-            song.index = locationURL
+            
             song.nameOfSong = names[index]
+            song.index = locationURL
+            song.songID = songID
             let fileName = (locationURL as NSString).lastPathComponent
             song.nameOfFile = fileName
-            
+            var exsist = false
             try realm.write {
-                realm.add(song)
+                for songTemp in songs {
+                    if songTemp.nameOfSong == song.nameOfSong {
+                        print("song exist")
+                        exsist = true
+                        break
+                    }
+                }
+                if !exsist {
+                    self.realm.add(song)
+                } else {
+                    print("Song alrady saved in Realm")
+                }
             }
         }catch
         {
@@ -270,11 +314,25 @@ class SongVC: UIViewController {
         
     }
     
-    func loadSongs() {
-        
-         songs = realm.objects(RealmData.self).filter("NewSong7")
-        print(songs)
+    @IBAction func deleteBtn(_ sender: Any) {
+        deleteFilesFromDirectory()
+        do {
+            try realm.write {
+                for songTemp in songs {
+                    if songTemp.songID == index{
+                        print("deleteing song from Realm ")
+                        realm.delete(songTemp)
+                        break
+                    }
+                }
+                
+                
+            }
+        } catch {
+            print("error deleting object from Realm")
+        }
     }
+    
     
     
     
@@ -375,4 +433,7 @@ class SongVC: UIViewController {
 //        }
 //        return Data()
 //    }
+
+//  let url = URL(string: audioArray[index])
+// song.songsData = try Data(contentsOf: url!)
 
