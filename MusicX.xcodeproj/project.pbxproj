@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F88B0532053BB7000083913 /* GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88B0522053BB7000083913 /* GIF.swift */; };
+		3F88B0572053BD0700083913 /* Play-1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3F88B0562053BD0600083913 /* Play-1.gif */; };
+		3F88B05B2053BE1E00083913 /* a.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3F88B05A2053BE1D00083913 /* a.jpg */; };
 		BE73AC6D203896100063F944 /* DataManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC6C203896100063F944 /* DataManger.swift */; };
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
 		BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E90502039443D0026566F /* DrawWaveForm.swift */; };
@@ -30,6 +33,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F88B0522053BB7000083913 /* GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIF.swift; sourceTree = "<group>"; };
+		3F88B0562053BD0600083913 /* Play-1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Play-1.gif"; path = "../../Play-1.gif"; sourceTree = "<group>"; };
+		3F88B05A2053BE1D00083913 /* a.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = a.jpg; path = ../../a.jpg; sourceTree = "<group>"; };
 		AD0DD3F64319D779269F6F34 /* Pods_MusicX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB6002DA4634CC54A813BD0F /* Pods-MusicX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicX.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusicX/Pods-MusicX.release.xcconfig"; sourceTree = "<group>"; };
 		BE4A1607201C50200090ACDC /* MusicX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicX-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -115,6 +121,8 @@
 				BEDFFA4A2016F0950097145F /* AppDelegate.swift */,
 				BEDFFA4E2016F0950097145F /* Main.storyboard */,
 				BEDFFA512016F0950097145F /* Assets.xcassets */,
+				3F88B05A2053BE1D00083913 /* a.jpg */,
+				3F88B0562053BD0600083913 /* Play-1.gif */,
 				BEDFFA532016F0950097145F /* LaunchScreen.storyboard */,
 				BEDFFA562016F0950097145F /* Info.plist */,
 				BEDFFA5C2016F1060097145F /* GoogleService-Info.plist */,
@@ -139,6 +147,7 @@
 				BEE0E6D62026687C00273562 /* jsonLibrary.json */,
 				BE7E9052203944F90026566F /* ReadFile.swift */,
 				BE9A8CD42041FD3600F24931 /* RealmData.swift */,
+				3F88B0522053BB7000083913 /* GIF.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -230,7 +239,9 @@
 				BEDFFA552016F0950097145F /* LaunchScreen.storyboard in Resources */,
 				BEDFFA522016F0950097145F /* Assets.xcassets in Resources */,
 				BEDFFA5D2016F1060097145F /* GoogleService-Info.plist in Resources */,
+				3F88B05B2053BE1E00083913 /* a.jpg in Resources */,
 				BEDFFA502016F0950097145F /* Main.storyboard in Resources */,
+				3F88B0572053BD0700083913 /* Play-1.gif in Resources */,
 				BEE0E6D72026687C00273562 /* jsonLibrary.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,7 +277,7 @@
 		};
 		89F52BD41D1D66EF5C082FC9 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputPaths = (
@@ -274,7 +285,7 @@
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MusicX/Pods-MusicX-resources.sh\"\n";
 			showEnvVarsInLog = 0;
@@ -304,6 +315,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3F88B0532053BB7000083913 /* GIF.swift in Sources */,
 				BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */,
 				BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */,
 				BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */,

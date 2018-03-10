@@ -12,7 +12,7 @@ import RealmSwift
 
 class SongVC: UIViewController {
     
-    var adioPlayer = AVAudioPlayer()
+//    var adioPlayer = AVAudioPlayer()
     var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
     let realm = try! Realm()
@@ -55,7 +55,9 @@ class SongVC: UIViewController {
         imageUrl = stringURls[index]
         name = names[index]
         audioUrl = audioArray[index]
-        imgView.sd_setImage(with: URL(string: imageUrl))
+        imgView.loadGif(name: "Play-1")
+      
+      //  imgView.sd_setImage(with: URL(string: imageUrl))
         nameOfSong.text = name
         
         loadSongs()
@@ -104,8 +106,9 @@ class SongVC: UIViewController {
     }
     
     @IBAction func slider(_ sender: Any) {
-        //  var sliderValue = CMTimeMake(, <#T##timescale: Int32##Int32#>)
-        //  player?.currentItem?.seek(to: <#T##CMTime#>, completionHandler: nil)= TimeInterval(slider.value)
+        let seconds : Int64 = Int64(slider.value)
+        let targetTime:CMTime = CMTimeMake(seconds, 1)
+        player!.seek(to: targetTime)
     }
     
     
@@ -118,11 +121,15 @@ class SongVC: UIViewController {
             self.slider.minimumValue = 0
             self.slider.maximumValue = Float(duration)
             self.slider.value = Float(currentTime)
-            self.timeLbl.text = "\(Int(currentTime))"
+            let (h,m,s) = self.secondsToHoursMinutesSeconds(seconds: Int(currentTime))
+            self.timeLbl.text = "\(m):\(s)"
         }
         
         
         
+    }
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
     
     func updateSongVC(index: Int)
