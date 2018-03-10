@@ -17,6 +17,7 @@ class SongVC: UIViewController {
     var player : AVPlayer?
     let realm = try! Realm()
     var locationURL = String().self
+    var songs : Results<RealmData>!
     //  @IBOutlet weak var audioView: DrawWaveForm!
     
   
@@ -245,6 +246,9 @@ class SongVC: UIViewController {
     @IBAction func saveSongBtn(_ sender: Any) {
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
+        
+        
+        
         saveTODisk()
         
         let song = RealmData()
@@ -253,6 +257,8 @@ class SongVC: UIViewController {
            // song.songsData = try Data(contentsOf: url!)
             song.index = locationURL
             song.nameOfSong = names[index]
+            let fileName = (locationURL as NSString).lastPathComponent
+            song.nameOfFile = fileName
             
             try realm.write {
                 realm.add(song)
@@ -266,7 +272,7 @@ class SongVC: UIViewController {
     
     func loadSongs() {
         
-        let songs = realm.objects(RealmData.self).filter("NewSong7")
+         songs = realm.objects(RealmData.self).filter("NewSong7")
         print(songs)
     }
     

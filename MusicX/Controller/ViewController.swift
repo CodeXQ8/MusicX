@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         
         
         
-        DataService.instance.getSongs { (names, urls) in
+    //   DataService.instance.getSongs { (names, urls) in
           
                 let url = URL(string: "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F001-al-fatihah.mp3?alt=media&token=9f475271-c955-4b87-af9b-6f4faeccd307")
           
@@ -60,7 +60,7 @@ class ViewController: UIViewController {
                 URLSession.shared.dataTask(with: requset as URLRequest, completionHandler: { (data, nil, error) in
 
                     if error != nil {
-                        print(error)
+                        print("error")
                     } else {
                         do {
                             self.audioPlayer = try AVAudioPlayer(data: data!)
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
                 }).resume()
 
          
-        }
+      //  }
         
         
         
@@ -96,21 +96,21 @@ class ViewController: UIViewController {
     }
     
     
-    func getImgae(){
-        DataService.instance.getSongs { (names, urls) in
-            do {
-                
-                let url = URL(string: urls[1])
-                let data = try Data(contentsOf: (url)!)
-                //                let img = UIImage(data: data)
-                //                let imgePNG = UIImagePNGRepresentation(img!)
-                self.imgView.image = UIImage(data: data)
-                
-            }catch {
-                print(error)
-            }
-        }
-    }
+//    func getImgae(){
+//      //  DataService.instance.getSongs { (names, urls) in
+//            do {
+//
+//                let url = URL(string: urls[1])
+//                let data = try Data(contentsOf: (url)!)
+//                //                let img = UIImage(data: data)
+//                //                let imgePNG = UIImagePNGRepresentation(img!)
+//                self.imgView.image = UIImage(data: data)
+//
+//            }catch {
+//                print(error)
+//            }
+//       // }
+//    }
     
 }
 

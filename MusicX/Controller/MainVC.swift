@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Firebase
+//import Firebase
 import SwiftyJSON
 
 class MainVC: UIViewController {

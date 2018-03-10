@@ -26,10 +26,11 @@ class savedSongVC: UIViewController {
         tableView.dataSource = self
         loadData()
         getpath()
-        deleteFilesFromDirectory()
+  
     }
     
     @IBAction func backBtn(_ sender: Any) {
+        
         dismiss(animated: true, completion: nil)
         
     }
@@ -56,9 +57,9 @@ class savedSongVC: UIViewController {
     func deleteFilesFromDirectory(){
         let paths = NSSearchPathForDirectoriesInDomains(FileManager.SearchPathDirectory.documentDirectory, FileManager.SearchPathDomainMask.userDomainMask, true)
         let dirFile = paths[0]
-       // let substring = songs[2].index.split(separator: "/")
-        let filePath = "\(dirFile)/mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"     // Try to Save name of the files to Realm so U can delete very faster 
-        
+       
+
+        let filePath = "\(dirFile)/\(songs[i].nameOfFile)"
         if FileManager.default.fileExists(atPath: filePath)
         {
               print("File Exisit")
@@ -97,3 +98,5 @@ extension savedSongVC : UITableViewDelegate, UITableViewDataSource {
     
     
 }
+
+//        let filePath = "\(dirFile)/mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"     // Try to Save name of the files to Realm so U can delete very faster
