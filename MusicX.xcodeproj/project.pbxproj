@@ -12,8 +12,9 @@
 		3F88B05B2053BE1E00083913 /* a.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3F88B05A2053BE1D00083913 /* a.jpg */; };
 		3F90894C2054AD25002D85AF /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894B2054AD25002D85AF /* PlayListVC.swift */; };
 		3F9089502054B571002D85AF /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894F2054B571002D85AF /* SongViewController.swift */; };
+		3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9089512054E02A002D85AF /* DownloadedSong.swift */; };
 		3FB6C34A205471E100AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FB6C349205471E000AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 */; };
-		BE73AC6D203896100063F944 /* DataManger.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC6C203896100063F944 /* DataManger.swift */; };
+		BE73AC6D203896100063F944 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC6C203896100063F944 /* DataManager.swift */; };
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
 		BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E90502039443D0026566F /* DrawWaveForm.swift */; };
 		BE7E9053203944F90026566F /* ReadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E9052203944F90026566F /* ReadFile.swift */; };
@@ -41,11 +42,12 @@
 		3F88B05A2053BE1D00083913 /* a.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = a.jpg; path = ../../a.jpg; sourceTree = "<group>"; };
 		3F90894B2054AD25002D85AF /* PlayListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		3F90894F2054B571002D85AF /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
+		3F9089512054E02A002D85AF /* DownloadedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedSong.swift; sourceTree = "<group>"; };
 		3FB6C349205471E000AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"; path = "../../mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"; sourceTree = "<group>"; };
 		AD0DD3F64319D779269F6F34 /* Pods_MusicX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB6002DA4634CC54A813BD0F /* Pods-MusicX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicX.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusicX/Pods-MusicX.release.xcconfig"; sourceTree = "<group>"; };
 		BE4A1607201C50200090ACDC /* MusicX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicX-Bridging-Header.h"; sourceTree = "<group>"; };
-		BE73AC6C203896100063F944 /* DataManger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManger.swift; sourceTree = "<group>"; };
+		BE73AC6C203896100063F944 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BE73AC702038C3620063F944 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		BE7E90502039443D0026566F /* DrawWaveForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawWaveForm.swift; sourceTree = "<group>"; };
 		BE7E9052203944F90026566F /* ReadFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFile.swift; sourceTree = "<group>"; };
@@ -144,7 +146,6 @@
 				BEDFFA562016F0950097145F /* Info.plist */,
 				BEDFFA5C2016F1060097145F /* GoogleService-Info.plist */,
 				BE4A1607201C50200090ACDC /* MusicX-Bridging-Header.h */,
-				BE73AC6C203896100063F944 /* DataManger.swift */,
 			);
 			path = MusicX;
 			sourceTree = "<group>";
@@ -152,6 +153,7 @@
 		BEDFFA602016F8800097145F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				BE73AC6C203896100063F944 /* DataManager.swift */,
 				BEDFFA5E2016F3D60097145F /* DataService.swift */,
 				BEDFFA632016FDEB0097145F /* StorageService.swift */,
 			);
@@ -165,6 +167,7 @@
 				BE7E9052203944F90026566F /* ReadFile.swift */,
 				BE9A8CD42041FD3600F24931 /* RealmData.swift */,
 				3F88B0522053BB7000083913 /* GIF.swift */,
+				3F9089512054E02A002D85AF /* DownloadedSong.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				3F9089502054B571002D85AF /* SongViewController.swift in Sources */,
 				BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */,
 				BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */,
+				3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */,
 				BEDFFA5F2016F3D60097145F /* DataService.swift in Sources */,
 				BEA80AD2201C17AE007CAB0D /* MainVC.swift in Sources */,
 				3F90894C2054AD25002D85AF /* PlayListVC.swift in Sources */,
@@ -349,7 +353,7 @@
 				BEDFFA4D2016F0950097145F /* ViewController.swift in Sources */,
 				BEAA6B842026CE41008AF3B6 /* SongVC.swift in Sources */,
 				BEDFFA4B2016F0950097145F /* AppDelegate.swift in Sources */,
-				BE73AC6D203896100063F944 /* DataManger.swift in Sources */,
+				BE73AC6D203896100063F944 /* DataManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import RealmSwift
 
 class SongViewController: UIViewController {
     
@@ -29,7 +30,10 @@ class SongViewController: UIViewController {
     var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
     
-    // var mytimer = Timer()
+    let realm = try! Realm()
+    
+    var locationString = String().self
+    
     var updater : CADisplayLink! = nil
     
     var imageString = String()
@@ -83,6 +87,9 @@ class SongViewController: UIViewController {
         
     }
     
+    @IBAction func downloadBtnWasPressed(_ sender: Any) {
+        saveTODisk(audioString: audioString)
+    }
     
     @IBAction func sliderAction(_ sender: Any) {
         let seconds : Int64 = Int64(slider.value)
@@ -90,9 +97,51 @@ class SongViewController: UIViewController {
         player!.seek(to: targetTime)
     }
     
+    /* Functions for FileManager*/
+    
+    func saveTODisk(audioString : String) {
+        let audioURL = URL(string: audioString)
+        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
+        
+        locationString = destinationUrl.path
+ 
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            print("The file already exists at path")
+        } else {
+            URLSession.shared.downloadTask(with: audioURL!, completionHandler: { (location, responce, error) in
+                if error == nil {
+                    do {
+                        // after downloading your file you need to move it to your destination url
+                        try FileManager.default.moveItem(at: location!, to: destinationUrl)
+                        print("File moved to documents folder")
+                    } catch let error as NSError {
+                        print(error.localizedDescription)
+                    }
+                    
+                }
+            }).resume()
+        }
+    }
     
     
-     /* Functions */
+    /* Functions for Realm*/
+    
+    func saveToRealm(nameOfSong:String,nameOfFile: String, songID:Int) {
+        let song = DownloadedSong()
+        song.nameOfSong = nameOfSong
+        song.nameOfFile = nameOfFile
+        song.songID = songID
+        do {                                     // Check if the file exisit before saveing the song 
+            try realm.write {
+                realm.add(song)
+            }
+        } catch {
+            print("couldn't save to Realm")
+        }
+    }
+    
+     /* Functions for AVPlayer */
 
     func startPlaying() {
         let audioURL = URL(string: audioString)

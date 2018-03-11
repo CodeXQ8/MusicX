@@ -13,7 +13,7 @@ import SwiftyJSON
 class MainVC: UIViewController {
 
     @IBOutlet weak var collectionView: UICollectionView!
-    var count : Int = 0
+      var count : Int = 0
     var urls = [URL]()
     var stringURls = [String]()
     var names = [String]()
@@ -29,22 +29,23 @@ class MainVC: UIViewController {
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         parseJSON()
-       
-
+        
     }
     
     
+
+ 
     func parseJSON() {
         
         let  path = Bundle.main.path(forResource: "jsonLibrary", ofType: "json") as String!
         let jsonData = NSData(contentsOfFile: path!) as Data!
         do {
-        var readableJSON = try JSON(data: jsonData! , options: JSONSerialization.ReadingOptions.mutableContainers)
+            var readableJSON = try JSON(data: jsonData! , options: JSONSerialization.ReadingOptions.mutableContainers)
             self.count = readableJSON["Songs"].count
             for i in 1...count {
-            let name = readableJSON["Songs","Song\(i)","Name"].string
-            let url = readableJSON["Songs","Song\(i)","UrlImage"].string
-            let audioUrl = readableJSON["Songs","Song\(i)","UrlAudio"].string
+                let name = readableJSON["Songs","Song\(i)","Name"].string
+                let url = readableJSON["Songs","Song\(i)","UrlImage"].string
+                let audioUrl = readableJSON["Songs","Song\(i)","UrlAudio"].string
                 self.names.append(name!)
                 self.stringURls.append(url!)
                 self.audioArray.append(audioUrl!)
@@ -54,7 +55,6 @@ class MainVC: UIViewController {
         }
         
     }
-    
     
     
     override func viewDidAppear(_ animated: Bool) {

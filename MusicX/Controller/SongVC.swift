@@ -45,7 +45,7 @@ class SongVC: UIViewController {
     
     var imageUrl = String()
     var name = String()
-    var audioUrl = String()
+    var audioString = String()
     
     var isPlaying : Bool = false
     
@@ -55,7 +55,7 @@ class SongVC: UIViewController {
         
         imageUrl = stringURls[index]
         name = names[index]
-        audioUrl = audioArray[index]
+        audioString = audioArray[index]
        // imgView.loadGif(name: "Play-1")
         
        imgView.sd_setImage(with: URL(string: imageUrl))
@@ -111,17 +111,17 @@ class SongVC: UIViewController {
         //        let destinationUrl = documentsDirectoryURL.appendingPathComponent((nameOfFile))
         
         
-        let audioURL1 = URL(string: audioUrl)
+        let audioURL = URL(string: audioString)
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists and it will play without network")
             self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
         } else {
-            let audioURL1 = URL(string: audioUrl)
-            self.audioplayerItem =  AVPlayerItem(url: audioURL1!)
+            let audioURL = URL(string: audioString)
+            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
         }
@@ -211,17 +211,17 @@ class SongVC: UIViewController {
         return fileURL!
     }
     
-    func saveTODisk() {
-        let audioURL1 = URL(string: audioUrl)
+    func saveTODisk(audioString : String) {
+        let audioURL = URL(string: audioString)
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL1?.lastPathComponent)!)
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         
         locationURL = destinationUrl.path
         destinationURLString = destinationUrl.absoluteString
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists at path")
         } else {
-            URLSession.shared.downloadTask(with: audioURL1!, completionHandler: { (location, responce, error) in
+            URLSession.shared.downloadTask(with: audioURL!, completionHandler: { (location, responce, error) in
                 if error == nil {
                     do {
                         // after downloading your file you need to move it to your destination url
@@ -343,7 +343,7 @@ class SongVC: UIViewController {
     @IBAction func saveSongBtn(_ sender: Any) {
         print(Realm.Configuration.defaultConfiguration.fileURL)
         
-        saveTODisk()
+        saveTODisk(audioString: audioString)
         songID = index
         let song = RealmData()
         do {
