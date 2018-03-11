@@ -19,6 +19,7 @@ class PlayListVC: UIViewController {
     var names = [String]()
     var audioArray = [String]()
     var count : Int = 0
+    var indexCell : Int = 0 ;
     
     
     
@@ -66,6 +67,21 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
         cell.updateCell(songImageUrl:self.stringURls[indexPath.item], songName: self.names[indexPath.item], songTime: "21:02")
         cell.layout()
         return cell
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.indexCell = indexPath.item
+        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+        
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let SongViewController = segue.destination as?  SongViewController {
+            SongViewController.stringURls = self.stringURls
+            SongViewController.names = self.names
+            SongViewController.audioArray = self.audioArray
+            SongViewController.indexCell = self.indexCell
+        }
         
     }
     
