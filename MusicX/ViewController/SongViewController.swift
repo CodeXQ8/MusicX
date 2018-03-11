@@ -29,7 +29,8 @@ class SongViewController: UIViewController {
     var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
     
-     var mytimer = Timer()
+    // var mytimer = Timer()
+    var updater : CADisplayLink! = nil
     
     var imageString = String()
     var name = String()
@@ -46,8 +47,6 @@ class SongViewController: UIViewController {
 
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -66,13 +65,13 @@ class SongViewController: UIViewController {
     }
     
     
-    
     @IBOutlet weak var playBtnOutLet: UIButton!
     @IBAction func playBtnWasPressed(_ sender: Any) {
         if isPlaying == false {
             playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
             startPlaying()
-             self.StartTimer()
+            updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
+            updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
             isPlaying = true
         } else {
              playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
@@ -94,7 +93,6 @@ class SongViewController: UIViewController {
     
     
      /* Functions */
-    
 
     func startPlaying() {
         let audioURL = URL(string: audioString)
@@ -104,8 +102,6 @@ class SongViewController: UIViewController {
     }
     
     /* Function Related to Slider */
-    
-
     
     @objc func updateSliderValue(){
         
@@ -122,22 +118,8 @@ class SongViewController: UIViewController {
         }
     }
     
-    func StartTimer(){
-        DispatchQueue.main.async {
-            self.mytimer =   Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(SongViewController.updateSliderValue), userInfo: nil, repeats: true)
-            self.mytimer.fire()
-            self.updateSliderValue()
-        }
-    }
-        
         func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
             return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
         }
-    
 
-    
-    
-    
-    
-    
 }
