@@ -18,7 +18,7 @@ class SongVC: UIViewController {
     let realm = try! Realm()
     var locationURL = String().self
     var destinationURLString = String()
-    var songs : Results<RealmData>!
+    var songs : Results<RealmData>!    
     var songID = 0
     
     //  @IBOutlet weak var audioView: DrawWaveForm!
@@ -268,7 +268,7 @@ class SongVC: UIViewController {
     }
     
     
-    func loadSongs() {
+    func loadSongs(){
         
         songs = realm.objects(RealmData.self)
         print(songs)

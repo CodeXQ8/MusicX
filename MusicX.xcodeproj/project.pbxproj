@@ -8,12 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		3F88B0532053BB7000083913 /* GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88B0522053BB7000083913 /* GIF.swift */; };
-		3F88B0572053BD0700083913 /* Play-1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3F88B0562053BD0600083913 /* Play-1.gif */; };
-		3F88B05B2053BE1E00083913 /* a.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3F88B05A2053BE1D00083913 /* a.jpg */; };
 		3F90894C2054AD25002D85AF /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894B2054AD25002D85AF /* PlayListVC.swift */; };
 		3F9089502054B571002D85AF /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894F2054B571002D85AF /* SongViewController.swift */; };
 		3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9089512054E02A002D85AF /* DownloadedSong.swift */; };
-		3FB6C34A205471E100AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 3FB6C349205471E000AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 */; };
+		BE1E1E1F2055DE9E00F64378 /* DownloadedSongsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */; };
+		BE1E1E212055F81500F64378 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E1E202055F81500F64378 /* RealmManager.swift */; };
 		BE73AC6D203896100063F944 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC6C203896100063F944 /* DataManager.swift */; };
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
 		BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E90502039443D0026566F /* DrawWaveForm.swift */; };
@@ -38,14 +37,13 @@
 
 /* Begin PBXFileReference section */
 		3F88B0522053BB7000083913 /* GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIF.swift; sourceTree = "<group>"; };
-		3F88B0562053BD0600083913 /* Play-1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = "Play-1.gif"; path = "../../Play-1.gif"; sourceTree = "<group>"; };
-		3F88B05A2053BE1D00083913 /* a.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = a.jpg; path = ../../a.jpg; sourceTree = "<group>"; };
 		3F90894B2054AD25002D85AF /* PlayListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		3F90894F2054B571002D85AF /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
 		3F9089512054E02A002D85AF /* DownloadedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedSong.swift; sourceTree = "<group>"; };
-		3FB6C349205471E000AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = "mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"; path = "../../mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3"; sourceTree = "<group>"; };
 		AD0DD3F64319D779269F6F34 /* Pods_MusicX.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MusicX.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB6002DA4634CC54A813BD0F /* Pods-MusicX.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicX.release.xcconfig"; path = "Pods/Target Support Files/Pods-MusicX/Pods-MusicX.release.xcconfig"; sourceTree = "<group>"; };
+		BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedSongsVC.swift; sourceTree = "<group>"; };
+		BE1E1E202055F81500F64378 /* RealmManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmManager.swift; sourceTree = "<group>"; };
 		BE4A1607201C50200090ACDC /* MusicX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicX-Bridging-Header.h"; sourceTree = "<group>"; };
 		BE73AC6C203896100063F944 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BE73AC702038C3620063F944 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
@@ -88,6 +86,7 @@
 			children = (
 				3F90894B2054AD25002D85AF /* PlayListVC.swift */,
 				3F90894F2054B571002D85AF /* SongViewController.swift */,
+				BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -139,9 +138,6 @@
 				BEDFFA4A2016F0950097145F /* AppDelegate.swift */,
 				BEDFFA4E2016F0950097145F /* Main.storyboard */,
 				BEDFFA512016F0950097145F /* Assets.xcassets */,
-				3F88B05A2053BE1D00083913 /* a.jpg */,
-				3FB6C349205471E000AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 */,
-				3F88B0562053BD0600083913 /* Play-1.gif */,
 				BEDFFA532016F0950097145F /* LaunchScreen.storyboard */,
 				BEDFFA562016F0950097145F /* Info.plist */,
 				BEDFFA5C2016F1060097145F /* GoogleService-Info.plist */,
@@ -156,6 +152,7 @@
 				BE73AC6C203896100063F944 /* DataManager.swift */,
 				BEDFFA5E2016F3D60097145F /* DataService.swift */,
 				BEDFFA632016FDEB0097145F /* StorageService.swift */,
+				BE1E1E202055F81500F64378 /* RealmManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -257,12 +254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BEDFFA552016F0950097145F /* LaunchScreen.storyboard in Resources */,
-				3FB6C34A205471E100AF9577 /* mishary-rashid-alafasy-001-al-fatiha-30-7477.mp3 in Resources */,
 				BEDFFA522016F0950097145F /* Assets.xcassets in Resources */,
 				BEDFFA5D2016F1060097145F /* GoogleService-Info.plist in Resources */,
-				3F88B05B2053BE1E00083913 /* a.jpg in Resources */,
 				BEDFFA502016F0950097145F /* Main.storyboard in Resources */,
-				3F88B0572053BD0700083913 /* Play-1.gif in Resources */,
 				BEE0E6D72026687C00273562 /* jsonLibrary.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -352,6 +346,8 @@
 				BE73AC712038C3620063F944 /* Slider.swift in Sources */,
 				BEDFFA4D2016F0950097145F /* ViewController.swift in Sources */,
 				BEAA6B842026CE41008AF3B6 /* SongVC.swift in Sources */,
+				BE1E1E1F2055DE9E00F64378 /* DownloadedSongsVC.swift in Sources */,
+				BE1E1E212055F81500F64378 /* RealmManager.swift in Sources */,
 				BEDFFA4B2016F0950097145F /* AppDelegate.swift in Sources */,
 				BE73AC6D203896100063F944 /* DataManager.swift in Sources */,
 			);

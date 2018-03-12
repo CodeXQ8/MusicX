@@ -369,7 +369,7 @@
         <!--Downloads Folder-->
         <scene sceneID="RVb-F6-bAE">
             <objects>
-                <viewController id="iUv-cs-dGq" sceneMemberID="viewController">
+                <viewController id="iUv-cs-dGq" customClass="DownloadedSongsVC" customModule="MusicX" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3PA-40-KHN">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -381,10 +381,23 @@
                                         <rect key="frame" x="118" y="10" width="178" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tiF-Wz-f81">
+                                        <rect key="frame" x="376" y="20" width="30" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="30" id="DlQ-zS-bjn"/>
+                                            <constraint firstAttribute="height" constant="30" id="Y8T-lr-tGg"/>
+                                        </constraints>
+                                        <state key="normal" image="ic_delete_forever_48px"/>
+                                        <connections>
+                                            <action selector="deleteBtnWasPressed:" destination="iUv-cs-dGq" eventType="touchUpInside" id="Dqn-Fz-IQq"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.42352941179999998" green="0.62745098040000002" blue="0.82352941180000006" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="2Wu-Rj-S11"/>
+                                    <constraint firstItem="tiF-Wz-f81" firstAttribute="top" secondItem="gtW-F0-TlL" secondAttribute="top" constant="20" id="55f-0R-EIP"/>
+                                    <constraint firstAttribute="trailing" secondItem="tiF-Wz-f81" secondAttribute="trailing" constant="8" id="8As-po-Xdq"/>
                                 </constraints>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="pea-WD-M6V">
@@ -461,6 +474,9 @@
                         <viewLayoutGuide key="safeArea" id="nLB-Xe-ufC"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Downloads Folder" image="icons8-downloads-folder-filled-25" id="dqZ-hI-dER"/>
+                    <connections>
+                        <outlet property="collectionView" destination="pea-WD-M6V" id="GmI-av-7p2"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5VA-KD-VCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -684,10 +700,10 @@
                                 </connections>
                             </slider>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0.0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LRr-BB-K6L">
-                                <rect key="frame" x="187" y="487" width="40" height="20"/>
+                                <rect key="frame" x="187" y="487" width="50" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="8Sy-R0-Dpa"/>
-                                    <constraint firstAttribute="width" constant="40" id="zxF-3T-JFr"/>
+                                    <constraint firstAttribute="width" constant="50" id="zxF-3T-JFr"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -707,7 +723,7 @@
                             <constraint firstItem="bf6-e7-Car" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="57" id="Zf0-Fg-3s9"/>
                             <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="u0L-NO-DF0" secondAttribute="trailing" constant="57" id="fIo-Qv-1fb"/>
                             <constraint firstItem="u0L-NO-DF0" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="57" id="fs4-pC-4qm"/>
-                            <constraint firstItem="LRr-BB-K6L" firstAttribute="centerX" secondItem="emP-BX-MmQ" secondAttribute="centerX" id="gDy-kZ-a3d"/>
+                            <constraint firstItem="LRr-BB-K6L" firstAttribute="centerX" secondItem="emP-BX-MmQ" secondAttribute="centerX" constant="5" id="gDy-kZ-a3d"/>
                             <constraint firstItem="LRr-BB-K6L" firstAttribute="top" secondItem="bf6-e7-Car" secondAttribute="bottom" constant="8" id="kSg-M0-VTC"/>
                             <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="bf6-e7-Car" secondAttribute="trailing" constant="57" id="pEb-8b-Uix"/>
                             <constraint firstItem="3IZ-BA-bOK" firstAttribute="top" secondItem="u0L-NO-DF0" secondAttribute="bottom" constant="20" id="td7-2R-nED"/>
@@ -757,7 +773,7 @@
                                 <rect key="frame" x="0.0" y="81" width="414" height="655"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="savedSongCell" rowHeight="120" id="IGh-1N-tOq" customClass="savedSongCell" customModule="MusicX" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="savedSongCell" rowHeight="120" id="IGh-1N-tOq" customClass="savedSongCell" customModule="MusicX" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="IGh-1N-tOq" id="lAa-oj-1Tn">
@@ -861,6 +877,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9rT-c5-yKf"/>
-        <segue reference="ID6-pw-LEq"/>
+        <segue reference="qXC-2t-WWA"/>
     </inferredMetricsTieBreakers>
 </document>

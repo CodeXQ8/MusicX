@@ -31,6 +31,8 @@ class SongViewController: UIViewController {
     var player : AVPlayer?
     
     let realm = try! Realm()
+    var songs : Results<DownloadedSong>!
+    var exist = false
     
     var locationString = String().self
     
@@ -44,11 +46,12 @@ class SongViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        loadSongs()
         
         imageString = stringURls[indexCell]
         name = names[indexCell]
         audioString = audioArray[indexCell]
-
+        
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
     }
@@ -78,7 +81,7 @@ class SongViewController: UIViewController {
             updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
             isPlaying = true
         } else {
-             playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
+            playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
             player?.pause()
             isPlaying = false
             
@@ -88,7 +91,9 @@ class SongViewController: UIViewController {
     }
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
-        saveTODisk(audioString: audioString)
+        locationString = DataManager().saveTODiskAndGetLocuationString(audioString: audioString)
+        saveToRealm(nameOfSong: names[indexCell], songID: indexCell)
+        
     }
     
     @IBAction func sliderAction(_ sender: Any) {
@@ -97,57 +102,65 @@ class SongViewController: UIViewController {
         player!.seek(to: targetTime)
     }
     
-    /* Functions for FileManager*/
-    
-    func saveTODisk(audioString : String) {
-        let audioURL = URL(string: audioString)
-        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
-        
-        locationString = destinationUrl.path
- 
-        if FileManager.default.fileExists(atPath: destinationUrl.path) {
-            print("The file already exists at path")
-        } else {
-            URLSession.shared.downloadTask(with: audioURL!, completionHandler: { (location, responce, error) in
-                if error == nil {
-                    do {
-                        // after downloading your file you need to move it to your destination url
-                        try FileManager.default.moveItem(at: location!, to: destinationUrl)
-                        print("File moved to documents folder")
-                    } catch let error as NSError {
-                        print(error.localizedDescription)
-                    }
-                    
-                }
-            }).resume()
-        }
-    }
-    
-    
     /* Functions for Realm*/
     
-    func saveToRealm(nameOfSong:String,nameOfFile: String, songID:Int) {
+    func saveToRealm(nameOfSong:String, songID:Int) {
+        print(Realm.Configuration.defaultConfiguration.fileURL)
         let song = DownloadedSong()
+        
         song.nameOfSong = nameOfSong
+        let nameOfFile = (locationString as NSString).lastPathComponent
         song.nameOfFile = nameOfFile
+        song.imageURL = stringURls[indexCell]
         song.songID = songID
-        do {                                     // Check if the file exisit before saveing the song 
+        
+        do {                                     // Check if the file exisit before saveing
             try realm.write {
-                realm.add(song)
+                checkIfFileExist(song: song)
+                if !exist {
+                    realm.add(song)
+                } else {
+                    print("song exist")
+                }
             }
         } catch {
             print("couldn't save to Realm")
         }
     }
     
-     /* Functions for AVPlayer */
-
+    func loadSongs(){
+        songs = realm.objects(DownloadedSong.self)
+        print(songs)
+    }
+    
+    func checkIfFileExist(song: DownloadedSong) {
+        exist = false
+        for songTemp in songs {
+            if songTemp.nameOfSong == song.nameOfSong {
+                exist = true
+                break
+            }
+        }
+    }
+    
+    /* Functions for AVPlayer */
+    
     func startPlaying() {
+        
         let audioURL = URL(string: audioString)
-        self.audioplayerItem =  AVPlayerItem(url: audioURL!)
-        self.player = AVPlayer(playerItem: self.audioplayerItem)
-        self.player?.play()
+        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            print("The file already exists and it will play without network")
+            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+        } else {
+            let audioURL = URL(string: audioString)
+            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+        }
     }
     
     /* Function Related to Slider */
@@ -167,8 +180,8 @@ class SongViewController: UIViewController {
         }
     }
     
-        func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-            return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-        }
-
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
 }
