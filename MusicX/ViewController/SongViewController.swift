@@ -21,9 +21,9 @@ class SongViewController: UIViewController {
     @IBOutlet weak var slider: Slider!
     
     /*  Variables Related to PlayListVC */
-    var stringURls = [String]()
-    var names = [String]()
-    var audioArray = [String]()
+//    var stringURls = [String]()
+//    var names = [String]()
+//    var audioArray = [String]()
     var indexCell : Int = 0 ;
     
     /* Global Variables */
@@ -31,7 +31,10 @@ class SongViewController: UIViewController {
     var player : AVPlayer?
     
     let realm = try! Realm()
-    var songs : Results<DownloadedSong>!
+   // var songs : Results<DownloadedSong>!
+    var songs : Results<JsonRealm>!
+    var downloadedSongs : Results<DownloadedSong>!
+    
     var exist = false
     
     var locationString = String().self
@@ -48,9 +51,9 @@ class SongViewController: UIViewController {
         super.viewDidLoad()
         loadSongs()
         
-        imageString = stringURls[indexCell]
-        name = names[indexCell]
-        audioString = audioArray[indexCell]
+        imageString = songs[indexCell].stringURl
+        name = songs[indexCell].names
+        audioString = songs[indexCell].audioUrl
         
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
@@ -92,14 +95,16 @@ class SongViewController: UIViewController {
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
         locationString = DataManager().saveTODiskAndGetLocuationString(audioString: audioString)
-        saveToRealm(nameOfSong: names[indexCell], songID: indexCell)
+       saveToRealm(nameOfSong: songs[indexCell].names, songID: indexCell)
         
     }
     
     @IBAction func sliderAction(_ sender: Any) {
+        if player != nil {
         let seconds : Int64 = Int64(slider.value)
         let targetTime:CMTime = CMTimeMake(seconds, 1)
         player!.seek(to: targetTime)
+        }
     }
     
     /* Functions for Realm*/
@@ -107,13 +112,13 @@ class SongViewController: UIViewController {
     func saveToRealm(nameOfSong:String, songID:Int) {
         print(Realm.Configuration.defaultConfiguration.fileURL)
         let song = DownloadedSong()
-        
+
         song.nameOfSong = nameOfSong
         let nameOfFile = (locationString as NSString).lastPathComponent
         song.nameOfFile = nameOfFile
-        song.imageURL = stringURls[indexCell]
+        song.imageURL = songs[indexCell].stringURl
         song.songID = songID
-        
+
         do {                                     // Check if the file exisit before saveing
             try realm.write {
                 checkIfFileExist(song: song)
@@ -129,13 +134,14 @@ class SongViewController: UIViewController {
     }
     
     func loadSongs(){
-        songs = realm.objects(DownloadedSong.self)
+        songs = realm.objects(JsonRealm.self)
+        downloadedSongs = realm.objects(DownloadedSong.self)
         print(songs)
     }
-    
+
     func checkIfFileExist(song: DownloadedSong) {
         exist = false
-        for songTemp in songs {
+        for songTemp in downloadedSongs {
             if songTemp.nameOfSong == song.nameOfSong {
                 exist = true
                 break
@@ -156,6 +162,7 @@ class SongViewController: UIViewController {
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
         } else {
+            print("The song  will play with network")
             let audioURL = URL(string: audioString)
             self.audioplayerItem =  AVPlayerItem(url: audioURL!)
             self.player = AVPlayer(playerItem: self.audioplayerItem)

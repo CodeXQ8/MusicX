@@ -476,6 +476,7 @@
                     <tabBarItem key="tabBarItem" title="Downloads Folder" image="icons8-downloads-folder-filled-25" id="dqZ-hI-dER"/>
                     <connections>
                         <outlet property="collectionView" destination="pea-WD-M6V" id="GmI-av-7p2"/>
+                        <segue destination="sMb-tY-a6N" kind="show" identifier="songViewControllerSegue" id="XyL-Rx-9qH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5VA-KD-VCQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -741,7 +742,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfF-kh-VIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1589.8550724637682" y="809.51086956521749"/>
+            <point key="canvasLocation" x="1833" y="1120"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="iGR-Qw-xpS">
@@ -877,6 +878,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9rT-c5-yKf"/>
+        <segue reference="XyL-Rx-9qH"/>
         <segue reference="qXC-2t-WWA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -22,7 +22,7 @@ class DownloadedSongsVC: UIViewController {
     
     /* Global Variables */
     let realm = try! Realm()
-    var songs : Results<DownloadedSong>!
+    var downloadedSongs : Results<DownloadedSong>!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +38,14 @@ class DownloadedSongsVC: UIViewController {
     }
    
     func loadSongs(){
-        songs = realm.objects(DownloadedSong.self)
-        print(songs)
+        downloadedSongs = realm.objects(DownloadedSong.self)
+        print(downloadedSongs)
     }
     
     /* IBActions */
     
     @IBAction func deleteBtnWasPressed(_ sender: Any) {
-        DataManager().deleteFilesFromDirectory(fileName: songs[0].nameOfFile)      // Try to delete the cell at index
+        DataManager().deleteFilesFromDirectory(fileName: downloadedSongs[0].nameOfFile)      // Try to delete the cell at index
     }
     
 }
@@ -54,12 +54,12 @@ extension DownloadedSongsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return songs.count
+        return downloadedSongs.count
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }
-        let song = songs[indexPath.item]
+        let song = downloadedSongs[indexPath.item]
         
         cell.updateCell(songImageUrl: song.imageURL, songName: song.nameOfSong, songTime: "21:02")
         cell.layout()
@@ -68,6 +68,16 @@ extension DownloadedSongsVC: UICollectionViewDelegate, UICollectionViewDataSourc
     }
 
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.indexCell = indexPath.item
+        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+    }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let SongViewController = segue.destination as?  SongViewController {
+            SongViewController.indexCell = downloadedSongs[indexCell].songID
+        }
+        
+    }
     
 }
