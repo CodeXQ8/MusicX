@@ -68,7 +68,7 @@ class PlayListVC: UIViewController {
         song.stringURl = stringUrl
         song.audioUrl = audioUrl
         checkIfFileExist(song: song)
-    //    if exist == true {
+        if exist == true {
         do {
             try realm.write {
                 realm.add(song)
@@ -77,7 +77,7 @@ class PlayListVC: UIViewController {
         {
             print("Can't save Json Data to Realm")
         }
-     //   }
+        }
     }
     
     func checkIfFileExist(song: JsonRealm) {

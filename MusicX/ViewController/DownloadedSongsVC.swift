@@ -49,9 +49,7 @@ class DownloadedSongsVC: UIViewController {
     
     /* IBActions */
     
-    @IBAction func deleteBtnWasPressed(_ sender: Any) {
-        DataManager().deleteFilesFromDirectory(fileName: downloadedSongs?[0].nameOfFile ?? " ")      // Try to delete the cell at index
-    }
+
     
 }
 
@@ -85,12 +83,32 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             // handle action by updating model with deletion
             print("Deleted Cell")
+            if let songName = self.downloadedSongs?[indexPath.row].nameOfFile {
+                           DataManager().deleteFilesFromDirectory(fileName: songName)
+                do {
+                    let song = self.downloadedSongs?[indexPath.row]
+                    try self.realm.write {
+                        self.realm.delete(song!)
+                    }
+                } catch {
+                    print("Couldn't move from realm")
+                }
+                  //   tableView.reloadData()
+            }
+  
         }
         
         // customize the action appearance
         deleteAction.image = UIImage(named: "delete")
         
         return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive
+        options.transitionStyle = .border
+        return options
     }
     
     
