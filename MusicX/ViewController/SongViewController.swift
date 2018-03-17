@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import RealmSwift
 
+
 class SongViewController: UIViewController {
     
     /* IBOutlets */
@@ -94,9 +95,10 @@ class SongViewController: UIViewController {
     }
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
-        locationString = DataManager().saveTODiskAndGetLocuationString(audioString: audioString)
-       saveToRealm(nameOfSong: songs[indexCell].names, songID: indexCell)
-        
+          locationString = DataManager().saveTODiskAndGetLocuationString(audioString: audioString)
+            saveToRealm(nameOfSong: songs[indexCell].names, songID: indexCell)
+          
+ 
     }
     
     @IBAction func sliderAction(_ sender: Any) {

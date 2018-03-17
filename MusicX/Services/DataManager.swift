@@ -7,11 +7,12 @@
 //
 
 import UIKit
-
+import SCLAlertView
 
 class DataManager{
     
     var  locationString = ""
+    var success = false
     
     func saveTODiskAndGetLocuationString(audioString : String ) -> String {
         let audioURL = URL(string: audioString)
@@ -25,9 +26,11 @@ class DataManager{
         } else {
             URLSession.shared.downloadTask(with: audioURL!, completionHandler: { (location, responce, error) in
                 if error == nil {
+                    
                     do {
                         // after downloading your file you need to move it to your destination url
                         try FileManager.default.moveItem(at: location!, to: destinationUrl)
+                        self.success = true
                         print("File moved to documents folder")
                     } catch let error as NSError {
                         print(error.localizedDescription)
@@ -35,6 +38,11 @@ class DataManager{
                     
                 }
             }).resume()
+        }
+        if success == true {
+         let alertController = SCLAlertView()
+            alertController.showSuccess("Download" , subTitle: " Song is downloaded" )
+
         }
         return locationString
     }

@@ -10,6 +10,7 @@ import UIKit
 import RealmSwift
 import SwipeCellKit
 
+
 class DownloadedSongsVC: UIViewController {
     
     /* IBOutlets */
@@ -49,7 +50,7 @@ class DownloadedSongsVC: UIViewController {
     
     /* IBActions */
     
-
+    
     
 }
 
@@ -71,7 +72,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         
         cell.layout()
         cell.updateCell(songImageUrl: songImgUrl, songName: songName, songTime: "21:02")
-    
+        
         return cell
         
         
@@ -84,7 +85,10 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
             // handle action by updating model with deletion
             print("Deleted Cell")
             if let songName = self.downloadedSongs?[indexPath.row].nameOfFile {
-                           DataManager().deleteFilesFromDirectory(fileName: songName)
+                DataManager().deleteFilesFromDirectory(fileName: songName)
+     
+                
+                
                 do {
                     let song = self.downloadedSongs?[indexPath.row]
                     try self.realm.write {
@@ -93,9 +97,9 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
                 } catch {
                     print("Couldn't move from realm")
                 }
-                  //   tableView.reloadData()
+                //   tableView.reloadData()
             }
-  
+            
         }
         
         // customize the action appearance
@@ -113,17 +117,17 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
     
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-                self.indexCell = indexPath.item
-                performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+        self.indexCell = indexPath.item
+        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
     }
     
-        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-            if let SongViewController = segue.destination as?  SongViewController {
-                SongViewController.indexCell = downloadedSongs?[indexCell].songID ?? 1
-            }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let SongViewController = segue.destination as?  SongViewController {
+            SongViewController.indexCell = downloadedSongs?[indexCell].songID ?? 1
+        }
+        
+    }
     
-}
-
 }
 
 //    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

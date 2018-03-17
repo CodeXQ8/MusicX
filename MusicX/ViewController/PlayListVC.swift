@@ -61,6 +61,7 @@ class PlayListVC: UIViewController {
            songs = realm.objects(JsonRealm.self)
     }
     
+    /// this function will not work the first time unless I remove the if exist commmand 
     func saveToRealm(name:String , stringUrl: String, audioUrl: String) {
         print(Realm.Configuration.defaultConfiguration.fileURL)
         let song = JsonRealm()
