@@ -9,7 +9,7 @@
 import UIKit
 import AVFoundation
 import RealmSwift
-
+import SCLAlertView
 
 class SongViewController: UIViewController {
     
@@ -58,6 +58,17 @@ class SongViewController: UIViewController {
         
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
+        
+        
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+            print("Playback OK")
+            try AVAudioSession.sharedInstance().setActive(true)
+            print("Session is Active")
+        } catch {
+            print(error)
+        }
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -95,8 +106,25 @@ class SongViewController: UIViewController {
     }
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
-          locationString = DataManager().saveTODiskAndGetLocuationString(audioString: audioString)
-            saveToRealm(nameOfSong: songs[indexCell].names, songID: indexCell)
+        
+        DataManager().saveTODiskAndGetLocuationString(audioString: audioString) { (location, success) in
+            self.locationString = location
+            if success {
+                DispatchQueue.main.async {
+                    self.saveToRealm(nameOfSong: self.songs[self.indexCell].names, songID : self.indexCell)
+                    let alertController = SCLAlertView()
+
+                    alertController.showCustom("Download", subTitle: "Song is downloaded", color:
+                        #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+                    
+                    
+                }
+                
+
+                        }
+            }
+        
+        
           
  
     }

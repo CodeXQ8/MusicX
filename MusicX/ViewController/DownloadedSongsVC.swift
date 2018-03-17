@@ -9,7 +9,7 @@
 import UIKit
 import RealmSwift
 import SwipeCellKit
-
+import SCLAlertView
 
 class DownloadedSongsVC: UIViewController {
     
@@ -85,7 +85,16 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
             // handle action by updating model with deletion
             print("Deleted Cell")
             if let songName = self.downloadedSongs?[indexPath.row].nameOfFile {
-                DataManager().deleteFilesFromDirectory(fileName: songName)
+                DataManager().deleteFilesFromDirectory(fileName: songName, handler: { (success) in
+//                    if success {
+//                        DispatchQueue.main.async {
+//                            let alertController = SCLAlertView()
+//
+//                            alertController.showCustom("Delete", subTitle: "Song is deleted", color:
+//                                #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+//                        }
+//                    }
+                })
      
                 
                 
