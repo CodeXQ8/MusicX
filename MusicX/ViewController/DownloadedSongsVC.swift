@@ -8,11 +8,15 @@
 
 import UIKit
 import RealmSwift
+import SwipeCellKit
 
 class DownloadedSongsVC: UIViewController {
-
+    
     /* IBOutlets */
-    @IBOutlet weak var collectionView: UICollectionView!
+    //@IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var tableView: UITableView!
+    
+    
     
     /*  Variables Related to PlayListVC */
     var stringURls = [String]()
@@ -22,21 +26,22 @@ class DownloadedSongsVC: UIViewController {
     
     /* Global Variables */
     let realm = try! Realm()
-    var downloadedSongs : Results<DownloadedSong>!
+    var downloadedSongs : Results<DownloadedSong>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView.delegate = self
-        self.collectionView.dataSource = self
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        tableView.reloadData()
         loadSongs()
     }
-
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        collectionView.reloadData()
+        tableView.reloadData()
     }
-   
+    
     func loadSongs(){
         downloadedSongs = realm.objects(DownloadedSong.self)
         print(downloadedSongs)
@@ -45,39 +50,116 @@ class DownloadedSongsVC: UIViewController {
     /* IBActions */
     
     @IBAction func deleteBtnWasPressed(_ sender: Any) {
-        DataManager().deleteFilesFromDirectory(fileName: downloadedSongs[0].nameOfFile)      // Try to delete the cell at index
+        DataManager().deleteFilesFromDirectory(fileName: downloadedSongs?[0].nameOfFile ?? " ")      // Try to delete the cell at index
     }
     
 }
 
-extension DownloadedSongsVC: UICollectionViewDelegate, UICollectionViewDataSource {
+
+
+extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , SwipeTableViewCellDelegate {
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
-        return downloadedSongs.count
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return downloadedSongs?.count ?? 1
     }
     
-    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }
-        let song = downloadedSongs[indexPath.item]
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! savedSongCell
+        cell.delegate = self
         
-        cell.updateCell(songImageUrl: song.imageURL, songName: song.nameOfSong, songTime: "21:02")
+        let songImgUrl = downloadedSongs?[indexPath.item].imageURL ?? "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg"
+        let songName = downloadedSongs?[indexPath.item].nameOfSong ?? "There is no Songs"
+        
         cell.layout()
+        cell.updateCell(songImageUrl: songImgUrl, songName: songName, songTime: "21:02")
+    
         return cell
         
-    }
-
-
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        self.indexCell = indexPath.item
-        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let SongViewController = segue.destination as?  SongViewController {
-            SongViewController.indexCell = downloadedSongs[indexCell].songID
-        }
         
     }
     
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            print("Deleted Cell")
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+        
+        return [deleteAction]
+    }
+    
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+                self.indexCell = indexPath.item
+                performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+    }
+    
+        override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+            if let SongViewController = segue.destination as?  SongViewController {
+                SongViewController.indexCell = downloadedSongs?[indexCell].songID ?? 1
+            }
+    
 }
+
+}
+
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.indexCell = indexPath.item
+//        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let SongViewController = segue.destination as?  SongViewController {
+//            SongViewController.indexCell = downloadedSongs[indexCell].songID
+//        }
+
+
+
+
+
+
+
+//extension DownloadedSongsVC: UICollectionViewDelegate, UICollectionViewDataSource {
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//
+//        return downloadedSongs.count
+//    }
+////
+////    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+////        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! SwipeTableViewCell
+////        cell.delegate = self
+////        return cell
+////    }
+//
+//
+//    public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }
+//        let song = downloadedSongs[indexPath.item]
+//
+//        cell.updateCell(songImageUrl: song.imageURL, songName: song.nameOfSong, songTime: "21:02")
+//        cell.layout()
+//        return cell
+//
+//    }
+//
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        self.indexCell = indexPath.item
+//        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+//    }
+//
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if let SongViewController = segue.destination as?  SongViewController {
+//            SongViewController.indexCell = downloadedSongs[indexCell].songID
+//        }
+//
+//    }
+//
+//}
+

@@ -17,6 +17,7 @@
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
 		BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E90502039443D0026566F /* DrawWaveForm.swift */; };
 		BE7E9053203944F90026566F /* ReadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E9052203944F90026566F /* ReadFile.swift */; };
+		BE930520205C973000BA59C9 /* SwipeTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93051F205C973000BA59C9 /* SwipeTableVC.swift */; };
 		BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD42041FD3600F24931 /* RealmData.swift */; };
 		BE9A8CD7204204EC00F24931 /* savedSongVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD6204204EC00F24931 /* savedSongVC.swift */; };
 		BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD82042051800F24931 /* savedSongCell.swift */; };
@@ -50,6 +51,7 @@
 		BE73AC702038C3620063F944 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		BE7E90502039443D0026566F /* DrawWaveForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawWaveForm.swift; sourceTree = "<group>"; };
 		BE7E9052203944F90026566F /* ReadFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFile.swift; sourceTree = "<group>"; };
+		BE93051F205C973000BA59C9 /* SwipeTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableVC.swift; sourceTree = "<group>"; };
 		BE9A8CD42041FD3600F24931 /* RealmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmData.swift; sourceTree = "<group>"; };
 		BE9A8CD6204204EC00F24931 /* savedSongVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedSongVC.swift; sourceTree = "<group>"; };
 		BE9A8CD82042051800F24931 /* savedSongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedSongCell.swift; sourceTree = "<group>"; };
@@ -89,6 +91,7 @@
 				3F90894B2054AD25002D85AF /* PlayListVC.swift */,
 				3F90894F2054B571002D85AF /* SongViewController.swift */,
 				BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */,
+				BE93051F205C973000BA59C9 /* SwipeTableVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -278,7 +281,7 @@
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
-				"${BUILT_PRODUCTS_DIR}/libwebp/libwebp.framework",
+				"${BUILT_PRODUCTS_DIR}/SwipeCellKit/SwipeCellKit.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -286,7 +289,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/libwebp.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwipeCellKit.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -351,6 +354,7 @@
 				BEDFFA4D2016F0950097145F /* ViewController.swift in Sources */,
 				BEAA6B842026CE41008AF3B6 /* SongVC.swift in Sources */,
 				BE1E1E1F2055DE9E00F64378 /* DownloadedSongsVC.swift in Sources */,
+				BE930520205C973000BA59C9 /* SwipeTableVC.swift in Sources */,
 				BE1E1E212055F81500F64378 /* RealmManager.swift in Sources */,
 				BEDFFA4B2016F0950097145F /* AppDelegate.swift in Sources */,
 				BE73AC6D203896100063F944 /* DataManager.swift in Sources */,

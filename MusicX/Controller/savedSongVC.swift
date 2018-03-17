@@ -73,7 +73,7 @@ extension savedSongVC : UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard  let cell = tableView.dequeueReusableCell(withIdentifier: "savedSongCell", for: indexPath) as? savedSongCell else { return savedSongCell() }
 
-        cell.nameofSong.text = songs[indexPath.row].nameOfSong
+     //   cell.nameofSong.text = songs[indexPath.row].nameOfSong
         return cell
     }
     

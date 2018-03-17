@@ -9,7 +9,8 @@
 import UIKit
 import SDWebImage
 
-class SongsCell: UICollectionViewCell {
+
+class SongsCell: UICollectionViewCell  {
     
     @IBOutlet weak var songImage: UIImageView!
     @IBOutlet weak var songNameLbl: UILabel!
@@ -36,4 +37,5 @@ class SongsCell: UICollectionViewCell {
     }
     
     }
+
 
