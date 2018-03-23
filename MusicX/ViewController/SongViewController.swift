@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import RealmSwift
 import SCLAlertView
+import MediaPlayer
 
 class SongViewController: UIViewController {
     
@@ -59,16 +60,38 @@ class SongViewController: UIViewController {
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
         
+//        UIApplication.shared.beginReceivingRemoteControlEvents()
+//        self.becomeFirstResponder()
+//        setupAudioSession()
+        //setupLockScreen()
+//
+//
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
+//            print("Playback OK")
+//            try AVAudioSession.sharedInstance().setActive(true)
+//            print("Session is Active")
+//        } catch {
+//            print(error)
+//        }
+        
+    }
+    
+    func setupAudioSession(){
+        
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
-            print("Playback OK")
-            try AVAudioSession.sharedInstance().setActive(true)
-            print("Session is Active")
-        } catch {
-            print(error)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: [])
+//            do {
+//                try AVAudioSession.sharedInstance().setActive(true)
+//                print("AVAudioSession is Active")
+//            } catch let error as NSError {
+//                print(error.localizedDescription)
+//                
+//            }
+        } catch let error as NSError {
+            print(error.localizedDescription)
         }
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -104,6 +127,66 @@ class SongViewController: UIViewController {
         
         
     }
+    
+    
+    /*  AudioPlayer Lock Control */
+    
+    func setupLockScreen(){
+        
+//        let commandCenter = MPRemoteCommandCenter.shared()
+//        commandCenter.playCommand.isEnabled = true
+//        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+//            if self.player?.rate == 0.0 {
+//                self.player?.play()
+//                return .success
+//            }
+//            return .commandFailed
+//        }
+//        commandCenter.pauseCommand.isEnabled = true
+//        commandCenter.pauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+//            if self.player?.rate != 0.0 {
+//                self.player?.pause()
+//                return .success
+//            }
+//            return .commandFailed
+//        }
+//        commandCenter.nextTrackCommand.isEnabled = true
+//        commandCenter.nextTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+//            if self.player?.rate != 0.0 {
+//               print("next")
+//                return .success
+//            }
+//            return .commandFailed
+//        }
+//        commandCenter.previousTrackCommand.isEnabled = true
+//        commandCenter.previousTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+//            if self.player?.rate != 0.0 {
+//                print("previousTrackCommand")
+//                return .success
+//            }
+//            return .commandFailed
+//        }
+//        commandCenter.skipBackwardCommand.isEnabled = false
+//        commandCenter.skipForwardCommand.isEnabled = false
+        
+        var nowPlayingInfo = [String : Any]()
+        nowPlayingInfo[MPMediaItemPropertyTitle] = "My Song"
+        nowPlayingInfo[MPMediaItemPropertyArtist] = "Artist"
+        nowPlayingInfo[MPMediaItemPropertyAlbumTitle] = "MPMediaItemPropertyAlbumTitle"
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = audioplayerItem.duration.seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = audioplayerItem.asset.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = player?.rate
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+    }
+    
+    
+    //   commandCenter.playCommand.addTarget(self, action: #selector(SongViewController.playCommandS))
+
+    @objc func playCommandS() {
+        print("Play Command")
+    }
+    /////////////////////////////
+
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
         
@@ -188,15 +271,22 @@ class SongViewController: UIViewController {
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists and it will play without network")
+            setupAudioSession()
             self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
+            setupLockScreen()
+            UIApplication.shared.beginReceivingRemoteControlEvents()
+            becomeFirstResponder()
+
         } else {
             print("The song  will play with network")
             let audioURL = URL(string: audioString)
             self.audioplayerItem =  AVPlayerItem(url: audioURL!)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
+            setupLockScreen()
+
         }
     }
     
@@ -205,7 +295,7 @@ class SongViewController: UIViewController {
     @objc func updateSliderValue(){
         
         let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-        let currentTime = CMTimeGetSeconds((self.player?.currentItem?.currentTime())!)
+        let currentTime =  CMTimeGetSeconds((self.player?.currentItem?.currentTime())!)
         
         DispatchQueue.main.async {
             self.slider.minimumValue = 0
@@ -220,5 +310,7 @@ class SongViewController: UIViewController {
     func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
         return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
     }
+    
+
     
 }
