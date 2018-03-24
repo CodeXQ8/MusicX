@@ -24,19 +24,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } catch {
             print("error create Realm \(error)")
         }
-//        UIApplication.shared.beginReceivingRemoteControlEvents()
-//        becomeFirstResponder()
-//        setupAudioSession()
+
+        setupAudioSession()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
+        becomeFirstResponder()
      
         return true
     }
     
     //Then in your UIResponder (or your AppDelegate if you will)
-    override func remoteControlReceived(with event: UIEvent?) {
-        if let event = event {
-           // player.remoteControlReceivedWithEvent(event)
-        }
-    }
+//    override func remoteControlReceived(with event: UIEvent?) {
+//        if let event = event {
+//           // player.remoteControlReceivedWithEvent(event)
+//        }
+//    }
 
     func setupAudioSession(){
         
@@ -44,13 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .defaultToSpeaker)
 
-//            do {
-//                try AVAudioSession.sharedInstance().setActive(true)
-//                print("AVAudioSession is Active")
-//            } catch let error as NSError {
-//                print(error.localizedDescription)
-//
-//            }
+            do {
+                try AVAudioSession.sharedInstance().setActive(true)
+                print("AVAudioSession is Active")
+            } catch let error as NSError {
+                print(error.localizedDescription)
+
+            }
         } catch let error as NSError {
             print(error.localizedDescription)
         }
