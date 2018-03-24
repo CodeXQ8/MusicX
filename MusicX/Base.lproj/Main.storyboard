@@ -716,6 +716,19 @@
                                     <action selector="leftBtnWasPressed:" destination="sMb-tY-a6N" eventType="touchUpInside" id="lWQ-eg-C8B"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="4dg-J7-N9c" customClass="NVActivityIndicatorView" customModule="NVActivityIndicatorView">
+                                <rect key="frame" x="140" y="580" width="134" height="62"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="color">
+                                        <color key="value" red="0.30498134546435074" green="0.49848909969848154" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="padding">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="typeName" value="lineScaleParty"/>
+                                </userDefinedRuntimeAttributes>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -724,14 +737,17 @@
                             <constraint firstItem="Cvc-FQ-POh" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" id="BHN-yd-OtJ"/>
                             <constraint firstItem="u0L-NO-DF0" firstAttribute="top" secondItem="R09-K0-VSG" secondAttribute="bottom" constant="30" id="CB4-OO-fzt"/>
                             <constraint firstItem="Cvc-FQ-POh" firstAttribute="top" secondItem="emP-BX-MmQ" secondAttribute="top" id="CqH-el-utC"/>
+                            <constraint firstItem="4dg-J7-N9c" firstAttribute="top" secondItem="LRr-BB-K6L" secondAttribute="bottom" constant="73" id="OMG-vW-bYm"/>
                             <constraint firstItem="R09-K0-VSG" firstAttribute="top" secondItem="Cvc-FQ-POh" secondAttribute="bottom" constant="30" id="TVS-kq-kHB"/>
                             <constraint firstItem="3IZ-BA-bOK" firstAttribute="centerX" secondItem="emP-BX-MmQ" secondAttribute="centerX" id="Tf2-GJ-k2L"/>
                             <constraint firstItem="3IZ-BA-bOK" firstAttribute="leading" secondItem="eSL-j5-Di0" secondAttribute="trailing" constant="8" id="TfJ-Zz-fU0"/>
                             <constraint firstItem="jC6-Nz-Peg" firstAttribute="top" secondItem="u0L-NO-DF0" secondAttribute="bottom" constant="20" id="Tjt-bH-6gK"/>
+                            <constraint firstItem="4dg-J7-N9c" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="140" id="Txj-p2-Gvl"/>
                             <constraint firstItem="bf6-e7-Car" firstAttribute="top" secondItem="jC6-Nz-Peg" secondAttribute="bottom" constant="15" id="U8I-pd-MLf"/>
                             <constraint firstItem="Cvc-FQ-POh" firstAttribute="trailing" secondItem="AB2-Kg-kTs" secondAttribute="trailing" id="Uku-QM-bnk"/>
                             <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="R09-K0-VSG" secondAttribute="trailing" constant="57" id="UlP-zR-cc9"/>
                             <constraint firstItem="bf6-e7-Car" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="57" id="Zf0-Fg-3s9"/>
+                            <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="4dg-J7-N9c" secondAttribute="trailing" constant="140" id="d4L-mj-ew5"/>
                             <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="u0L-NO-DF0" secondAttribute="trailing" constant="57" id="fIo-Qv-1fb"/>
                             <constraint firstItem="u0L-NO-DF0" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="57" id="fs4-pC-4qm"/>
                             <constraint firstItem="LRr-BB-K6L" firstAttribute="centerX" secondItem="emP-BX-MmQ" secondAttribute="centerX" constant="5" id="gDy-kZ-a3d"/>
@@ -741,12 +757,14 @@
                             <constraint firstItem="AB2-Kg-kTs" firstAttribute="trailing" secondItem="bf6-e7-Car" secondAttribute="trailing" constant="57" id="pEb-8b-Uix"/>
                             <constraint firstItem="jC6-Nz-Peg" firstAttribute="leading" secondItem="3IZ-BA-bOK" secondAttribute="trailing" constant="8" id="sg6-xL-WPW"/>
                             <constraint firstItem="3IZ-BA-bOK" firstAttribute="top" secondItem="u0L-NO-DF0" secondAttribute="bottom" constant="20" id="td7-2R-nED"/>
+                            <constraint firstItem="AB2-Kg-kTs" firstAttribute="bottom" secondItem="4dg-J7-N9c" secondAttribute="bottom" constant="94" id="wTg-Iz-3XZ"/>
                             <constraint firstItem="R09-K0-VSG" firstAttribute="leading" secondItem="AB2-Kg-kTs" secondAttribute="leading" constant="57" id="xzg-nb-rf3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="AB2-Kg-kTs"/>
                     </view>
                     <connections>
                         <outlet property="NameOfAudio" destination="yDB-LY-Aka" id="rKr-Bm-b9g"/>
+                        <outlet property="activityIndicatorView" destination="4dg-J7-N9c" id="6Jg-as-ORR"/>
                         <outlet property="durationLbl" destination="LRr-BB-K6L" id="gMc-MI-hxC"/>
                         <outlet property="playBtnOutLet" destination="3IZ-BA-bOK" id="WJr-N5-JPR"/>
                         <outlet property="slider" destination="bf6-e7-Car" id="eaE-Vr-Y8O"/>
@@ -755,7 +773,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RfF-kh-VIa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1661" y="1132"/>
+            <point key="canvasLocation" x="1660.8695652173915" y="1131.521739130435"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="iGR-Qw-xpS">

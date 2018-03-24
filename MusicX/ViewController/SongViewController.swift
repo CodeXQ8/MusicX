@@ -11,6 +11,7 @@ import AVFoundation
 import RealmSwift
 import SCLAlertView
 import MediaPlayer
+import NVActivityIndicatorView
 
 class SongViewController: UIViewController {
     
@@ -49,54 +50,24 @@ class SongViewController: UIViewController {
     
     var isPlaying : Bool = false
     
+    var elapsedTime = Double()
+    
+    
+  
+    var nowPlayingInfo: [String : Any]?
+    
+    @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadSongs()
         
         imageString = songs[indexCell].stringURl
         name = songs[indexCell].names
-       // audioString = songs[indexCell].audioUrl
+        // audioString = songs[indexCell].audioUrl
         
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
-        
-        //        UIApplication.shared.beginReceivingRemoteControlEvents()
-        //        self.becomeFirstResponder()
-        //        setupAudioSession()
-        //setupLockScreen()
-        //
-        //
-        //        do {
-        //            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: .mixWithOthers)
-        //            print("Playback OK")
-        //            try AVAudioSession.sharedInstance().setActive(true)
-        //            print("Session is Active")
-        //        } catch {
-        //            print(error)
-        //        }
-        
-    }
-    
-    func setupAudioSession(){
-        
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, with: [])
-            //            do {
-            //                try AVAudioSession.sharedInstance().setActive(true)
-            //                print("AVAudioSession is Active")
-            //            } catch let error as NSError {
-            //                print(error.localizedDescription)
-            //
-            //            }
-        } catch let error as NSError {
-            print(error.localizedDescription)
-        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
         
     }
     
@@ -110,25 +81,11 @@ class SongViewController: UIViewController {
     }
     
     @IBAction func rightBtnWasPressed(_ sender: Any) {
-        if indexCell + 1 <= songs.count{
-            if player?.rate != 0 {
-                self.player?.pause()
-            }
-            indexCell = indexCell + 1
-            updateSongVC()
-            startPlaying()
-        }
+        nextSong()
     }
     
     @IBAction func leftBtnWasPressed(_ sender: Any) {
-        if indexCell > 0 {
-            if player?.rate != 0 {
-                self.player?.pause()
-            }
-            indexCell = indexCell - 1
-            updateSongVC()
-            startPlaying()
-        }
+        previousSong()
     }
     
     
@@ -137,14 +94,22 @@ class SongViewController: UIViewController {
         if isPlaying == false {
             playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
             startPlaying()
+            isPlaying = true
             updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
             updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
-            isPlaying = true
+            MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds((player?.currentTime())!)
+            DispatchQueue.main.async() {
+                self.activityIndicatorView.startAnimating()
+            }
         } else {
             playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
+            DispatchQueue.main.async() {
+                self.activityIndicatorView.stopAnimating()
+            }
+            MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds((player?.currentTime())!)
+
             player?.pause()
             isPlaying = false
-            
         }
         
         
@@ -153,7 +118,7 @@ class SongViewController: UIViewController {
     
     /*  AudioPlayer Lock Control */
     
-    func setupLockScreen(){
+    func updateLockScreen(){
         
         let image = UIImage(named: "1")!
         let songImage = MPMediaItemArtwork.init(boundsSize: image.size) { (size) -> UIImage in
@@ -162,12 +127,27 @@ class SongViewController: UIViewController {
         
         var nowPlayingInfo = [String : Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = audioplayerItem.asset.duration.seconds
+         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] =  player?.currentItem?.currentTime().seconds
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
         nowPlayingInfo[MPMediaItemPropertyArtwork] = songImage
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        
+      //  configureNowPlayingInfo(nowPlayingInfo)
+       
+        
     }
-    
+//
+//    func updateNowPlayinginfoElapsedTime(){
+//        guard var nowPlayingInfo = self.nowPlayingInfo else { return }
+//        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] =  player?.currentItem?.currentTime().seconds
+//        self.configureNowPlayingInfo(nowPlayingInfo)
+//    }
+//
+//    func configureNowPlayingInfo(_ nowPlayingInfo: [String: Any]?) {
+//        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+//        self.nowPlayingInfo = nowPlayingInfo
+//    }
     
     func lockScreenCommands() {
         
@@ -191,19 +171,118 @@ class SongViewController: UIViewController {
         
         commandCenter.nextTrackCommand.isEnabled = true
         commandCenter.nextTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            print("Next")
+            self.nextSong()
             return .success
         }
         
         commandCenter.previousTrackCommand.isEnabled = true
         commandCenter.previousTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            print("previousTrackCommand")
+            self.previousSong()
             return .success
         }
         
-        
-       
     }
+    
+    @IBAction func sliderAction(_ sender: Any) {
+        if player != nil {
+            let seconds : Int64 = Int64(slider.value)
+            let targetTime:CMTime = CMTimeMake(seconds, 1)
+            player!.seek(to: targetTime)
+            slider.addTarget(self, action: #selector(sliderDidChange), for: .touchUpOutside)
+        }
+    }
+    
+    @objc func sliderDidChange(){
+//        updateNowPlayinginfoElapsedTime()
+    }
+    
+    /* Functions for AVPlayer */
+    
+    func startPlaying() {
+        
+        let audioURL = URL(string: songs[indexCell].audioUrl)
+        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
+        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
+        if FileManager.default.fileExists(atPath: destinationUrl.path) {
+            print("The file already exists and it will play without network")
+            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
+            NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+            updateLockScreen()
+            lockScreenCommands()
+            
+        } else {
+            print("The song  will play with network")
+            let audioURL = URL(string: songs[indexCell].audioUrl)
+            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
+            NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+            self.player = AVPlayer(playerItem: self.audioplayerItem)
+            self.player?.play()
+            updateLockScreen()
+            lockScreenCommands()
+            
+        }
+    }
+    
+    
+    
+    @objc func nextSong(){
+        if indexCell + 1 < songs.count{
+            if player?.rate != 0 {
+                self.player?.pause()
+            }
+            indexCell = indexCell + 1
+            updateSongVC()
+            startPlaying()
+        }
+    }
+    
+    func previousSong(){
+        if indexCell > 0 {
+            if player?.rate != 0 {
+                self.player?.pause()
+            }
+            indexCell = indexCell - 1
+            updateSongVC()
+            startPlaying()
+        }
+    }
+    
+    func updateSongVC()
+    {
+        
+        self.NameOfAudio.text = songs?[indexCell].names
+        let imageUrl = songs?[indexCell].stringURl
+        self.songImageView.sd_setImage(with:URL(string: imageUrl!) )
+        
+    }
+    
+    
+    /* Function Related to Slider */
+    
+    @objc func updateSliderValue(){
+        
+        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
+        let currentTime =  CMTimeGetSeconds((self.player?.currentItem?.currentTime())!)
+
+        DispatchQueue.main.async {
+            self.slider.minimumValue = 0
+            self.slider.maximumValue = Float(duration)
+            self.slider.setValue(Float(currentTime), animated: true)
+            
+            let (h,m,s) = self.secondsToHoursMinutesSeconds(seconds: Int(currentTime))
+            self.durationLbl.text = "\(m):\(s)"
+        }
+        if player?.rate == Float(duration){
+            nextSong()
+        }
+    }
+    
+    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    }
+    
     
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
@@ -217,31 +296,16 @@ class SongViewController: UIViewController {
                     
                     alertController.showCustom("Download", subTitle: "Song is downloaded", color:
                         #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
-                    
-                    
                 }
-                
-                
             }
         }
-        
-        
-        
-        
     }
     
-    @IBAction func sliderAction(_ sender: Any) {
-        if player != nil {
-            let seconds : Int64 = Int64(slider.value)
-            let targetTime:CMTime = CMTimeMake(seconds, 1)
-            player!.seek(to: targetTime)
-        }
-    }
     
     /* Functions for Realm*/
     
     func saveToRealm(nameOfSong:String, songID:Int) {
-        print(Realm.Configuration.defaultConfiguration.fileURL)
+        //   print(Realm.Configuration.defaultConfiguration.fileURL)
         let song = DownloadedSong()
         
         song.nameOfSong = nameOfSong
@@ -279,63 +343,5 @@ class SongViewController: UIViewController {
             }
         }
     }
-    
-    /* Functions for AVPlayer */
-    
-    func startPlaying() {
-        
-        let audioURL = URL(string: songs[indexCell].audioUrl)
-        let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
-        let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
-        if FileManager.default.fileExists(atPath: destinationUrl.path) {
-            print("The file already exists and it will play without network")
-            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
-            self.player = AVPlayer(playerItem: self.audioplayerItem)
-            self.player?.play()
-            setupLockScreen()
-            lockScreenCommands()
-        } else {
-            print("The song  will play with network")
-            let audioURL = URL(string: songs[indexCell].audioUrl)
-            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
-            self.player = AVPlayer(playerItem: self.audioplayerItem)
-            self.player?.play()
-            setupLockScreen()
-            lockScreenCommands()
-            
-        }
-    }
-    
-    func updateSongVC()
-    {
-        self.NameOfAudio.text = songs[indexCell].names
-        let imageUrl = songs[indexCell].stringURl
-        self.songImageView.sd_setImage(with:URL(string: imageUrl) )
-        
-    }
-    
-    
-    /* Function Related to Slider */
-    
-    @objc func updateSliderValue(){
-        
-        let duration = CMTimeGetSeconds((self.player?.currentItem?.asset.duration)!)
-        let currentTime =  CMTimeGetSeconds((self.player?.currentItem?.currentTime())!)
-        
-        DispatchQueue.main.async {
-            self.slider.minimumValue = 0
-            self.slider.maximumValue = Float(duration)
-            self.slider.setValue(Float(currentTime), animated: true)
-            
-            let (h,m,s) = self.secondsToHoursMinutesSeconds(seconds: Int(currentTime))
-            self.durationLbl.text = "\(m):\(s)"
-        }
-    }
-    
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
-    }
-    
-    
     
 }
