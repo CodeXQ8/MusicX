@@ -54,9 +54,10 @@ class SongViewController: UIViewController {
     
     
   
-    var nowPlayingInfo: [String : Any]?
+    var nowPlayingInfo = [String : Any]()
     
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -92,22 +93,21 @@ class SongViewController: UIViewController {
     @IBOutlet weak var playBtnOutLet: UIButton!
     @IBAction func playBtnWasPressed(_ sender: Any) {
         if isPlaying == false {
-            playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
-            startPlaying()
-            isPlaying = true
-            updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
-            updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
-            MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds((player?.currentTime())!)
             DispatchQueue.main.async() {
+                self.playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
+                self.startPlaying()
                 self.activityIndicatorView.startAnimating()
+                self.updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
+                self.updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
             }
+            isPlaying = true
+           
+         
         } else {
-            playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
             DispatchQueue.main.async() {
+                self.playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
                 self.activityIndicatorView.stopAnimating()
             }
-            MPNowPlayingInfoCenter.default().nowPlayingInfo![MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds((player?.currentTime())!)
-
             player?.pause()
             isPlaying = false
         }
@@ -124,30 +124,15 @@ class SongViewController: UIViewController {
         let songImage = MPMediaItemArtwork.init(boundsSize: image.size) { (size) -> UIImage in
             return image
         }
-        
-        var nowPlayingInfo = [String : Any]()
         nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
-         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] =  player?.currentItem?.currentTime().seconds
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
         nowPlayingInfo[MPMediaItemPropertyArtwork] = songImage
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-        
-      //  configureNowPlayingInfo(nowPlayingInfo)
-       
-        
+   
     }
-//
-//    func updateNowPlayinginfoElapsedTime(){
-//        guard var nowPlayingInfo = self.nowPlayingInfo else { return }
-//        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] =  player?.currentItem?.currentTime().seconds
-//        self.configureNowPlayingInfo(nowPlayingInfo)
-//    }
-//
-//    func configureNowPlayingInfo(_ nowPlayingInfo: [String: Any]?) {
-//        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-//        self.nowPlayingInfo = nowPlayingInfo
-//    }
+
     
     func lockScreenCommands() {
         
@@ -185,17 +170,19 @@ class SongViewController: UIViewController {
     
     @IBAction func sliderAction(_ sender: Any) {
         if player != nil {
+            player?.pause()
             let seconds : Int64 = Int64(slider.value)
             let targetTime:CMTime = CMTimeMake(seconds, 1)
             player!.seek(to: targetTime)
-            slider.addTarget(self, action: #selector(sliderDidChange), for: .touchUpOutside)
+          
+            slider.addTarget(self, action: #selector(sliderStopChainging), for: .touchUpInside)
         }
     }
     
-    @objc func sliderDidChange(){
-//        updateNowPlayinginfoElapsedTime()
+    @objc func sliderStopChainging(){
+        updateLockScreen()
+        player?.play()
     }
-    
     /* Functions for AVPlayer */
     
     func startPlaying() {
@@ -205,7 +192,8 @@ class SongViewController: UIViewController {
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists and it will play without network")
-            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
+            let asset = AVAsset(url: destinationUrl)
+            self.audioplayerItem =  AVPlayerItem(asset: asset)
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
@@ -214,11 +202,12 @@ class SongViewController: UIViewController {
             
         } else {
             print("The song  will play with network")
-            let audioURL = URL(string: songs[indexCell].audioUrl)
-            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
+            let asset = AVAsset(url: audioURL!)
+            self.audioplayerItem =  AVPlayerItem(asset: asset)
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
+            player?.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
             updateLockScreen()
             lockScreenCommands()
             
@@ -226,7 +215,13 @@ class SongViewController: UIViewController {
     }
     
     
-    
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == "rate" {
+            if (player?.rate)! > Float(0.0) {
+                print("audio started")
+            }
+        }
+    }
     @objc func nextSong(){
         if indexCell + 1 < songs.count{
             if player?.rate != 0 {
@@ -270,17 +265,20 @@ class SongViewController: UIViewController {
             self.slider.minimumValue = 0
             self.slider.maximumValue = Float(duration)
             self.slider.setValue(Float(currentTime), animated: true)
-            
-            let (h,m,s) = self.secondsToHoursMinutesSeconds(seconds: Int(currentTime))
-            self.durationLbl.text = "\(m):\(s)"
+            self.durationLbl.text = self.secondsToHoursMinutesSeconds(currentTime)
         }
         if player?.rate == Float(duration){
             nextSong()
         }
     }
     
-    func secondsToHoursMinutesSeconds (seconds : Int) -> (Int, Int, Int) {
-        return (seconds / 3600, (seconds % 3600) / 60, (seconds % 3600) % 60)
+    func secondsToHoursMinutesSeconds (_ timeInterval: TimeInterval) -> String {
+        let timeInt = Int(round(timeInterval))
+        let (h, m, s) = (timeInt / 3600, (timeInt % 3600) / 60, (timeInt % 3600) % 60)
+        let hour: String? = h > 0 ? String(h) : nil
+        let minute = (h > 0 && m < 10 ? "0" : "") + String(m)
+        let second = (s < 10 ? "0" : "") + String(s)
+        return (hour != nil ? (hour! + ":") : "") + minute + ":" + second
     }
     
     
