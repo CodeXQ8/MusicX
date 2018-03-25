@@ -51,7 +51,13 @@ class SongViewController: UIViewController {
     var isPlaying : Bool = false
     
     var elapsedTime = Double()
-    
+
+    override func viewDidDisappear(_ animated: Bool) {
+//        MPRemoteCommandCentercommandCenter = [MPRemoteCommandCenter sharedCommandCenter];
+//        [commandCenter.nextTrackCommand removeTarget:self];
+//        [commandCenter.previousTrackCommand removeTarget:self];
+     //   MPRemoteCommandCenter.shared().nextTrackCommand.removeTarget(self)
+    }
     
   
     var nowPlayingInfo = [String : Any]()
@@ -192,18 +198,18 @@ class SongViewController: UIViewController {
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists and it will play without network")
-            let asset = AVAsset(url: destinationUrl)
-            self.audioplayerItem =  AVPlayerItem(asset: asset)
+           // let asset = AVAsset(url: destinationUrl)
+            self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
             updateLockScreen()
             lockScreenCommands()
-            
+    
         } else {
             print("The song  will play with network")
-            let asset = AVAsset(url: audioURL!)
-            self.audioplayerItem =  AVPlayerItem(asset: asset)
+            //let asset = AVAsset(url: audioURL!)
+            self.audioplayerItem =  AVPlayerItem(url: audioURL!)
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
@@ -237,7 +243,6 @@ class SongViewController: UIViewController {
     
     func updateSongVC()
     {
-        
         self.NameOfAudio.text = songs?[indexCell].names
         let imageUrl = songs?[indexCell].stringURl
         self.songImageView.sd_setImage(with:URL(string: imageUrl!) )

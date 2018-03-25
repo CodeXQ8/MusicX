@@ -23,7 +23,7 @@ class SongsCell: UICollectionViewCell  {
         self.songImage.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
             if error != nil
             {
-                print("error in seting the images SBWeb")
+                print("error in setting the images SBWeb \(error)")
             }
 
         self.songNameLbl.text = songName
@@ -34,8 +34,6 @@ class SongsCell: UICollectionViewCell  {
     func layout() {
         self.songImage.layer.cornerRadius = 30
         self.songImage.layer.shadowRadius = 100
-        self.layer.cornerRadius = 30
-        self.layer.shadowRadius = 20
     }
     
     }
