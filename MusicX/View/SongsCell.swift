@@ -23,7 +23,7 @@ class SongsCell: UICollectionViewCell  {
         self.songImage.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
             if error != nil
             {
-                print("error in seting the images SBWeb")
+                print("error in seting the images SBWeb  \(error) ")
             }
 
         self.songNameLbl.text = songName
