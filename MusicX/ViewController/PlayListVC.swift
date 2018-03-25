@@ -33,6 +33,7 @@ class PlayListVC: UIViewController {
         self.collectionView.dataSource = self
         parseJSON()
         loadJSONFromRealm()
+        
         collectionView.reloadData()
     }
     
@@ -102,6 +103,8 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         return songs?.count ?? 1
     }
+    
+    
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }

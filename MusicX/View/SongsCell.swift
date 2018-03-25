@@ -34,6 +34,8 @@ class SongsCell: UICollectionViewCell  {
     func layout() {
         self.songImage.layer.cornerRadius = 30
         self.songImage.layer.shadowRadius = 100
+        self.layer.cornerRadius = 30
+        self.layer.shadowRadius = 20
     }
     
     }

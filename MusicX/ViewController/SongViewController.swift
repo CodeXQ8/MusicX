@@ -207,21 +207,12 @@ class SongViewController: UIViewController {
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
-            player?.addObserver(self, forKeyPath: "rate", options: NSKeyValueObservingOptions.new, context: nil)
             updateLockScreen()
             lockScreenCommands()
-            
         }
     }
     
     
-    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "rate" {
-            if (player?.rate)! > Float(0.0) {
-                print("audio started")
-            }
-        }
-    }
     @objc func nextSong(){
         if indexCell + 1 < songs.count{
             if player?.rate != 0 {
