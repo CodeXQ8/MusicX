@@ -57,7 +57,8 @@ class SongViewController: UIViewController {
 //        [commandCenter.nextTrackCommand removeTarget:self];
 //        [commandCenter.previousTrackCommand removeTarget:self];
      //   MPRemoteCommandCenter.shared().nextTrackCommand.removeTarget(self)
-    }
+
+}
     
   
     var nowPlayingInfo = [String : Any]()
@@ -96,11 +97,14 @@ class SongViewController: UIViewController {
     }
     
     
-    @IBOutlet weak var playBtnOutLet: UIButton!
+    //@IBOutlet weak var playBtnOutLet: UIButton!
+    @IBOutlet weak var playBtnImage: UIImageView!
+    
     @IBAction func playBtnWasPressed(_ sender: Any) {
         if isPlaying == false {
             DispatchQueue.main.async() {
-                self.playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
+          //      self.playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
+                self.playBtnImage.image = UIImage(named: "puase")
                 self.startPlaying()
                 self.activityIndicatorView.startAnimating()
                 self.updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
@@ -111,8 +115,10 @@ class SongViewController: UIViewController {
          
         } else {
             DispatchQueue.main.async() {
-                self.playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
-                self.activityIndicatorView.stopAnimating()
+             //   self.playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
+                self.playBtnImage.image = UIImage(named: "playBtn")
+
+            self.activityIndicatorView.stopAnimating()
             }
             player?.pause()
             isPlaying = false
