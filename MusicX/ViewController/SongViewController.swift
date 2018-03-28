@@ -71,7 +71,7 @@ class SongViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadSongs()
+        //loadSongs()
         
         imageString = songs[indexCell].stringURl
         name = songs[indexCell].names

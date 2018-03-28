@@ -27,6 +27,8 @@
 		BEAA6B842026CE41008AF3B6 /* SongVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAA6B832026CE41008AF3B6 /* SongVC.swift */; };
 		BEB013AA20696D21002241A8 /* DesginImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB013A920696D21002241A8 /* DesginImageView.swift */; };
 		BEC31B232057793200917E6F /* JsonRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC31B222057793200917E6F /* JsonRealm.swift */; };
+		BEC404CF206BFDFE00324AC9 /* SongListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC404CE206BFDFE00324AC9 /* SongListVC.swift */; };
+		BEC404D1206BFF9900324AC9 /* listCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEC404D0206BFF9900324AC9 /* listCell.swift */; };
 		BEDFFA4B2016F0950097145F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFFA4A2016F0950097145F /* AppDelegate.swift */; };
 		BEDFFA4D2016F0950097145F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFFA4C2016F0950097145F /* ViewController.swift */; };
 		BEDFFA502016F0950097145F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEDFFA4E2016F0950097145F /* Main.storyboard */; };
@@ -63,6 +65,8 @@
 		BEAA6B832026CE41008AF3B6 /* SongVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongVC.swift; sourceTree = "<group>"; };
 		BEB013A920696D21002241A8 /* DesginImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesginImageView.swift; sourceTree = "<group>"; };
 		BEC31B222057793200917E6F /* JsonRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JsonRealm.swift; sourceTree = "<group>"; };
+		BEC404CE206BFDFE00324AC9 /* SongListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongListVC.swift; sourceTree = "<group>"; };
+		BEC404D0206BFF9900324AC9 /* listCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = listCell.swift; sourceTree = "<group>"; };
 		BEDFFA472016F0950097145F /* MusicX.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicX.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BEDFFA4A2016F0950097145F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BEDFFA4C2016F0950097145F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -96,6 +100,7 @@
 				3F90894F2054B571002D85AF /* SongViewController.swift */,
 				BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */,
 				BE93051F205C973000BA59C9 /* SwipeTableVC.swift */,
+				BEC404CE206BFDFE00324AC9 /* SongListVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -116,6 +121,7 @@
 				BE9A8CD82042051800F24931 /* savedSongCell.swift */,
 				BEB013A920696D21002241A8 /* DesginImageView.swift */,
 				BE89E67C206B823600253027 /* headerCell.swift */,
+				BEC404D0206BFF9900324AC9 /* listCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 				BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */,
 				BEC31B232057793200917E6F /* JsonRealm.swift in Sources */,
 				3F9089502054B571002D85AF /* SongViewController.swift in Sources */,
+				BEC404CF206BFDFE00324AC9 /* SongListVC.swift in Sources */,
 				BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */,
 				BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */,
 				3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */,
@@ -362,6 +369,7 @@
 				BEA80AD2201C17AE007CAB0D /* MainVC.swift in Sources */,
 				3F90894C2054AD25002D85AF /* PlayListVC.swift in Sources */,
 				BEA80AD0201C161F007CAB0D /* SongsCell.swift in Sources */,
+				BEC404D1206BFF9900324AC9 /* listCell.swift in Sources */,
 				BEDFFA642016FDEB0097145F /* StorageService.swift in Sources */,
 				BE9A8CD7204204EC00F24931 /* savedSongVC.swift in Sources */,
 				BE7E9053203944F90026566F /* ReadFile.swift in Sources */,

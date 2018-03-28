@@ -119,13 +119,17 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
-        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+        performSegue(withIdentifier: "songListSegue", sender: self)
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SongViewController = segue.destination as?  SongViewController {
-            SongViewController.songs = songs
+           // SongViewController.songs = songs
             SongViewController.indexCell = self.indexCell
+        }
+        if let songListVC = segue.destination as? SongListVC {
+            songListVC.indexCell = self.indexCell
+            songListVC.songs = songs
         }
         
     }
