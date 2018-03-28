@@ -230,7 +230,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="44" translatesAutoresizingMaskIntoConstraints="NO" id="O27-kf-JK2">
-                                <rect key="frame" x="88" y="622" width="238" height="50"/>
+                                <rect key="frame" x="88" y="631" width="238" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="caP-9h-mmj">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -301,7 +301,7 @@
                                 </userDefinedRuntimeAttributes>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zcf-rT-THx">
-                                <rect key="frame" x="142" y="571" width="113" height="25"/>
+                                <rect key="frame" x="142" y="580" width="113" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="lQK-EO-Vxd"/>
                                 </constraints>
@@ -310,7 +310,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="100" translatesAutoresizingMaskIntoConstraints="NO" id="Zyy-Ge-cxD" customClass="Slider" customModule="MusicX">
-                                <rect key="frame" x="33.666666666666657" y="523" width="347" height="22"/>
+                                <rect key="frame" x="33.666666666666657" y="523" width="347" height="31"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="343" id="bqU-Or-VSP"/>
                                 </constraints>
