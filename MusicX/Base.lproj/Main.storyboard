@@ -18,6 +18,9 @@
         <array key="EuphemiaCAS.ttc">
             <string>EuphemiaUCAS-Italic</string>
         </array>
+        <array key="GurmukhiMN.ttc">
+            <string>GurmukhiMN</string>
+        </array>
     </customFonts>
     <scenes>
         <!--MainVC-->
@@ -377,12 +380,55 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="1kC-8N-5BG">
                                 <rect key="frame" x="0.0" y="77" width="414" height="610"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="separatorColor" red="0.99963909387588501" green="1" blue="0.99975615739822388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="sectionIndexBackgroundColor" red="0.38586176056225796" green="0.6517425309975825" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="130" id="GFg-Rk-oZs" customClass="savedSongCell" customModule="MusicX" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="414" height="130"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="headerCell" rowHeight="70" id="od6-j8-gld" customClass="headerCell" customModule="MusicX" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="70"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="od6-j8-gld" id="SXz-dZ-kJX">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="69.666666666666671"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="hello" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tkn-GK-2XU">
+                                                    <rect key="frame" x="117" y="24" width="215" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1" translatesAutoresizingMaskIntoConstraints="NO" id="c4e-1n-wce" customClass="DesginImageView" customModule="MusicX" customModuleProvider="target">
+                                                    <rect key="frame" x="21" y="4" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="ker-ec-xRb"/>
+                                                    </constraints>
+                                                    <userDefinedRuntimeAttributes>
+                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRaduis">
+                                                            <real key="value" value="20"/>
+                                                        </userDefinedRuntimeAttribute>
+                                                    </userDefinedRuntimeAttributes>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.90057069063186646" green="0.90125507116317749" blue="0.9006766676902771" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="Tkn-GK-2XU" firstAttribute="leading" secondItem="SXz-dZ-kJX" secondAttribute="leadingMargin" constant="102" id="5m5-C9-xsG"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Tkn-GK-2XU" secondAttribute="bottom" constant="14" id="6Oe-D7-KyH"/>
+                                                <constraint firstItem="c4e-1n-wce" firstAttribute="top" secondItem="SXz-dZ-kJX" secondAttribute="top" constant="4" id="PyD-UK-y31"/>
+                                                <constraint firstAttribute="bottom" secondItem="c4e-1n-wce" secondAttribute="bottom" constant="5.6699999999999999" id="aFB-hf-NU8"/>
+                                                <constraint firstItem="Tkn-GK-2XU" firstAttribute="top" secondItem="SXz-dZ-kJX" secondAttribute="topMargin" constant="13" id="drf-tB-jhZ"/>
+                                                <constraint firstItem="c4e-1n-wce" firstAttribute="leading" secondItem="SXz-dZ-kJX" secondAttribute="leading" constant="21" id="eQc-Fc-w8j"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Tkn-GK-2XU" secondAttribute="trailing" constant="67" id="r2T-QB-qas"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="imageHeader" destination="c4e-1n-wce" id="Hic-VX-05o"/>
+                                            <outlet property="songNameLbl" destination="Tkn-GK-2XU" id="ubo-op-li2"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="140" id="GFg-Rk-oZs" customClass="savedSongCell" customModule="MusicX" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="98" width="414" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GFg-Rk-oZs" id="KAT-Td-w6y">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="129.66666666666666"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="139.66666666666666"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FeP-Z2-XLm">
@@ -470,10 +516,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="D2Y-2p-TWy">
-                                <rect key="frame" x="0.0" y="77" width="414" height="610"/>
+                                <rect key="frame" x="0.0" y="129" width="414" height="558"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="610" id="C58-PH-OQW"/>
+                                    <constraint firstAttribute="height" constant="558" id="C58-PH-OQW"/>
                                 </constraints>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="tZq-Qt-BFl">
                                     <size key="itemSize" width="138" height="160"/>
@@ -527,14 +573,26 @@
                                     <constraint firstAttribute="height" constant="77" id="C5X-i2-eJk"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Reciters" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9M-qG-FBR">
+                                <rect key="frame" x="20" y="85" width="127" height="36"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="127" id="TNj-oZ-VYZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="GurmukhiMN" family="Gurmukhi MN" pointSize="20"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="D2Y-2p-TWy" firstAttribute="top" secondItem="N9M-qG-FBR" secondAttribute="bottom" constant="8" id="8Gc-IN-xnh"/>
+                            <constraint firstItem="N9M-qG-FBR" firstAttribute="top" secondItem="z26-r8-V9O" secondAttribute="bottom" constant="8" id="FiS-mn-k3U"/>
                             <constraint firstItem="D2Y-2p-TWy" firstAttribute="leading" secondItem="nq6-jn-Uas" secondAttribute="leading" id="Ido-4h-taJ"/>
                             <constraint firstItem="z26-r8-V9O" firstAttribute="leading" secondItem="nq6-jn-Uas" secondAttribute="leading" id="Ii2-LK-01V"/>
-                            <constraint firstItem="D2Y-2p-TWy" firstAttribute="top" secondItem="z26-r8-V9O" secondAttribute="bottom" id="P2C-03-DpE"/>
+                            <constraint firstItem="D2Y-2p-TWy" firstAttribute="top" secondItem="z26-r8-V9O" secondAttribute="bottom" constant="52" id="P2C-03-DpE"/>
                             <constraint firstItem="z26-r8-V9O" firstAttribute="trailing" secondItem="nq6-jn-Uas" secondAttribute="trailing" id="U9B-QW-d1v"/>
                             <constraint firstItem="z26-r8-V9O" firstAttribute="top" secondItem="ak4-0h-cqi" secondAttribute="top" id="nLg-xw-O49"/>
+                            <constraint firstItem="N9M-qG-FBR" firstAttribute="leading" secondItem="nq6-jn-Uas" secondAttribute="leading" constant="20" id="sVk-dK-TXP"/>
                             <constraint firstAttribute="trailing" secondItem="D2Y-2p-TWy" secondAttribute="trailing" id="wdt-kk-t2B"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nq6-jn-Uas"/>
@@ -561,13 +619,13 @@
                                 <rect key="frame" x="87" y="390" width="250" height="51"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="N" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhc-lG-zQm">
-                                        <rect key="frame" x="0.0" y="0.0" width="250" height="25.666666666666668"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="25.333333333333332"/>
                                         <fontDescription key="fontDescription" name="EuphemiaUCAS-Italic" family="Euphemia UCAS" pointSize="19"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Name Of Audio" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yDB-LY-Aka">
-                                        <rect key="frame" x="0.0" y="25.666666666666686" width="250" height="25.333333333333329"/>
+                                        <rect key="frame" x="0.0" y="25.333333333333314" width="250" height="25.666666666666671"/>
                                         <fontDescription key="fontDescription" name="EuphemiaUCAS-Italic" family="Euphemia UCAS" pointSize="19"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -905,7 +963,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9rT-c5-yKf"/>
-        <segue reference="sK4-jF-Ymf"/>
+        <segue reference="XyL-Rx-9qH"/>
         <segue reference="qXC-2t-WWA"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -54,15 +54,14 @@ class SongViewController: UIViewController {
     var elapsedTime = Double()
 
     override func viewDidDisappear(_ animated: Bool) {
-//        MPRemoteCommandCentercommandCenter = [MPRemoteCommandCenter sharedCommandCenter];
-//        [commandCenter.nextTrackCommand removeTarget:self];
-//        [commandCenter.previousTrackCommand removeTarget:self];
-     //   MPRemoteCommandCenter.shared().nextTrackCommand.removeTarget(self)
+        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
 
 }
     
     deinit {
         self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
     }
   
     var nowPlayingInfo = [String : Any]()
@@ -125,6 +124,7 @@ class SongViewController: UIViewController {
             self.activityIndicatorView.stopAnimating()
             }
             player?.pause()
+            
             isPlaying = false
         }
         
@@ -132,57 +132,7 @@ class SongViewController: UIViewController {
     }
     
     
-    /*  AudioPlayer Lock Control */
-    
-    func updateLockScreen(){
-        
-        let image = UIImage(named: "1")!
-        let songImage = MPMediaItemArtwork.init(boundsSize: image.size) { (size) -> UIImage in
-            return image
-        }
-        nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
-        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(audioplayerItem.currentTime())
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
-        nowPlayingInfo[MPMediaItemPropertyArtwork] = songImage
-        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
-   
-    }
 
-    
-    func lockScreenCommands() {
-        
-        let commandCenter = MPRemoteCommandCenter.shared()
-        commandCenter.playCommand.isEnabled = true
-        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            if self.player?.rate == 0.0 {
-                self.player?.play()
-                return .success
-            }
-            return .commandFailed
-        }
-        commandCenter.pauseCommand.isEnabled = true
-        commandCenter.pauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            if self.player?.rate != 0.0 {
-                self.player?.pause()
-                return .success
-            }
-            return .commandFailed
-        }
-        
-        commandCenter.nextTrackCommand.isEnabled = true
-        commandCenter.nextTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            self.nextSong()
-            return .success
-        }
-        
-        commandCenter.previousTrackCommand.isEnabled = true
-        commandCenter.previousTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
-            self.previousSong()
-            return .success
-        }
-        
-    }
     
     @IBAction func sliderAction(_ sender: Any) {
         if player != nil {
@@ -198,6 +148,7 @@ class SongViewController: UIViewController {
         updateLockScreen()
         player?.play()
     }
+    
     /* Functions for AVPlayer */
     
     func startPlaying() {
@@ -261,6 +212,57 @@ class SongViewController: UIViewController {
         
     }
     
+    /*  AudioPlayer Lock Control */
+    
+    func updateLockScreen(){
+        
+        let image = UIImage(named: "1")!
+        let songImage = MPMediaItemArtwork.init(boundsSize: image.size) { (size) -> UIImage in
+            return image
+        }
+        nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
+        nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(audioplayerItem.currentTime())
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
+        nowPlayingInfo[MPMediaItemPropertyArtwork] = songImage
+        MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
+        
+    }
+    
+    
+    func lockScreenCommands() {
+        
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.isEnabled = true
+        commandCenter.playCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            if self.player?.rate == 0.0 {
+                self.player?.play()
+                return .success
+            }
+            return .commandFailed
+        }
+        commandCenter.pauseCommand.isEnabled = true
+        commandCenter.pauseCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            if self.player?.rate != 0.0 {
+                self.player?.pause()
+                return .success
+            }
+            return .commandFailed
+        }
+        
+        commandCenter.nextTrackCommand.isEnabled = true
+        commandCenter.nextTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            self.nextSong()
+            return .success
+        }
+        
+        commandCenter.previousTrackCommand.isEnabled = true
+        commandCenter.previousTrackCommand.addTarget { (event) -> MPRemoteCommandHandlerStatus in
+            self.previousSong()
+            return .success
+        }
+        
+    }
     
     /* Function Related to Slider */
     
