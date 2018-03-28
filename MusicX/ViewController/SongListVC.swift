@@ -9,6 +9,7 @@
 import UIKit
 import RealmSwift
 import SCLAlertView
+import SDWebImage
 
 class SongListVC: UIViewController {
 
@@ -26,8 +27,14 @@ class SongListVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-      imageView.image = UIImage(named: "1")
+        let url = URL(string: songs[indexCell].stringURl)
+        let placeHolder = UIImage(named: "single-1")
+        self.imageView.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
+            if error != nil
+            {
+                print("error in setting the images SBWeb \(error)")
+            }
+        }
        nameOfReciterLbl.text = ("\(indexCell)")
         
         tabelView.delegate = self
@@ -35,7 +42,11 @@ class SongListVC: UIViewController {
         
     }
 
-
+    @IBAction func backBtn(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    
 }
 
 extension SongListVC : UITableViewDelegate , UITableViewDataSource {
@@ -48,9 +59,24 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
 
         guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
         cell.updateCell(nameLbl: songs?[indexPath.row].names ?? "No cell", indexLbl: indexPath.row)
+        cell.saveBtn.addTarget(self, action: #selector(saveSong), for: .touchUpInside)
         return  cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+                self.indexCell = indexPath.item
+                performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+    }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let SongViewController = segue.destination as?  SongViewController {
+                        SongViewController.songs = songs
+                        SongViewController.indexCell = self.indexCell
+                    }
+
+    }
+
+    @objc func saveSong() {
+        print("song saved")
+    }
 }

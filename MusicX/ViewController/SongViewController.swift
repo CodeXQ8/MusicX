@@ -53,16 +53,19 @@ class SongViewController: UIViewController {
     
     var elapsedTime = Double()
 
-    override func viewDidDisappear(_ animated: Bool) {
-        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
-
-}
     
-    deinit {
-        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
-    }
+//    override func viewDidDisappear(_ animated: Bool) {
+//        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+//
+//}
+    
+//    deinit {
+//        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+//        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+//                  print( "observer is removed " )
+//        print("deinit")
+//    }
   
     var nowPlayingInfo = [String : Any]()
     
@@ -146,6 +149,7 @@ class SongViewController: UIViewController {
     
     @objc func sliderStopChainging(){
         updateLockScreen()
+        print("4")
         player?.play()
     }
     
@@ -169,8 +173,14 @@ class SongViewController: UIViewController {
             self.audioplayerItem =  AVPlayerItem(url: audioURL!)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.automaticallyWaitsToMinimizeStalling = false
+            
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+            
             self.player?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: .new, context: nil)
+           
+            print( "observer is added " )
+     
+           
         }
     }
     
@@ -178,11 +188,16 @@ class SongViewController: UIViewController {
         if keyPath == #keyPath(AVPlayerItem.status)
         {
             updateLockScreen()
-            self.player?.playImmediately(atRate: 1)
+                self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+                self.player?.playImmediately(atRate: 1)
+              print( "observer is removed " )
+        
         }
     }
     
+    var i = 0
     @objc func nextSong(){
+        
         if indexCell + 1 < songs.count{
             if player?.rate != 0 {
                 self.player?.pause()
@@ -190,6 +205,9 @@ class SongViewController: UIViewController {
             indexCell = indexCell + 1
             updateSongVC()
             startPlaying()
+            self.player?.play()
+            print("nextSong is called \(i)")
+            i = i + 1
         }
     }
     

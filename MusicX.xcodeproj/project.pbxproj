@@ -78,6 +78,10 @@
 		BEDFFA5E2016F3D60097145F /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		BEDFFA632016FDEB0097145F /* StorageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageService.swift; sourceTree = "<group>"; };
 		BEE0E6D62026687C00273562 /* jsonLibrary.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = jsonLibrary.json; sourceTree = "<group>"; };
+		BEF951B0206C44C300B6EA43 /* 0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 0.jpg; sourceTree = "<group>"; };
+		BEF951B1206C44C300B6EA43 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
+		BEF951B2206C44C300B6EA43 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
+		BEF951B3206C44C300B6EA43 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
 		F13E314EFF62D6B5FA7CADD0 /* Pods-MusicX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MusicX/Pods-MusicX.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -147,6 +151,7 @@
 		BEDFFA492016F0950097145F /* MusicX */ = {
 			isa = PBXGroup;
 			children = (
+				BEF951AF206C44C300B6EA43 /* Reciter */,
 				3F90894E2054B4D7002D85AF /* ViewController */,
 				BEA80ACE201C1521007CAB0D /* View */,
 				BEDFFA622016F8A30097145F /* Controller */,
@@ -197,6 +202,17 @@
 				BE9A8CD6204204EC00F24931 /* savedSongVC.swift */,
 			);
 			path = Controller;
+			sourceTree = "<group>";
+		};
+		BEF951AF206C44C300B6EA43 /* Reciter */ = {
+			isa = PBXGroup;
+			children = (
+				BEF951B0206C44C300B6EA43 /* 0.jpg */,
+				BEF951B1206C44C300B6EA43 /* 1.jpg */,
+				BEF951B2206C44C300B6EA43 /* 2.jpg */,
+				BEF951B3206C44C300B6EA43 /* 3.jpg */,
+			);
+			path = Reciter;
 			sourceTree = "<group>";
 		};
 		E1431347635092CD12AC956E /* Pods */ = {

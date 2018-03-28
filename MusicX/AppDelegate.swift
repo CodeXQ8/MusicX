@@ -32,12 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    //Then in your UIResponder (or your AppDelegate if you will)
-//    override func remoteControlReceived(with event: UIEvent?) {
-//        if let event = event {
-//           // player.remoteControlReceivedWithEvent(event)
-//        }
-//    }
+
 
     func setupAudioSession(){
         

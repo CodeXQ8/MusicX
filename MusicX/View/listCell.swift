@@ -12,7 +12,7 @@ class listCell: UITableViewCell {
 
     @IBOutlet weak var indexLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
-    
+    @IBOutlet weak var saveBtn: UIButton!
     
     func updateCell( nameLbl: String, indexLbl: Int) {
         self.nameLbl.text = nameLbl
