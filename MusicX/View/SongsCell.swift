@@ -14,7 +14,7 @@ class SongsCell: UICollectionViewCell  {
     
     @IBOutlet weak var songImage: UIImageView!
     @IBOutlet weak var songNameLbl: UILabel!
-    @IBOutlet weak var songTimeLbl: UILabel!
+
     
     
     func updateCell( songImageUrl: String , songName: String, songTime:String){
@@ -27,8 +27,6 @@ class SongsCell: UICollectionViewCell  {
             }
 
         self.songNameLbl.text = songName
-        self.songTimeLbl.text = songTime
-
     }
 }
     func layout() {

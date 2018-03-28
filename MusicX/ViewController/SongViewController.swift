@@ -20,6 +20,7 @@ class SongViewController: UIViewController {
     
     @IBOutlet weak var NameOfAudio: UILabel!
     @IBOutlet weak var durationLbl: UILabel!
+    @IBOutlet weak var totalDuration: UILabel!
     
     @IBOutlet weak var slider: Slider!
     
@@ -30,7 +31,7 @@ class SongViewController: UIViewController {
     var indexCell : Int = 0 ;
     
     /* Global Variables */
-    var audioplayerItem : AVPlayerItem!
+    @objc var audioplayerItem : AVPlayerItem!
     var player : AVPlayer?
     
     let realm = try! Realm()
@@ -60,6 +61,9 @@ class SongViewController: UIViewController {
 
 }
     
+    deinit {
+        self.player?.removeObserver(self, forKeyPath: #keyPath(AVPlayerItem.status))
+    }
   
     var nowPlayingInfo = [String : Any]()
     
@@ -77,6 +81,8 @@ class SongViewController: UIViewController {
         songImageView.sd_setImage(with: URL(string: imageString))
         NameOfAudio.text = name
         
+        lockScreenCommands()
+
     }
     
     /* IBActions */
@@ -102,22 +108,20 @@ class SongViewController: UIViewController {
     
     @IBAction func playBtnWasPressed(_ sender: Any) {
         if isPlaying == false {
-            DispatchQueue.main.async() {
-          //      self.playBtnOutLet.setImage(UIImage(named: "ic_pause_48px"), for: UIControlState.normal)
-                self.playBtnImage.image = UIImage(named: "puase")
-                self.startPlaying()
+            self.playBtnImage.image = UIImage(named: "puase")
+            self.startPlaying()
+            self.updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
+            self.updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
+            
+           DispatchQueue.main.async() {
                 self.activityIndicatorView.startAnimating()
-                self.updater = CADisplayLink(target: self, selector: #selector(SongViewController.updateSliderValue))   // Updating Slider Using CADisplay
-                self.updater.add(to: RunLoop.current, forMode: RunLoopMode.defaultRunLoopMode)
             }
             isPlaying = true
            
          
         } else {
             DispatchQueue.main.async() {
-             //   self.playBtnOutLet.setImage(UIImage(named: "ic_play_arrow_48px"), for: UIControlState.normal)
-                self.playBtnImage.image = UIImage(named: "playBtn")
-
+            self.playBtnImage.image = UIImage(named: "playBtn")
             self.activityIndicatorView.stopAnimating()
             }
             player?.pause()
@@ -138,7 +142,7 @@ class SongViewController: UIViewController {
         }
         nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = player?.currentItem?.currentTime().seconds
+        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(audioplayerItem.currentTime())
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
         nowPlayingInfo[MPMediaItemPropertyArtwork] = songImage
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
@@ -186,7 +190,6 @@ class SongViewController: UIViewController {
             let seconds : Int64 = Int64(slider.value)
             let targetTime:CMTime = CMTimeMake(seconds, 1)
             player!.seek(to: targetTime)
-          
             slider.addTarget(self, action: #selector(sliderStopChainging), for: .touchUpInside)
         }
     }
@@ -204,26 +207,29 @@ class SongViewController: UIViewController {
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
             print("The file already exists and it will play without network")
-           // let asset = AVAsset(url: destinationUrl)
             self.audioplayerItem =  AVPlayerItem(url: destinationUrl)
             NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
             self.player?.play()
             updateLockScreen()
-            lockScreenCommands()
     
         } else {
             print("The song  will play with network")
-            //let asset = AVAsset(url: audioURL!)
             self.audioplayerItem =  AVPlayerItem(url: audioURL!)
-            NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
             self.player = AVPlayer(playerItem: self.audioplayerItem)
-            self.player?.play()
-            updateLockScreen()
-            lockScreenCommands()
+            self.player?.automaticallyWaitsToMinimizeStalling = false
+            NotificationCenter.default.addObserver(self, selector: #selector(nextSong), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: audioplayerItem)
+            self.player?.addObserver(self, forKeyPath: #keyPath(AVPlayerItem.status), options: .new, context: nil)
         }
     }
     
+    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+        if keyPath == #keyPath(AVPlayerItem.status)
+        {
+            updateLockScreen()
+            self.player?.playImmediately(atRate: 1)
+        }
+    }
     
     @objc func nextSong(){
         if indexCell + 1 < songs.count{
@@ -268,10 +274,9 @@ class SongViewController: UIViewController {
             self.slider.maximumValue = Float(duration)
             self.slider.setValue(Float(currentTime), animated: true)
             self.durationLbl.text = self.secondsToHoursMinutesSeconds(currentTime)
+            self.totalDuration.text = self.secondsToHoursMinutesSeconds(duration - currentTime)
         }
-        if player?.rate == Float(duration){
-            nextSong()
-        }
+  
     }
     
     func secondsToHoursMinutesSeconds (_ timeInterval: TimeInterval) -> String {
