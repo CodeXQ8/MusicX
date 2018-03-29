@@ -24,7 +24,6 @@ class RealmManager {
                     realm.add(reciter)
                     print("reciter saved")
                 }
-
         } catch
         {
             print("Can't save reciter to Realm")
@@ -37,10 +36,25 @@ class RealmManager {
     }
     
     func loadSurahsFromRealm(reciter: Reciters) -> Results<ReciterSurahs> {
-        surahs = reciter.reciterSurahs.sorted(byKeyPath: "title", ascending: true)
-           // realm.objects(ReciterSurahs.self)
+        surahs = reciter.reciterSurahs.sorted(byKeyPath: "surahName", ascending: true)
         return surahs!
     }
+    
+    
+    func checkIfFileExist(reciter : Reciters,reciters: Results<Reciters>?, exist : @escaping (Bool) ->() ) {
+
+        if reciters != nil {
+            for reciterTemp in reciters! {
+                if reciterTemp.reciterName == reciter.reciterName {
+                    exist(true)
+                    return
+                }
+            }
+        }
+        exist(false)
+        
+    }
+
 
 
 }

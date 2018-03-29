@@ -26,9 +26,11 @@ class PlayListVC: UIViewController {
     
     var  reciterName = ""
     var reciterImage = ""
-    var reciterAudio = String()
+    var reciterAudio = [JSON]()
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration)
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         print(Realm.Configuration.defaultConfiguration)
@@ -49,21 +51,30 @@ class PlayListVC: UIViewController {
             for i in 0...count-1 {
                reciterName = readableJSON["Reciters","Reciter\(i)","Name"].string!
                reciterImage = readableJSON["Reciters","Reciter\(i)","ImageName"].string!
-                // reciterAudio = readableJSON["Reciters","Reciter\(i)","ReciterSurahs"].string!
-//                createReciterandSurahs()
-                // create Reciters and save to Realm
-                
-                        let surah = ReciterSurahs()
-                        surah.surahName = reciterName
-                        surah.reciterAudio = "reciterAudio"
+            
                 let reciter = Reciters()
                 reciter.reciterName = reciterName
                 reciter.reciterImage = reciterImage
-                reciter.reciterSurahs.append(surah)
-                checkIfFileExist(reciter: reciter)
-             //   if !exist {
-                    RealmManager.sharedInstance.saveToRealmReciter(reciter: reciter)
-            //    }
+                
+                for j in 0...(readableJSON["Reciters","Reciter\(i)","ReciterSurahs"].count)-1 {
+                    
+                reciterAudio = readableJSON["Reciters","Reciter\(i)","ReciterSurahs"].array!
+                    let surah = ReciterSurahs()
+                    surah.surahName = "Al-fatah \(j)"
+                    surah.reciterAudio = reciterAudio[j].string!
+                    reciter.reciterSurahs.append(surah)
+                }
+
+
+
+                
+                RealmManager.sharedInstance.checkIfFileExist(reciter: reciter, reciters: reciters, exist: { (exist) in
+                    if exist == false
+                    {
+                        RealmManager.sharedInstance.saveToRealmReciter(reciter: reciter)
+                    }
+                })
+              
                 
             }
         } catch {
@@ -71,6 +82,11 @@ class PlayListVC: UIViewController {
         }
         
     }
+    //                createReciterandSurahs()
+    // create Reciters and save to Realm
+    // print("\(i)   : \(reciterAudio) ")
+    
+    
     
 //    func createReciterandSurahs(){
 //        // create Reciters and save to Realm
@@ -91,16 +107,16 @@ class PlayListVC: UIViewController {
 //    }
     
     
-    func checkIfFileExist(reciter: Reciters) {
-        if reciters != nil {
-            for reciterTemp in reciters! {
-                if reciterTemp.reciterName == reciter.reciterName {
-                    exist = true
-                    break
-                }
-            }
-        }
-    }
+//    func checkIfFileExist(reciter: Reciters) {
+//        if reciters != nil {
+//            for reciterTemp in reciters! {
+//                if reciterTemp.reciterName == reciter.reciterName {
+//                    exist = true
+//                    break
+//                }
+//            }
+//        }
+//    }
     
     
 }

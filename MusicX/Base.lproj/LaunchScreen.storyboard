@@ -10,8 +10,8 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Avenir.ttc">
-            <string>Avenir-Medium</string>
+        <array key="AlNile.ttc">
+            <string>AlNile-Bold</string>
         </array>
     </customFonts>
     <scenes>
@@ -23,19 +23,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9E-vf-0eO">
-                                <rect key="frame" x="0.0" y="264" width="375" height="100"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="‏ ‏القرآن الكريم" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9E-vf-0eO">
+                                <rect key="frame" x="0.0" y="283" width="375" height="100"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="4Jk-dJ-yb5"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="42"/>
+                                <fontDescription key="fontDescription" name="AlNile-Bold" family="Al Nile" pointSize="59"/>
                                 <color key="textColor" red="0.99963909387588501" green="1" blue="0.99975615739822388" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.18247568607330322" green="0.75294762849807739" blue="0.75297075510025024" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.35004168748855591" green="0.69513601064682007" blue="0.69872558116912842" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="i9E-vf-0eO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="244" id="FvG-Ml-fSJ"/>
+                            <constraint firstItem="i9E-vf-0eO" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="263" id="FvG-Ml-fSJ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="i9E-vf-0eO" secondAttribute="trailing" id="qf9-VY-heg"/>
                             <constraint firstItem="i9E-vf-0eO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="zdN-HB-lK1"/>
                         </constraints>

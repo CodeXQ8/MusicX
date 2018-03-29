@@ -26,13 +26,10 @@ class SongListVC: UIViewController {
     var indexCell = Int()
     var exist = false
     
-   // var surahs = [ ReciterSurahs]()
     
     var reciter : Reciters? {
         didSet{
-            // load Surahs
-         //   surahs = reciter?.reciterSurahs.sorted(byKeyPath: "title", ascending: true)
-          //  surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
+            surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
         }
     }
     
@@ -44,7 +41,7 @@ class SongListVC: UIViewController {
         
         tabelView.delegate = self
         tabelView.dataSource = self
-        
+        surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
     }
 
     @IBAction func backBtn(_ sender: Any) {
@@ -65,7 +62,7 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
         guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
         
         if let surah = surahs?[indexPath.row] {
-            cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
+        cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
         cell.saveBtn.addTarget(self, action: #selector(saveSong), for: .touchUpInside)
         } else {
              cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
