@@ -14,6 +14,8 @@ class RealmManager {
     let realm = try! Realm()
     var reciters : Results<Reciters>?
     
+    var surahs : Results<ReciterSurahs>?
+    
     static let sharedInstance = RealmManager()
 
      func saveToRealmReciter(reciter : Reciters) {
@@ -29,9 +31,15 @@ class RealmManager {
         }
     }
     
-    func loadRecitersromRealm() -> Results<Reciters> {
+    func loadRecitersFromRealm() -> Results<Reciters> {
         reciters = realm.objects(Reciters.self)
         return reciters!
+    }
+    
+    func loadSurahsFromRealm(reciter: Reciters) -> Results<ReciterSurahs> {
+        surahs = reciter.reciterSurahs.sorted(byKeyPath: "title", ascending: true)
+           // realm.objects(ReciterSurahs.self)
+        return surahs!
     }
 
 

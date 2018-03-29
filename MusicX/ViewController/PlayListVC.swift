@@ -16,26 +16,23 @@ class PlayListVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     /* Global Variables */
-    //    var stringURls = [String]()
-    //    var names = [String]()
-    //    var audioArray = [String]()
     var count : Int = 0
     var indexCell : Int = 0 ;
     
     /* Realm Variables */
     let realm = try! Realm()
-    var songs : Results<JsonRealm>?
     var reciters : Results<Reciters>?
     var exist = false
-    var reciterName = " Nayef"
-    var reciterImage = " XX "
     
+    var  reciterName = ""
+    var reciterImage = ""
+    var reciterAudio = String()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
-        reciters =  RealmManager.sharedInstance.loadRecitersromRealm()
+        print(Realm.Configuration.defaultConfiguration)
+        reciters =  RealmManager.sharedInstance.loadRecitersFromRealm()
         parseJSON()
         
         collectionView.reloadData()
@@ -50,19 +47,23 @@ class PlayListVC: UIViewController {
             var readableJSON = try JSON(data: jsonData! , options: JSONSerialization.ReadingOptions.mutableContainers)
             self.count = readableJSON["Reciters"].count
             for i in 0...count-1 {
-                reciterName = readableJSON["Reciters","Reciter\(i)","Name"].string!
-                reciterImage = readableJSON["Reciters","Reciter\(i)","ImageName"].string!
-              //  let audioUrl = readableJSON["Songs","Song\(i)","UrlAudio"].string
-                
+               reciterName = readableJSON["Reciters","Reciter\(i)","Name"].string!
+               reciterImage = readableJSON["Reciters","Reciter\(i)","ImageName"].string!
+                // reciterAudio = readableJSON["Reciters","Reciter\(i)","ReciterSurahs"].string!
+//                createReciterandSurahs()
                 // create Reciters and save to Realm
+                
+                        let surah = ReciterSurahs()
+                        surah.surahName = reciterName
+                        surah.reciterAudio = "reciterAudio"
                 let reciter = Reciters()
                 reciter.reciterName = reciterName
                 reciter.reciterImage = reciterImage
-                
+                reciter.reciterSurahs.append(surah)
                 checkIfFileExist(reciter: reciter)
-                if !exist {
+             //   if !exist {
                     RealmManager.sharedInstance.saveToRealmReciter(reciter: reciter)
-                }
+            //    }
                 
             }
         } catch {
@@ -70,6 +71,25 @@ class PlayListVC: UIViewController {
         }
         
     }
+    
+//    func createReciterandSurahs(){
+//        // create Reciters and save to Realm
+//        let surah = ReciterSurahs()
+//        surah.surahName = reciterName
+//        surah.reciterAudio = "reciterAudio"
+//
+//        let reciter = Reciters()
+//        reciter.reciterName = reciterName
+//        reciter.reciterImage = reciterImage
+//      //  reciter.reciterSurahs.append(surah)
+//
+//
+//        checkIfFileExist(reciter: reciter)
+//        if !exist {
+//            RealmManager.sharedInstance.saveToRealmReciter(reciter: reciter)
+//        }
+//    }
+    
     
     func checkIfFileExist(reciter: Reciters) {
         if reciters != nil {
@@ -111,13 +131,9 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let SongViewController = segue.destination as?  SongViewController {
-            // SongViewController.songs = songs
-            SongViewController.indexCell = self.indexCell
-        }
         if let songListVC = segue.destination as? SongListVC {
             songListVC.indexCell = self.indexCell
-        //    songListVC.reciters = reciters
+            songListVC.reciter = reciters?[indexCell]
         }
         
     }

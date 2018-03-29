@@ -12,7 +12,7 @@ import RealmSwift
 class ReciterSurahs : Object {
     
     @objc dynamic var surahName = ""
-    @objc dynamic var reciterImage = " "
+     @objc dynamic var reciterAudio = ""
     @objc dynamic var surahID : Int = 0
     var reciter = LinkingObjects(fromType: Reciters.self, property: "reciterSurahs")
 }

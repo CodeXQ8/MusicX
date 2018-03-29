@@ -14,30 +14,33 @@ import SDWebImage
 class SongListVC: UIViewController {
 
  
-    var reciters : Results<JsonRealm>!
+    var surahs : Results<ReciterSurahs>?
    
     @IBOutlet weak var nameOfReciterLbl: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tabelView: UITableView!
     
     let realm = try! Realm()
+    
     var locationString = String().self
     var indexCell = Int()
     var exist = false
     
+   // var surahs = [ ReciterSurahs]()
+    
+    var reciter : Reciters? {
+        didSet{
+            // load Surahs
+         //   surahs = reciter?.reciterSurahs.sorted(byKeyPath: "title", ascending: true)
+          //  surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        let url = URL(string: reciters[indexCell].stringURl)
-        let placeHolder = UIImage(named: "single-1")
-        self.imageView.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
-            if error != nil
-            {
-                print("error in setting the images SBWeb \(error)")
-            }
-        }
-       nameOfReciterLbl.text = ("\(indexCell)")
+        self.imageView.image = UIImage(named: ("\(indexCell)"))
+        nameOfReciterLbl.text = ("\(indexCell)")
         
         tabelView.delegate = self
         tabelView.dataSource = self
@@ -54,14 +57,19 @@ class SongListVC: UIViewController {
 extension SongListVC : UITableViewDelegate , UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return reciters?.count ?? 1
+        return surahs?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
         guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
-        cell.updateCell(nameLbl: reciters?[indexPath.row].names ?? "No cell", indexLbl: indexPath.row)
+        
+        if let surah = surahs?[indexPath.row] {
+            cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
         cell.saveBtn.addTarget(self, action: #selector(saveSong), for: .touchUpInside)
+        } else {
+             cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+        }
         return  cell
     }
     
@@ -72,7 +80,7 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SongViewController = segue.destination as?  SongViewController {
-                        SongViewController.songs = reciters
+                     //   SongViewController.songs = surahs
                         SongViewController.indexCell = self.indexCell
                     }
 
