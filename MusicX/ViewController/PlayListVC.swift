@@ -33,7 +33,7 @@ class PlayListVC: UIViewController {
         self.collectionView.dataSource = self
         parseJSON()
         loadJSONFromRealm()
-        
+            print(Realm.Configuration.defaultConfiguration.fileURL)
         collectionView.reloadData()
     }
     

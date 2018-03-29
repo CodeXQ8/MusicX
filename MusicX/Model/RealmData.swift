@@ -15,6 +15,4 @@ class RealmData : Object {
     @objc dynamic var songsData = Data()
     @objc dynamic var nameOfFile = " "
     @objc dynamic var songID : Int = 0 
-    
-    
 }

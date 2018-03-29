@@ -71,6 +71,7 @@ class SongViewController: UIViewController {
     
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
 
+  
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,6 +85,7 @@ class SongViewController: UIViewController {
         NameOfAudio.text = name
         
         lockScreenCommands()
+        
 
     }
     
@@ -105,7 +107,7 @@ class SongViewController: UIViewController {
     }
     
     
-    //@IBOutlet weak var playBtnOutLet: UIButton!
+    @IBOutlet weak var playBtnOutLet: UIButton!
     @IBOutlet weak var playBtnImage: UIImageView!
     
     @IBAction func playBtnWasPressed(_ sender: Any) {

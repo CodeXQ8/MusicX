@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F88B0532053BB7000083913 /* GIF.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F88B0522053BB7000083913 /* GIF.swift */; };
 		3F90894C2054AD25002D85AF /* PlayListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894B2054AD25002D85AF /* PlayListVC.swift */; };
 		3F9089502054B571002D85AF /* SongViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F90894F2054B571002D85AF /* SongViewController.swift */; };
 		3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F9089512054E02A002D85AF /* DownloadedSong.swift */; };
@@ -15,8 +14,6 @@
 		BE1E1E212055F81500F64378 /* RealmManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE1E1E202055F81500F64378 /* RealmManager.swift */; };
 		BE73AC6D203896100063F944 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC6C203896100063F944 /* DataManager.swift */; };
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
-		BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E90502039443D0026566F /* DrawWaveForm.swift */; };
-		BE7E9053203944F90026566F /* ReadFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE7E9052203944F90026566F /* ReadFile.swift */; };
 		BE89E67D206B823600253027 /* headerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE89E67C206B823600253027 /* headerCell.swift */; };
 		BE930520205C973000BA59C9 /* SwipeTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93051F205C973000BA59C9 /* SwipeTableVC.swift */; };
 		BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD42041FD3600F24931 /* RealmData.swift */; };
@@ -38,11 +35,13 @@
 		BEDFFA5F2016F3D60097145F /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFFA5E2016F3D60097145F /* DataService.swift */; };
 		BEDFFA642016FDEB0097145F /* StorageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEDFFA632016FDEB0097145F /* StorageService.swift */; };
 		BEE0E6D72026687C00273562 /* jsonLibrary.json in Resources */ = {isa = PBXBuildFile; fileRef = BEE0E6D62026687C00273562 /* jsonLibrary.json */; };
+		BEF951B5206C6D3700B6EA43 /* designableButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF951B4206C6D3700B6EA43 /* designableButton.swift */; };
+		BEF951B8206C8C5D00B6EA43 /* Reciters.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF951B7206C8C5D00B6EA43 /* Reciters.swift */; };
+		BEF951BA206C8D0C00B6EA43 /* ReciterSurahs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEF951B9206C8D0C00B6EA43 /* ReciterSurahs.swift */; };
 		FB2DCD82384F62C9FB5E59EB /* Pods_MusicX.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD0DD3F64319D779269F6F34 /* Pods_MusicX.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3F88B0522053BB7000083913 /* GIF.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GIF.swift; sourceTree = "<group>"; };
 		3F90894B2054AD25002D85AF /* PlayListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayListVC.swift; sourceTree = "<group>"; };
 		3F90894F2054B571002D85AF /* SongViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SongViewController.swift; sourceTree = "<group>"; };
 		3F9089512054E02A002D85AF /* DownloadedSong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedSong.swift; sourceTree = "<group>"; };
@@ -53,8 +52,6 @@
 		BE4A1607201C50200090ACDC /* MusicX-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MusicX-Bridging-Header.h"; sourceTree = "<group>"; };
 		BE73AC6C203896100063F944 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		BE73AC702038C3620063F944 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
-		BE7E90502039443D0026566F /* DrawWaveForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawWaveForm.swift; sourceTree = "<group>"; };
-		BE7E9052203944F90026566F /* ReadFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadFile.swift; sourceTree = "<group>"; };
 		BE89E67C206B823600253027 /* headerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerCell.swift; sourceTree = "<group>"; };
 		BE93051F205C973000BA59C9 /* SwipeTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableVC.swift; sourceTree = "<group>"; };
 		BE9A8CD42041FD3600F24931 /* RealmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmData.swift; sourceTree = "<group>"; };
@@ -82,6 +79,9 @@
 		BEF951B1206C44C300B6EA43 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		BEF951B2206C44C300B6EA43 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		BEF951B3206C44C300B6EA43 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
+		BEF951B4206C6D3700B6EA43 /* designableButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = designableButton.swift; sourceTree = "<group>"; };
+		BEF951B7206C8C5D00B6EA43 /* Reciters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reciters.swift; sourceTree = "<group>"; };
+		BEF951B9206C8D0C00B6EA43 /* ReciterSurahs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReciterSurahs.swift; sourceTree = "<group>"; };
 		F13E314EFF62D6B5FA7CADD0 /* Pods-MusicX.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MusicX.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MusicX/Pods-MusicX.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,7 +123,6 @@
 				BEA80ACF201C161F007CAB0D /* SongsCell.swift */,
 				BE73AC702038C3620063F944 /* Slider.swift */,
 				BE9A8CD82042051800F24931 /* savedSongCell.swift */,
-				BEB013A920696D21002241A8 /* DesginImageView.swift */,
 				BE89E67C206B823600253027 /* headerCell.swift */,
 				BEC404D0206BFF9900324AC9 /* listCell.swift */,
 			);
@@ -151,6 +150,7 @@
 		BEDFFA492016F0950097145F /* MusicX */ = {
 			isa = PBXGroup;
 			children = (
+				BEF951B6206C6D3E00B6EA43 /* Designable */,
 				BEF951AF206C44C300B6EA43 /* Reciter */,
 				3F90894E2054B4D7002D85AF /* ViewController */,
 				BEA80ACE201C1521007CAB0D /* View */,
@@ -172,9 +172,9 @@
 			isa = PBXGroup;
 			children = (
 				BE73AC6C203896100063F944 /* DataManager.swift */,
+				BE1E1E202055F81500F64378 /* RealmManager.swift */,
 				BEDFFA5E2016F3D60097145F /* DataService.swift */,
 				BEDFFA632016FDEB0097145F /* StorageService.swift */,
-				BE1E1E202055F81500F64378 /* RealmManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -183,11 +183,11 @@
 			isa = PBXGroup;
 			children = (
 				BEE0E6D62026687C00273562 /* jsonLibrary.json */,
-				BE7E9052203944F90026566F /* ReadFile.swift */,
 				BE9A8CD42041FD3600F24931 /* RealmData.swift */,
-				3F88B0522053BB7000083913 /* GIF.swift */,
 				3F9089512054E02A002D85AF /* DownloadedSong.swift */,
 				BEC31B222057793200917E6F /* JsonRealm.swift */,
+				BEF951B7206C8C5D00B6EA43 /* Reciters.swift */,
+				BEF951B9206C8D0C00B6EA43 /* ReciterSurahs.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -198,7 +198,6 @@
 				BEDFFA4C2016F0950097145F /* ViewController.swift */,
 				BEA80AD1201C17AE007CAB0D /* MainVC.swift */,
 				BEAA6B832026CE41008AF3B6 /* SongVC.swift */,
-				BE7E90502039443D0026566F /* DrawWaveForm.swift */,
 				BE9A8CD6204204EC00F24931 /* savedSongVC.swift */,
 			);
 			path = Controller;
@@ -213,6 +212,15 @@
 				BEF951B3206C44C300B6EA43 /* 3.jpg */,
 			);
 			path = Reciter;
+			sourceTree = "<group>";
+		};
+		BEF951B6206C6D3E00B6EA43 /* Designable */ = {
+			isa = PBXGroup;
+			children = (
+				BEB013A920696D21002241A8 /* DesginImageView.swift */,
+				BEF951B4206C6D3700B6EA43 /* designableButton.swift */,
+			);
+			path = Designable;
 			sourceTree = "<group>";
 		};
 		E1431347635092CD12AC956E /* Pods */ = {
@@ -373,11 +381,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3F88B0532053BB7000083913 /* GIF.swift in Sources */,
-				BE7E90512039443D0026566F /* DrawWaveForm.swift in Sources */,
 				BEC31B232057793200917E6F /* JsonRealm.swift in Sources */,
 				3F9089502054B571002D85AF /* SongViewController.swift in Sources */,
 				BEC404CF206BFDFE00324AC9 /* SongListVC.swift in Sources */,
+				BEF951B5206C6D3700B6EA43 /* designableButton.swift in Sources */,
 				BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */,
 				BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */,
 				3F9089522054E02A002D85AF /* DownloadedSong.swift in Sources */,
@@ -388,11 +395,12 @@
 				BEC404D1206BFF9900324AC9 /* listCell.swift in Sources */,
 				BEDFFA642016FDEB0097145F /* StorageService.swift in Sources */,
 				BE9A8CD7204204EC00F24931 /* savedSongVC.swift in Sources */,
-				BE7E9053203944F90026566F /* ReadFile.swift in Sources */,
 				BE73AC712038C3620063F944 /* Slider.swift in Sources */,
 				BEDFFA4D2016F0950097145F /* ViewController.swift in Sources */,
+				BEF951BA206C8D0C00B6EA43 /* ReciterSurahs.swift in Sources */,
 				BEAA6B842026CE41008AF3B6 /* SongVC.swift in Sources */,
 				BE1E1E1F2055DE9E00F64378 /* DownloadedSongsVC.swift in Sources */,
+				BEF951B8206C8C5D00B6EA43 /* Reciters.swift in Sources */,
 				BE930520205C973000BA59C9 /* SwipeTableVC.swift in Sources */,
 				BE1E1E212055F81500F64378 /* RealmManager.swift in Sources */,
 				BE89E67D206B823600253027 /* headerCell.swift in Sources */,
