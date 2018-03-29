@@ -74,7 +74,7 @@ class SongViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //loadSongs()
+        loadSongs()
         
         imageString = songs[indexCell].stringURl
         name = songs[indexCell].names
@@ -205,7 +205,7 @@ class SongViewController: UIViewController {
             indexCell = indexCell + 1
             updateSongVC()
             startPlaying()
-            self.player?.play()
+           
             print("nextSong is called \(i)")
             i = i + 1
         }
