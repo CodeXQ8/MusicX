@@ -1,73 +1,41 @@
-////
-////  RealmManager.swift
-////  MusicX
-////
-////  Created by Nayef Alotaibi on 3/11/18.
-////  Copyright © 2018 Nayef Alotaibi. All rights reserved.
-////
 //
-//import Foundation
-//import RealmSwift
+//  RealmManager.swift
+//  MusicX
 //
-//struct RealmManager {
-//    
-//    let realm = try! Realm()
-//    var songs: Results<DownloadedSong>!
-//    
-//   // static let realmManager = RealmManager
-//    
-//    
-//}
-//    
-//    
-//    
-//    
-//    /* Global Variables */
+//  Created by Nayef Alotaibi on 3/11/18.
+//  Copyright © 2018 Nayef Alotaibi. All rights reserved.
 //
-//    
-//    var exist = false
-//    
-//    /* Functions */
-//    
-//    func saveToRealm(nameOfSong:String, songID:Int,locationString:String, imageURL: String ) {
-//        print(Realm.Configuration.defaultConfiguration.fileURL)
-//        let song = DownloadedSong()
-//        
-//        song.nameOfSong = nameOfSong
-//        let nameOfFile = (locationString as NSString).lastPathComponent
-//        song.nameOfFile = nameOfFile
-//        song.imageURL = imageURL
-//        song.songID = songID
-//        
-//        do {                                     // Check if the file exisit before saveing
-//            try realm.write {
-//                checkIfFileExist(song: song, songs: songs)
-//                if !exist {
-//                    realm.add(song)
-//                } else {
-//                    print("song exist")
-//                }
-//            }
-//        } catch {
-//            print("couldn't save to Realm")
-//        }
-//    }
-//    
-//    func loadSongs(){
-//        songs = realm.objects(DownloadedSong.self)
-//        print(songs)
-//    }
-//    
-//    func checkIfFileExist(song: DownloadedSong, songs : Results<DownloadedSong>!) {
-//        
-//        if songs != nil {
-//            for songTemp in songs {
-//                if songTemp.nameOfSong == song.nameOfSong {
-//                    exist = true
-//                    break
-//                }
-//            }
-//        }
-//    }
-//}
+
+import Foundation
+import RealmSwift
+
+class RealmManager {
+    
+    let realm = try! Realm()
+    var reciters : Results<Reciters>?
+    
+    static let sharedInstance = RealmManager()
+
+     func saveToRealmReciter(reciter : Reciters) {
+        do {
+                try realm.write {
+                    realm.add(reciter)
+                    print("reciter saved")
+                }
+
+        } catch
+        {
+            print("Can't save reciter to Realm")
+        }
+    }
+    
+    func loadRecitersromRealm() -> Results<Reciters> {
+        reciters = realm.objects(Reciters.self)
+        return reciters!
+    }
+
+
+}
+
+
 

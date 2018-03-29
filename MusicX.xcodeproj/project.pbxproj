@@ -101,10 +101,10 @@
 			isa = PBXGroup;
 			children = (
 				3F90894B2054AD25002D85AF /* PlayListVC.swift */,
+				BEC404CE206BFDFE00324AC9 /* SongListVC.swift */,
 				3F90894F2054B571002D85AF /* SongViewController.swift */,
 				BE1E1E1E2055DE9E00F64378 /* DownloadedSongsVC.swift */,
 				BE93051F205C973000BA59C9 /* SwipeTableVC.swift */,
-				BEC404CE206BFDFE00324AC9 /* SongListVC.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";

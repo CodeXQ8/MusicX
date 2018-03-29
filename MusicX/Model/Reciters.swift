@@ -13,7 +13,7 @@ class Reciters : Object {
     
     @objc dynamic var reciterName = ""
     @objc dynamic var reciterImage = " "
-    let reciterSurahs = List<ReciterSurahs>()
+    var reciterSurahs = List<ReciterSurahs>()
     
 
 }

@@ -17,17 +17,11 @@ class SongsCell: UICollectionViewCell  {
 
     
     
-    func updateCell( songImageUrl: String , songName: String, songTime:String){
-        let url = URL(string: songImageUrl)
-         let placeHolder = UIImage(named: "single-1")
-        self.songImage.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
-            if error != nil
-            {
-                print("error in setting the images SBWeb \(error)")
-            }
+    func updateCell(songName: String, songTime:String, reciterImage : String){
 
+        songImage.image = UIImage(named: reciterImage)
         self.songNameLbl.text = songName
-    }
+    
 }
     func layout() {
         self.songImage.layer.cornerRadius = 30
@@ -37,3 +31,9 @@ class SongsCell: UICollectionViewCell  {
     }
 
 
+//let url = URL(string: songImageUrl)
+//        self.songImage.sd_setImage(with: url, placeholderImage: placeHolder, options: .highPriority) { (image, error, cache, url) in
+//            if error != nil
+//            {
+//                print("error in setting the images SBWeb \(error)")
+//            }

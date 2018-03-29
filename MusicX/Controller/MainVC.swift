@@ -79,10 +79,10 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }
-
-        cell.updateCell(songImageUrl:self.stringURls[indexPath.item], songName: self.names[indexPath.item], songTime: "21:02")
-        cell.layout()
-        return cell
+//
+//        cell.updateCell(songImageUrl:self.stringURls[indexPath.item], songName: self.names[indexPath.item], songTime: "21:02")
+//        cell.layout()
+       return cell
 
         }
 

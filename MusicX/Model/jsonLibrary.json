@@ -1,57 +1,45 @@
+
 {
-    "Songs" : {
-        "Song1": {
-            "Name" : " Mishary0",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F1.jpg?alt=media&token=b819b9e1-9cc3-4fbf-b968-2e691f5cadcd",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9"
-        },
-        "Song2": {
-            "Name" : " Mishary1",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F2.jpg?alt=media&token=0b9e9e2c-a426-4d72-9e2c-53730528a5f8",
-            "UrlAudio" : "c
-        },
-        "Song3": {
-            "Name" : " Mishary2",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg?alt=media&token=a986a3ed-4023-45a5-9f90-339cd5462899",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F017-al-isra.mp3?alt=media&token=bddeeddc-ee4f-4d58-83a0-d377f4f8fcef"
-        },
-        "Song4": {
-            "Name" : " Mishary3",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F4.jpg?alt=media&token=2f21087e-8f02-4bed-9854-6b96b17cace6",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F024-an-nur.mp3?alt=media&token=801d7c78-baaa-4e12-abbf-4571b8e2e2f2"
-        },
-        "Song5": {
-            "Name" : " Mishary4",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg?alt=media&token=a986a3ed-4023-45a5-9f90-339cd5462899",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F030-ar-rum.mp3?alt=media&token=b2b6a65e-ec51-403f-9d5a-bc7c9db24326"
-        },
-        "Song6": {
-            "Name" : " Mishary5",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg?alt=media&token=a986a3ed-4023-45a5-9f90-339cd5462899",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
-        },
-        "Song7": {
-            "Name" : " Mishary6",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F1.jpg?alt=media&token=b819b9e1-9cc3-4fbf-b968-2e691f5cadcd",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
-        },
-        "Song8": {
-            "Name" : " Mishary7",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F1.jpg?alt=media&token=b819b9e1-9cc3-4fbf-b968-2e691f5cadcd",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
-        },
-        "Song9": {
-            "Name" : " Mishary8",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F1.jpg?alt=media&token=b819b9e1-9cc3-4fbf-b968-2e691f5cadcd",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
-        },
-        "Song10": {
-            "Name" : " Mishary9",
-            "UrlImage" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F1.jpg?alt=media&token=b819b9e1-9cc3-4fbf-b968-2e691f5cadcd",
-            "UrlAudio" : "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
+    "Reciters" : {
+        "Reciter0": {
+            "Name" : "Mishary",
+            "ImageName" : "0",
+            "RecitersSurahs" : ["https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-                b94e-8a1ab52252a9",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9"
+                                ]
+        },"Reciter1": {
+            "Name" : "Mohammed",
+            "ImageName" : "1",
+            "RecitersSurahs" : ["https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F024-an-nur.mp3?alt=media&token=801d7c78-baaa-4e12-abbf-4571b8e2e2f2",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F024-an-nur.mp3?alt=media&token=801d7c78-baaa-4e12-abbf-4571b8e2e2f2",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F024-an-nur.mp3?alt=media&token=801d7c78-baaa-4e12-abbf-4571b8e2e2f2"
+                                ]
+        },"Reciter2": {
+            "Name" : "Abdul Rahman Al-Soudais",
+            "ImageName" : "2",
+            "RecitersSurahs" : ["https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F017-al-isra.mp3?alt=media&token=bddeeddc-ee4f-4d58-83a0-d377f4f8fcef",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F017-al-isra.mp3?alt=media&token=bddeeddc-ee4f-4d58-83a0-d377f4f8fcef"
+                                ]
+        },"Reciter3": {
+            "Name" : "Yasser Al-Dosari",
+            "ImageName" : "3",
+            "RecitersSurahs" : ["https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737"
+                                ]
         }
-        
     }
-    
 }
+
+
+
+
+
+
+
+
 

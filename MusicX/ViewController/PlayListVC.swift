@@ -25,15 +25,19 @@ class PlayListVC: UIViewController {
     /* Realm Variables */
     let realm = try! Realm()
     var songs : Results<JsonRealm>?
+    var reciters : Results<Reciters>?
     var exist = false
+    var reciterName = " Nayef"
+    var reciterImage = " XX "
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
+        
+        reciters =  RealmManager.sharedInstance.loadRecitersromRealm()
         parseJSON()
-        loadJSONFromRealm()
-            print(Realm.Configuration.defaultConfiguration.fileURL)
+        
         collectionView.reloadData()
     }
     
@@ -44,13 +48,22 @@ class PlayListVC: UIViewController {
         let jsonData = NSData(contentsOfFile: path!) as Data!
         do {
             var readableJSON = try JSON(data: jsonData! , options: JSONSerialization.ReadingOptions.mutableContainers)
-            self.count = readableJSON["Songs"].count
-            for i in 1...count {
-                let name = readableJSON["Songs","Song\(i)","Name"].string
-                let stringurl = readableJSON["Songs","Song\(i)","UrlImage"].string
-                let audioUrl = readableJSON["Songs","Song\(i)","UrlAudio"].string
-                saveToRealm(name:name! , stringUrl: stringurl!, audioUrl: audioUrl!)
-
+            self.count = readableJSON["Reciters"].count
+            for i in 0...count-1 {
+                reciterName = readableJSON["Reciters","Reciter\(i)","Name"].string!
+                reciterImage = readableJSON["Reciters","Reciter\(i)","ImageName"].string!
+              //  let audioUrl = readableJSON["Songs","Song\(i)","UrlAudio"].string
+                
+                // create Reciters and save to Realm
+                let reciter = Reciters()
+                reciter.reciterName = reciterName
+                reciter.reciterImage = reciterImage
+                
+                checkIfFileExist(reciter: reciter)
+                if !exist {
+                    RealmManager.sharedInstance.saveToRealmReciter(reciter: reciter)
+                }
+                
             }
         } catch {
             print(error)
@@ -58,35 +71,10 @@ class PlayListVC: UIViewController {
         
     }
     
-    func loadJSONFromRealm(){
-           songs = realm.objects(JsonRealm.self)
-    }
-    
-    /// this function will not work the first time unless I remove the if exist commmand 
-    func saveToRealm(name:String , stringUrl: String, audioUrl: String) {
-        print(Realm.Configuration.defaultConfiguration.fileURL)
-        let song = JsonRealm()
-        song.names = name
-        song.stringURl = stringUrl
-        song.audioUrl = audioUrl
-        checkIfFileExist(song: song)
-        if exist == true {
-        do {
-            try realm.write {
-                realm.add(song)
-            }
-        } catch
-        {
-            print("Can't save Json Data to Realm")
-        }
-        }
-    }
-    
-    func checkIfFileExist(song: JsonRealm) {
-        
-        if songs != nil {
-            for songTemp in songs! {
-                if songTemp.names == song.names {
+    func checkIfFileExist(reciter: Reciters) {
+        if reciters != nil {
+            for reciterTemp in reciters! {
+                if reciterTemp.reciterName == reciter.reciterName {
                     exist = true
                     break
                 }
@@ -101,7 +89,7 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return songs?.count ?? 1
+        return reciters?.count ?? 1
     }
     
     
@@ -109,9 +97,9 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SongsCell", for: indexPath) as? SongsCell else { return SongsCell() }
         
-        let songImgUrl = songs?[indexPath.item].stringURl ?? "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg"
-        let songName = songs?[indexPath.item].names ?? "There is no Songs"
-        cell.updateCell(songImageUrl:songImgUrl, songName: songName , songTime: "21:02")
+        let reciterImage = reciters?[indexPath.item].reciterImage ?? "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg"
+        let reciterName = reciters?[indexPath.item].reciterName ?? "There is no Songs"
+        cell.updateCell(songName: reciterName , songTime: "21:02", reciterImage : reciterImage)
         cell.layout()
         return cell
         
@@ -124,12 +112,12 @@ extension PlayListVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SongViewController = segue.destination as?  SongViewController {
-           // SongViewController.songs = songs
+            // SongViewController.songs = songs
             SongViewController.indexCell = self.indexCell
         }
         if let songListVC = segue.destination as? SongListVC {
             songListVC.indexCell = self.indexCell
-            songListVC.songs = songs
+        //    songListVC.reciters = reciters
         }
         
     }
