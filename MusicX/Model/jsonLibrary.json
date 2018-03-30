@@ -4,8 +4,8 @@
         "Reciter0": {
             "Name" : "Mishary",
             "ImageName" : "0",
-            "ReciterSurahs" : ["https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-                b94e-8a1ab52252a9",
-                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2Fmishary-rashid-alafasy-047-muhammad-76-3225.mp3?alt=media&token=755e979a-7d70-4d2f-8f86-3f4cdf838737",
+            "ReciterSurahs" : [ "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9",
+                                "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9",
                                 "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Audio%2F%200.mp3?alt=media&token=0be443d1-b371-4c65-b94e-8a1ab52252a9"
                                 ]
         },"Reciter1": {

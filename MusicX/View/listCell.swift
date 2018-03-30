@@ -8,11 +8,21 @@
 
 import UIKit
 
-class listCell: UITableViewCell {
 
+protocol listCellDelegate {
+    
+    func saveBtnWasPressed(btnIndex: Int)
+}
+
+
+class listCell: UITableViewCell {
+    
     @IBOutlet weak var indexLbl: UILabel!
     @IBOutlet weak var nameLbl: UILabel!
     @IBOutlet weak var saveBtn: UIButton!
+    
+    
+    var delegate : listCellDelegate?
     
     func updateCell( nameLbl: String, indexLbl: Int) {
         self.nameLbl.text = nameLbl
@@ -20,7 +30,10 @@ class listCell: UITableViewCell {
     }
 
 
-
+    @IBAction func saveBtnWasPressed(_ sender: UIButton) {
+        delegate?.saveBtnWasPressed(btnIndex: sender.tag)
+    }
+    
     
 
 }

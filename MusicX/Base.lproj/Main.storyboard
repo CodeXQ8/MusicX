@@ -697,6 +697,9 @@
                                                         <constraint firstAttribute="width" constant="25" id="3J2-sS-qZE"/>
                                                     </constraints>
                                                     <state key="normal" image="icons8-downloads-folder-filled-25"/>
+                                                    <connections>
+                                                        <action selector="saveBtnWasPressed:" destination="gBZ-jh-l02" eventType="touchUpInside" id="chO-Fe-E6X"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -780,7 +783,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="owr-8J-cTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1805.7971014492755" y="804.61956521739137"/>
+            <point key="canvasLocation" x="1620" y="805"/>
         </scene>
         <!--Song View Controller-->
         <scene sceneID="jxz-PV-BWW">
@@ -1139,7 +1142,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9rT-c5-yKf"/>
-        <segue reference="XyL-Rx-9qH"/>
+        <segue reference="MmX-RD-Em8"/>
         <segue reference="qXC-2t-WWA"/>
     </inferredMetricsTieBreakers>
 </document>

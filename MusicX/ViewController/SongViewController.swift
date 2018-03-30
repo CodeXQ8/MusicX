@@ -84,7 +84,7 @@ class SongViewController: UIViewController {
         reciterImage = reciter?.reciterImage ?? "1"
         
         songImageView.image = UIImage(named: reciterImage)
-        surahName.text = surahs[indexCell].surahName ?? "Sorry there is an error"
+        surahName.text = surahs?[indexCell].surahName ?? "Sorry there is an error"
         lockScreenCommands()
         
         

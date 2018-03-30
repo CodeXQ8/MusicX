@@ -27,7 +27,7 @@ class SongListVC: UIViewController {
     var locationString = String().self
     var indexCell = Int()
     var exist = false
-    var btnIndex = Int()
+   // var btnIndex = Int()
     
     var reciter : Reciters? {
         didSet{
@@ -50,10 +50,52 @@ class SongListVC: UIViewController {
         dismiss(animated: true, completion: nil)
     }
     
-    var success = Bool()
+//    var success = Bool()
 }
 
-extension SongListVC : UITableViewDelegate , UITableViewDataSource {
+
+extension SongListVC : listCellDelegate {
+  
+
+    func saveBtnWasPressed(btnIndex: Int) {
+        
+
+        
+        let downloadedSurah = DownloadedSurahs()
+        downloadedSurah.surahName = self.surahs![btnIndex].surahName         ////// Try to figure out how to get btn index
+        downloadedSurah.nameOfFile = locationString
+        
+        
+        DataManager().saveTODiskAndGetLocuationString(audioString: surahs![btnIndex].reciterAudio) { (location, success) in
+            self.locationString = location
+            if success {
+                DispatchQueue.main.async {
+                    
+                    RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedsurahs, exist: { (exist) in
+                        if exist == false {
+                            do {
+                                try self.realm.write {
+                                    self.reciter?.downloadedSurah.append(downloadedSurah)
+                                }
+                            } catch {
+                                print("realm error in songListVC")
+                            }
+                            RealmManager.sharedInstance.saveDownloadedToRealm(downloadedSurah: downloadedSurah)
+                        }
+                    })
+                    let alertController = SCLAlertView()
+                    alertController.showCustom("Download", subTitle: "Song is downloaded", color:
+                        #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+                }
+            }
+        }
+    }
+    
+    
+}
+
+
+extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,11 +106,11 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
         
         guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
         
+        
         if let surah = surahs?[indexPath.row] {
             cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
             cell.saveBtn.tag = indexPath.row
-            cell.saveBtn.addTarget(self, action: #selector(saveSong), for: .touchUpInside)
-            
+            cell.delegate = self
         } else {
             cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
         }
@@ -92,33 +134,4 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
         
     }
     
-    @objc func saveSong() {
-        
-        let downloadedSurah = DownloadedSurahs()
-        downloadedSurah.surahName = self.surahs![0].surahName         ////// Try to figure out how to get btn index
-        downloadedSurah.nameOfFile = locationString
-        
-        //reciter?.downloadedSurah.append(downloadedSurah)                         //// Try to add the downloaded Surah to the reciter
-        
-        DataManager().saveTODiskAndGetLocuationString(audioString: surahs![0].reciterAudio) { (location, success) in
-            self.locationString = location
-            self.success = success
-            if success {
-                DispatchQueue.main.async {
-                    
-                    RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedsurahs, exist: { (exist) in
-                        if exist == false {
-                            
-                            RealmManager.sharedInstance.saveDownloadedToRealm(downloadedSurah: downloadedSurah)
-                        }
-                    })
-                    let alertController = SCLAlertView()
-                    alertController.showCustom("Download", subTitle: "Song is downloaded", color:
-                        #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
-                }
-            }
-        }
-        
-
-    }
 }
