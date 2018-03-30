@@ -29,7 +29,7 @@ class SongListVC: UIViewController {
     var locationString = String().self
     var indexCell = Int()
     var exist = false
-   // var btnIndex = Int()
+    // var btnIndex = Int()
     
     var reciter : Reciters? {
         didSet{
@@ -46,13 +46,14 @@ class SongListVC: UIViewController {
         
         tabelView.delegate = self
         tabelView.dataSource = self
+        
         surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
     }
     
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
-
+    
     @IBAction func segmentActionCtrl(_ sender: Any) {
         tabelView.reloadData()
     }
@@ -64,8 +65,8 @@ class SongListVC: UIViewController {
 
 
 extension SongListVC : listCellDelegate {
-  
-
+    
+    
     func saveBtnWasPressed(btnIndex: Int) {
         
         DataManager().saveTODiskAndGetLocuationString(audioString: surahs![btnIndex].reciterAudio) { (location, success) in
@@ -75,7 +76,7 @@ extension SongListVC : listCellDelegate {
                     
                     let downloadedSurah = DownloadedSurahs()
                     downloadedSurah.surahName = self.surahs![btnIndex].surahName
-                    downloadedSurah.nameOfFile = self.locationString
+                    downloadedSurah.nameOfFile = (location as NSString).lastPathComponent
                     
                     RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedSurahs, exist: { (exist) in
                         if exist == false {
@@ -95,7 +96,7 @@ extension SongListVC : listCellDelegate {
                 }
             }
         }
-        
+     //   tabelView.reloadData()
     }
     
     
@@ -123,43 +124,43 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tabelView.dequeueReusableCell(withIdentifier: "swipleCell") as? SwipleCell else { return SwipleCell() }
-        
-        
+        guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
+       
+        guard let swipleCell = tabelView.dequeueReusableCell(withIdentifier: "swipleCell") as? SwipleCell else { return SwipleCell() }
         
         switch segmentControl.selectedSegmentIndex{
-            
+           
         case 0:
             if let surah = surahs?[indexPath.row] {
                 cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
                 cell.saveBtn.tag = indexPath.row
                 cell.delegate = self
-            } else {
-                cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+              return  cell
             }
-       
+            break 
         case 1:
+            print(segmentControl.selectedSegmentIndex)
+            
             if let downloadedSurah = downloadedSurahs?[indexPath.row] {
-                cell.updateCell(nameLbl: downloadedSurah.surahName , indexLbl: indexPath.row)
-    
+                swipleCell.updateCell(nameLbl: downloadedSurah.surahName , indexLbl: indexPath.row)
+                swipleCell.delegate = self
             } else {
-                cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+                swipleCell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
             }
-        
+            return  swipleCell
         default :
-            break
+            cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
         }
-        
-        return  cell
+        return  UITableViewCell()
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
-   //     performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
     }
     
     
-
+    
     
     
     
@@ -183,47 +184,58 @@ extension SongListVC : SwipeTableViewCellDelegate {
     
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
-        guard orientation == .right else { return nil }
         
-        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
-            // handle action by updating model with deletion
-            print("Deleted Cell")
-            if let nameOfFile = self.downloadedSurahs?[indexPath.row].nameOfFile {
-                DataManager().deleteFilesFromDirectory(fileName: nameOfFile, handler: { (success) in
-                    if success {
-                        DispatchQueue.main.async {
-                            let alertController = SCLAlertView()
-                            
-                            alertController.showCustom("Delete", subTitle: "Song is deleted", color:
-                                #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+        if segmentControl.selectedSegmentIndex == 1 {
+            guard orientation == .right else { return nil }
+            
+            let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+                // handle action by updating model with deletion
+                print("Deleted Cell")
+                if let nameOfFile = self.downloadedSurahs?[indexPath.row].nameOfFile {
+                    DataManager().deleteFilesFromDirectory(fileName: nameOfFile, handler: { (success) in
+                        if success {
+                            DispatchQueue.main.async {
+                                let alertController = SCLAlertView()
+                                
+                                alertController.showCustom("Delete", subTitle: "Song is deleted", color:
+                                    #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+                                
+                                
+                                do {
+                                    let surah = self.downloadedSurahs?[indexPath.row]
+                                    try self.realm.write {
+                                        self.realm.delete(surah!)
+                                    }
+                                } catch {
+                                    print("Couldn't move from realm")
+                                }
+                             
+                            }
                         }
-                    }
-                })
-                
-                
-                
-                do {
-                    let song = self.downloadedSurahs?[indexPath.row]
-                    try self.realm.write {
-                        self.realm.delete(song!)
-                    }
-                } catch {
-                    print("Couldn't move from realm")
+                    })
+                    
+                    
+        
                 }
-                tableView.reloadData()
+                
             }
             
+            // customize the action appearance
+            deleteAction.image = UIImage(named: "delete")
+            
+            return [deleteAction]
+        }else {
+            return nil
         }
         
-        // customize the action appearance
-        deleteAction.image = UIImage(named: "delete")
-        
-        return [deleteAction]
     }
     
     func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
-        var options = SwipeTableOptions()
-        options.expansionStyle = .destructive
-        options.transitionStyle = .border
-        return options
+        if segmentControl.selectedSegmentIndex == 1 {
+            var options = SwipeTableOptions()
+            options.expansionStyle = .destructive
+            options.transitionStyle = .border
+            return options
+        }
+        return SwipeTableOptions()
     }}
