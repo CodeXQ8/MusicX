@@ -59,17 +59,14 @@ extension SongListVC : listCellDelegate {
 
     func saveBtnWasPressed(btnIndex: Int) {
         
-
-        
-        let downloadedSurah = DownloadedSurahs()
-        downloadedSurah.surahName = self.surahs![btnIndex].surahName         ////// Try to figure out how to get btn index
-        downloadedSurah.nameOfFile = locationString
-        
-        
         DataManager().saveTODiskAndGetLocuationString(audioString: surahs![btnIndex].reciterAudio) { (location, success) in
             self.locationString = location
             if success {
                 DispatchQueue.main.async {
+                    
+                    let downloadedSurah = DownloadedSurahs()
+                    downloadedSurah.surahName = self.surahs![btnIndex].surahName
+                    downloadedSurah.nameOfFile = self.locationString
                     
                     RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedsurahs, exist: { (exist) in
                         if exist == false {
@@ -89,6 +86,7 @@ extension SongListVC : listCellDelegate {
                 }
             }
         }
+        
     }
     
     

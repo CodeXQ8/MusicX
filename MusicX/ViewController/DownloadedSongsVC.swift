@@ -43,8 +43,6 @@ class DownloadedSongsVC: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         tableView.reloadData()
-        
-  //     downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -52,12 +50,7 @@ class DownloadedSongsVC: UIViewController {
         tableView.reloadData()
     }
     
-//    func loadSongs(){
-//        downloadedSongs = realm.objects(DownloadedSong.self)
-//        print(downloadedSongs)
-//    }
-    
-    /* IBActions */
+
     
     
     
@@ -86,7 +79,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         
         
     }
-//
+
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerCell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! headerCell
         headerCell.updateCell(imageHeader: "1", songName: "String")
@@ -115,16 +108,16 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             // handle action by updating model with deletion
             print("Deleted Cell")
-            if let songName = self.downloadedSurahs?[indexPath.row].nameOfFile {
-                DataManager().deleteFilesFromDirectory(fileName: songName, handler: { (success) in
-//                    if success {
-//                        DispatchQueue.main.async {
-//                            let alertController = SCLAlertView()
-//
-//                            alertController.showCustom("Delete", subTitle: "Song is deleted", color:
-//                                #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
-//                        }
-//                    }
+            if let suranName = self.downloadedSurahs?[indexPath.row].nameOfFile {
+                DataManager().deleteFilesFromDirectory(fileName: suranName, handler: { (success) in
+                    if success {
+                        DispatchQueue.main.async {
+                            let alertController = SCLAlertView()
+
+                            alertController.showCustom("Delete", subTitle: "Song is deleted", color:
+                                #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+                        }
+                    }
                 })
      
                 

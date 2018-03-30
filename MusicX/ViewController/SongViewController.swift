@@ -36,7 +36,7 @@ class SongViewController: UIViewController {
     var reciters : Results<Reciters>!
     var surahs : Results<ReciterSurahs>!
     
-    var downloadedSongs : Results<DownloadedSong>!
+ //   var downloadedSongs : Results<DownloadedSong>!
     
     var exist = false
     
@@ -317,48 +317,48 @@ class SongViewController: UIViewController {
     
     
     
-    @IBAction func downloadBtnWasPressed(_ sender: Any) {
-        
-        DataManager().saveTODiskAndGetLocuationString(audioString: surahs[indexCell].reciterAudio) { (location, success) in
-            self.locationString = location
-            if success {
-                DispatchQueue.main.async {
-                    self.saveToRealm(nameOfSong: self.surahs[self.indexCell].surahName, songID : self.indexCell)
-                    let alertController = SCLAlertView()
-                    
-                    alertController.showCustom("Download", subTitle: "Song is downloaded", color:
-                        #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
-                }
-            }
-        }
-    }
+//    @IBAction func downloadBtnWasPressed(_ sender: Any) {
+//        
+//        DataManager().saveTODiskAndGetLocuationString(audioString: surahs[indexCell].reciterAudio) { (location, success) in
+//            self.locationString = location
+//            if success {
+//                DispatchQueue.main.async {
+//                    self.saveToRealm(nameOfSong: self.surahs[self.indexCell].surahName, songID : self.indexCell)
+//                    let alertController = SCLAlertView()
+//                    
+//                    alertController.showCustom("Download", subTitle: "Song is downloaded", color:
+//                        #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+//                }
+//            }
+//        }
+//    }
     
     
     /* Functions for Realm*/
     
-    func saveToRealm(nameOfSong:String, songID:Int) {
-        //   print(Realm.Configuration.defaultConfiguration.fileURL)
-        let song = DownloadedSong()
-        
-        song.nameOfSong = nameOfSong
-        let nameOfFile = (locationString as NSString).lastPathComponent
-        song.nameOfFile = nameOfFile
-        song.imageURL = surahs[indexCell].reciterAudio
-        song.songID = songID
-        
-        do {                                     // Check if the file exisit before saveing
-            try realm.write {
-                checkIfFileExist(song: song)
-                if !exist {
-                    realm.add(song)
-                } else {
-                    print("song exist")
-                }
-            }
-        } catch {
-            print("couldn't save to Realm")
-        }
-    }
+//    func saveToRealm(nameOfSong:String, songID:Int) {
+//        //   print(Realm.Configuration.defaultConfiguration.fileURL)
+//        let song = DownloadedSong()
+//
+//        song.nameOfSong = nameOfSong
+//        let nameOfFile = (locationString as NSString).lastPathComponent
+//        song.nameOfFile = nameOfFile
+//        song.imageURL = surahs[indexCell].reciterAudio
+//        song.songID = songID
+//
+//        do {                                     // Check if the file exisit before saveing
+//            try realm.write {
+//                checkIfFileExist(song: song)
+//                if !exist {
+//                    realm.add(song)
+//                } else {
+//                    print("song exist")
+//                }
+//            }
+//        } catch {
+//            print("couldn't save to Realm")
+//        }
+//    }
     
 //    func loadSongs(){
 //        surahs = realm.objects(JsonRealm.self)
@@ -366,14 +366,14 @@ class SongViewController: UIViewController {
 //        print(surahs)
 //    }
     
-    func checkIfFileExist(song: DownloadedSong) {
-        exist = false
-        for songTemp in downloadedSongs {
-            if songTemp.nameOfSong == song.nameOfSong {
-                exist = true
-                break
-            }
-        }
-    }
+//    func checkIfFileExist(song: DownloadedSong) {
+//        exist = false
+//        for songTemp in downloadedSongs {
+//            if songTemp.nameOfSong == song.nameOfSong {
+//                exist = true
+//                break
+//            }
+//        }
+//    }
     
 }
