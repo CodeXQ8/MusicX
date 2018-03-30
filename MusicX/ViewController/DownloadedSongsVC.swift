@@ -33,7 +33,7 @@ class DownloadedSongsVC: UIViewController {
     
     var reciter : Reciters? {
         didSet{
-            downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm()
+        downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm(reciter: reciter!)
         }
     }
     
@@ -80,27 +80,27 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         
     }
 
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let headerCell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! headerCell
-        headerCell.updateCell(imageHeader: "1", songName: "String")
-        headerCell.layout()
-        return headerCell
-    }
-
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 70
-    }
-
- 
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
-        return "Hey"
-    }
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let headerCell = tableView.dequeueReusableCell(withIdentifier: "headerCell") as! headerCell
+//        headerCell.updateCell(imageHeader: "1", songName: "String")
+//        headerCell.layout()
+//        return headerCell
+//    }
+//
+//    func numberOfSections(in tableView: UITableView) -> Int {
+//        return 3
+//    }
+//    
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 70
+//    }
+//
+// 
+//    
+//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+//        
+//        return "Hey"
+//    }
     
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
         guard orientation == .right else { return nil }
@@ -130,7 +130,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
                 } catch {
                     print("Couldn't move from realm")
                 }
-                //   tableView.reloadData()
+                   tableView.reloadData()
             }
             
         }

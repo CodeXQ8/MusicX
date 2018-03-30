@@ -10,17 +10,19 @@ import UIKit
 import RealmSwift
 import SCLAlertView
 import SDWebImage
+import SwipeCellKit
 
 class SongListVC: UIViewController {
     
     
     var surahs : Results<ReciterSurahs>?
-    var downloadedsurahs : Results<DownloadedSurahs>?
+    var downloadedSurahs : Results<DownloadedSurahs>?
     
     @IBOutlet weak var nameOfReciterLbl: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tabelView: UITableView!
     
+    @IBOutlet weak var segmentControl: UISegmentedControl!
     
     let realm = try! Realm()
     
@@ -32,6 +34,7 @@ class SongListVC: UIViewController {
     var reciter : Reciters? {
         didSet{
             surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
+            downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm(reciter: reciter!)
         }
     }
     
@@ -49,8 +52,14 @@ class SongListVC: UIViewController {
     @IBAction func backBtn(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
+
+    @IBAction func segmentActionCtrl(_ sender: Any) {
+        tabelView.reloadData()
+    }
     
-//    var success = Bool()
+    
+    
+    
 }
 
 
@@ -68,7 +77,7 @@ extension SongListVC : listCellDelegate {
                     downloadedSurah.surahName = self.surahs![btnIndex].surahName
                     downloadedSurah.nameOfFile = self.locationString
                     
-                    RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedsurahs, exist: { (exist) in
+                    RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedSurahs, exist: { (exist) in
                         if exist == false {
                             do {
                                 try self.realm.write {
@@ -97,28 +106,63 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return surahs?.count ?? 1
+        
+        switch segmentControl.selectedSegmentIndex{
+            
+        case 0:
+            return (surahs?.count)!
+        case 1:
+            return (downloadedSurahs?.count)!
+            
+        default :
+            break
+        }
+        
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
+        guard let cell = tabelView.dequeueReusableCell(withIdentifier: "swipleCell") as? SwipleCell else { return SwipleCell() }
         
         
-        if let surah = surahs?[indexPath.row] {
-            cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
-            cell.saveBtn.tag = indexPath.row
-            cell.delegate = self
-        } else {
-            cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+        
+        switch segmentControl.selectedSegmentIndex{
+            
+        case 0:
+            if let surah = surahs?[indexPath.row] {
+                cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
+                cell.saveBtn.tag = indexPath.row
+                cell.delegate = self
+            } else {
+                cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+            }
+       
+        case 1:
+            if let downloadedSurah = downloadedSurahs?[indexPath.row] {
+                cell.updateCell(nameLbl: downloadedSurah.surahName , indexLbl: indexPath.row)
+    
+            } else {
+                cell.updateCell(nameLbl:"No Surah" , indexLbl: indexPath.row)
+            }
+        
+        default :
+            break
         }
+        
         return  cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.indexCell = indexPath.item
-        performSegue(withIdentifier: "songViewControllerSegue", sender: self)
+   //     performSegue(withIdentifier: "songViewControllerSegue", sender: self)
     }
+    
+    
+
+    
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SongViewController = segue.destination as?  SongViewController {
@@ -133,3 +177,53 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
     }
     
 }
+
+
+extension SongListVC : SwipeTableViewCellDelegate {
+    
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> [SwipeAction]? {
+        guard orientation == .right else { return nil }
+        
+        let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
+            // handle action by updating model with deletion
+            print("Deleted Cell")
+            if let nameOfFile = self.downloadedSurahs?[indexPath.row].nameOfFile {
+                DataManager().deleteFilesFromDirectory(fileName: nameOfFile, handler: { (success) in
+                    if success {
+                        DispatchQueue.main.async {
+                            let alertController = SCLAlertView()
+                            
+                            alertController.showCustom("Delete", subTitle: "Song is deleted", color:
+                                #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
+                        }
+                    }
+                })
+                
+                
+                
+                do {
+                    let song = self.downloadedSurahs?[indexPath.row]
+                    try self.realm.write {
+                        self.realm.delete(song!)
+                    }
+                } catch {
+                    print("Couldn't move from realm")
+                }
+                tableView.reloadData()
+            }
+            
+        }
+        
+        // customize the action appearance
+        deleteAction.image = UIImage(named: "delete")
+        
+        return [deleteAction]
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsOptionsForRowAt indexPath: IndexPath, for orientation: SwipeActionsOrientation) -> SwipeTableOptions {
+        var options = SwipeTableOptions()
+        options.expansionStyle = .destructive
+        options.transitionStyle = .border
+        return options
+    }}

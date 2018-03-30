@@ -55,8 +55,8 @@ class RealmManager {
         return surahs!
     }
     
-    func loadDownloadedSurahsFromRealm() -> Results<DownloadedSurahs> {
-        downloadedSurahs = realm.objects(DownloadedSurahs.self)
+    func loadDownloadedSurahsFromRealm(reciter: Reciters) -> Results<DownloadedSurahs> {
+        downloadedSurahs = reciter.downloadedSurah.sorted(byKeyPath: "surahName", ascending: true)
         return downloadedSurahs!
     }
     
