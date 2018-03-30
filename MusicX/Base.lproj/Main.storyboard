@@ -985,12 +985,12 @@
                         <viewLayoutGuide key="safeArea" id="AB2-Kg-kTs"/>
                     </view>
                     <connections>
-                        <outlet property="NameOfAudio" destination="yDB-LY-Aka" id="rKr-Bm-b9g"/>
                         <outlet property="activityIndicatorView" destination="4dg-J7-N9c" id="6Jg-as-ORR"/>
                         <outlet property="durationLbl" destination="LRr-BB-K6L" id="gMc-MI-hxC"/>
                         <outlet property="playBtnImage" destination="diM-6r-hu6" id="KEf-mJ-7SS"/>
                         <outlet property="slider" destination="bf6-e7-Car" id="eaE-Vr-Y8O"/>
                         <outlet property="songImageView" destination="R09-K0-VSG" id="3Yo-sI-WHM"/>
+                        <outlet property="surahName" destination="yDB-LY-Aka" id="0dU-z3-aLV"/>
                         <outlet property="totalDuration" destination="y4j-L8-YHd" id="vgm-I6-z9d"/>
                     </connections>
                 </viewController>
@@ -1139,7 +1139,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="9rT-c5-yKf"/>
-        <segue reference="MmX-RD-Em8"/>
+        <segue reference="XyL-Rx-9qH"/>
         <segue reference="qXC-2t-WWA"/>
     </inferredMetricsTieBreakers>
 </document>

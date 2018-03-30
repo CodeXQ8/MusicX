@@ -16,6 +16,7 @@
 		BE73AC712038C3620063F944 /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE73AC702038C3620063F944 /* Slider.swift */; };
 		BE89E67D206B823600253027 /* headerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE89E67C206B823600253027 /* headerCell.swift */; };
 		BE930520205C973000BA59C9 /* SwipeTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE93051F205C973000BA59C9 /* SwipeTableVC.swift */; };
+		BE99D002206DB3CF00DF3338 /* DownloadedSurahs.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE99D001206DB3CF00DF3338 /* DownloadedSurahs.swift */; };
 		BE9A8CD52041FD3600F24931 /* RealmData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD42041FD3600F24931 /* RealmData.swift */; };
 		BE9A8CD7204204EC00F24931 /* savedSongVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD6204204EC00F24931 /* savedSongVC.swift */; };
 		BE9A8CD92042051800F24931 /* savedSongCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9A8CD82042051800F24931 /* savedSongCell.swift */; };
@@ -54,6 +55,7 @@
 		BE73AC702038C3620063F944 /* Slider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Slider.swift; sourceTree = "<group>"; };
 		BE89E67C206B823600253027 /* headerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = headerCell.swift; sourceTree = "<group>"; };
 		BE93051F205C973000BA59C9 /* SwipeTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableVC.swift; sourceTree = "<group>"; };
+		BE99D001206DB3CF00DF3338 /* DownloadedSurahs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadedSurahs.swift; sourceTree = "<group>"; };
 		BE9A8CD42041FD3600F24931 /* RealmData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmData.swift; sourceTree = "<group>"; };
 		BE9A8CD6204204EC00F24931 /* savedSongVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedSongVC.swift; sourceTree = "<group>"; };
 		BE9A8CD82042051800F24931 /* savedSongCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = savedSongCell.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				BEC31B222057793200917E6F /* JsonRealm.swift */,
 				BEF951B7206C8C5D00B6EA43 /* Reciters.swift */,
 				BEF951B9206C8D0C00B6EA43 /* ReciterSurahs.swift */,
+				BE99D001206DB3CF00DF3338 /* DownloadedSurahs.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE99D002206DB3CF00DF3338 /* DownloadedSurahs.swift in Sources */,
 				BEC31B232057793200917E6F /* JsonRealm.swift in Sources */,
 				3F9089502054B571002D85AF /* SongViewController.swift in Sources */,
 				BEC404CF206BFDFE00324AC9 /* SongListVC.swift in Sources */,

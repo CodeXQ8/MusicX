@@ -18,16 +18,13 @@ class SongViewController: UIViewController {
     /* IBOutlets */
     @IBOutlet weak var songImageView: UIImageView!
     
-    @IBOutlet weak var NameOfAudio: UILabel!
+    @IBOutlet weak var surahName: UILabel!
     @IBOutlet weak var durationLbl: UILabel!
     @IBOutlet weak var totalDuration: UILabel!
     
     @IBOutlet weak var slider: Slider!
     
     /*  Variables Related to PlayListVC */
-    //    var stringURls = [String]()
-    //    var names = [String]()
-    //    var audioArray = [String]()
     var indexCell : Int = 0 ;
     
     /* Global Variables */
@@ -35,8 +32,10 @@ class SongViewController: UIViewController {
     var player : AVPlayer?
     
     let realm = try! Realm()
-    // var songs : Results<DownloadedSong>!
-    var songs : Results<JsonRealm>!
+
+    var reciters : Results<Reciters>!
+    var surahs : Results<ReciterSurahs>!
+    
     var downloadedSongs : Results<DownloadedSong>!
     
     var exist = false
@@ -45,7 +44,7 @@ class SongViewController: UIViewController {
     
     var updater : CADisplayLink! = nil
     
-    var imageString = String()
+    var reciterImage = String()
     var name = String()
     //var audioString = String()
     
@@ -71,20 +70,27 @@ class SongViewController: UIViewController {
     
     @IBOutlet weak var activityIndicatorView: NVActivityIndicatorView!
 
-  
+    var reciter : Reciters? {
+        didSet{
+            surahs = RealmManager.sharedInstance.loadSurahsFromRealm(reciter: reciter!)
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadSongs()
+      //  loadSongs()            //////////////////////////////////// comment//////////////////////////////////////////
         
-        imageString = songs[indexCell].stringURl
-        name = songs[indexCell].names
-        // audioString = songs[indexCell].audioUrl
+     
+        reciterImage = reciter?.reciterImage ?? "1"
         
-        songImageView.sd_setImage(with: URL(string: imageString))
-        NameOfAudio.text = name
-        
+        songImageView.image = UIImage(named: reciterImage)
+        surahName.text = surahs[indexCell].surahName ?? "Sorry there is an error"
         lockScreenCommands()
+        
+        
+         // audioString = songs[indexCell].audioUrl
+       // songImageView.sd_setImage(with: URL(string: reciterImage))
+
         
 
     }
@@ -159,7 +165,7 @@ class SongViewController: UIViewController {
     
     func startPlaying() {
         
-        let audioURL = URL(string: songs[indexCell].audioUrl)
+        let audioURL = URL(string: surahs[indexCell].reciterAudio)
         let documentsDirectoryURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         let destinationUrl = documentsDirectoryURL.appendingPathComponent((audioURL?.lastPathComponent)!)
         if FileManager.default.fileExists(atPath: destinationUrl.path) {
@@ -200,7 +206,7 @@ class SongViewController: UIViewController {
     var i = 0
     @objc func nextSong(){
         
-        if indexCell + 1 < songs.count{
+        if indexCell + 1 < surahs.count{
             if player?.rate != 0 {
                 self.player?.pause()
             }
@@ -226,10 +232,9 @@ class SongViewController: UIViewController {
     
     func updateSongVC()
     {
-        self.NameOfAudio.text = songs?[indexCell].names
-        let imageUrl = songs?[indexCell].stringURl
-        self.songImageView.sd_setImage(with:URL(string: imageUrl!) )
-        
+        self.surahName.text = surahs?[indexCell].surahName
+        let reciterImage = reciter?.reciterImage
+        self.songImageView.image = UIImage(named: reciterImage!)
     }
     
     /*  AudioPlayer Lock Control */
@@ -240,7 +245,7 @@ class SongViewController: UIViewController {
         let songImage = MPMediaItemArtwork.init(boundsSize: image.size) { (size) -> UIImage in
             return image
         }
-        nowPlayingInfo[MPMediaItemPropertyTitle] = songs[indexCell].names
+        nowPlayingInfo[MPMediaItemPropertyTitle] = surahs[indexCell].surahName
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = player?.currentItem?.asset.duration.seconds
         nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = CMTimeGetSeconds(audioplayerItem.currentTime())
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = 1
@@ -314,11 +319,11 @@ class SongViewController: UIViewController {
     
     @IBAction func downloadBtnWasPressed(_ sender: Any) {
         
-        DataManager().saveTODiskAndGetLocuationString(audioString: songs[indexCell].audioUrl) { (location, success) in
+        DataManager().saveTODiskAndGetLocuationString(audioString: surahs[indexCell].reciterAudio) { (location, success) in
             self.locationString = location
             if success {
                 DispatchQueue.main.async {
-                    self.saveToRealm(nameOfSong: self.songs[self.indexCell].names, songID : self.indexCell)
+                    self.saveToRealm(nameOfSong: self.surahs[self.indexCell].surahName, songID : self.indexCell)
                     let alertController = SCLAlertView()
                     
                     alertController.showCustom("Download", subTitle: "Song is downloaded", color:
@@ -338,7 +343,7 @@ class SongViewController: UIViewController {
         song.nameOfSong = nameOfSong
         let nameOfFile = (locationString as NSString).lastPathComponent
         song.nameOfFile = nameOfFile
-        song.imageURL = songs[indexCell].stringURl
+        song.imageURL = surahs[indexCell].reciterAudio
         song.songID = songID
         
         do {                                     // Check if the file exisit before saveing
@@ -355,11 +360,11 @@ class SongViewController: UIViewController {
         }
     }
     
-    func loadSongs(){
-        songs = realm.objects(JsonRealm.self)
-        downloadedSongs = realm.objects(DownloadedSong.self)
-        print(songs)
-    }
+//    func loadSongs(){
+//        surahs = realm.objects(JsonRealm.self)
+//        downloadedSongs = realm.objects(DownloadedSong.self)
+//        print(surahs)
+//    }
     
     func checkIfFileExist(song: DownloadedSong) {
         exist = false

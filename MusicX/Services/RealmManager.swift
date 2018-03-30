@@ -17,18 +17,33 @@ class RealmManager {
     var surahs : Results<ReciterSurahs>?
     
     static let sharedInstance = RealmManager()
-
-     func saveToRealmReciter(reciter : Reciters) {
+    
+    func saveToRealmReciter(reciter : Reciters) {
         do {
-                try realm.write {
-                    realm.add(reciter)
-                    print("reciter saved")
-                }
+            try realm.write {
+                realm.add(reciter)
+                print("reciter saved")
+            }
         } catch
         {
             print("Can't save reciter to Realm")
         }
     }
+    
+    
+    func saveDownloadedToRealm(downloadedSurah : DownloadedSurahs){
+        
+        do {
+            try realm.write {
+                realm.add(downloadedSurah)
+            }
+        } catch {
+            print("couldn't save to Realm")
+        }
+    }
+    
+    
+    
     
     func loadRecitersFromRealm() -> Results<Reciters> {
         reciters = realm.objects(Reciters.self)
@@ -42,7 +57,7 @@ class RealmManager {
     
     
     func checkIfFileExist(reciter : Reciters,reciters: Results<Reciters>?, exist : @escaping (Bool) ->() ) {
-
+        
         if reciters != nil {
             for reciterTemp in reciters! {
                 if reciterTemp.reciterName == reciter.reciterName {
@@ -54,10 +69,23 @@ class RealmManager {
         exist(false)
         
     }
-
-
-
+    
+    func checkIfFileExistInDownLoadedSurahs(downloadedSurah : DownloadedSurahs ,downloadedSurahs: Results<DownloadedSurahs>?, exist : @escaping (Bool) ->() ) {
+        
+        if downloadedSurahs != nil {
+            for reciterTemp in downloadedSurahs! {
+                if reciterTemp.surahName  == downloadedSurah.surahName {
+                    exist(true)
+                    return
+                }
+            }
+        }
+        exist(false)
+        
+    }
 }
+
+
 
 
 
