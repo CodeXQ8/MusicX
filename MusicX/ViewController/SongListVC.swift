@@ -86,24 +86,29 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource {
             SongViewController.reciter = self.reciter
         }
         
+        if let DownloadedSurahsVC = segue.destination as? DownloadedSongsVC {
+            DownloadedSurahsVC.reciter = self.reciter
+        }
+        
     }
     
     @objc func saveSong() {
         
         let downloadedSurah = DownloadedSurahs()
-        downloadedSurah.surahName = self.surahs![btnIndex].surahName         ////// Try to figure out how to get btn index 
+        downloadedSurah.surahName = self.surahs![0].surahName         ////// Try to figure out how to get btn index
         downloadedSurah.nameOfFile = locationString
         
-        DataManager().saveTODiskAndGetLocuationString(audioString: surahs![btnIndex].reciterAudio) { (location, success) in
+        //reciter?.downloadedSurah.append(downloadedSurah)                         //// Try to add the downloaded Surah to the reciter
+        
+        DataManager().saveTODiskAndGetLocuationString(audioString: surahs![0].reciterAudio) { (location, success) in
             self.locationString = location
             self.success = success
             if success {
-  
-                
                 DispatchQueue.main.async {
                     
                     RealmManager.sharedInstance.checkIfFileExistInDownLoadedSurahs(downloadedSurah: downloadedSurah, downloadedSurahs: self.downloadedsurahs, exist: { (exist) in
                         if exist == false {
+                            
                             RealmManager.sharedInstance.saveDownloadedToRealm(downloadedSurah: downloadedSurah)
                         }
                     })

@@ -27,7 +27,15 @@ class DownloadedSongsVC: UIViewController {
     
     /* Global Variables */
     let realm = try! Realm()
-    var downloadedSongs : Results<DownloadedSong>?
+    var downloadedSurahs : Results<DownloadedSurahs>?
+    
+    
+    
+    var reciter : Reciters? {
+        didSet{
+            downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +43,8 @@ class DownloadedSongsVC: UIViewController {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         tableView.reloadData()
-        loadSongs()
+        
+  //     downloadedSurahs = RealmManager.sharedInstance.loadDownloadedSurahsFromRealm()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -43,10 +52,10 @@ class DownloadedSongsVC: UIViewController {
         tableView.reloadData()
     }
     
-    func loadSongs(){
-        downloadedSongs = realm.objects(DownloadedSong.self)
-        print(downloadedSongs)
-    }
+//    func loadSongs(){
+//        downloadedSongs = realm.objects(DownloadedSong.self)
+//        print(downloadedSongs)
+//    }
     
     /* IBActions */
     
@@ -60,18 +69,18 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return downloadedSongs?.count ?? 1
+        return downloadedSurahs?.count ?? 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! savedSongCell
         cell.delegate = self
         
-        let songImgUrl = downloadedSongs?[indexPath.item].imageURL ?? "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg"
-        let songName = downloadedSongs?[indexPath.item].nameOfSong ?? "There is no Songs"
+        let surahImage = downloadedSurahs?[indexPath.row].surahImage ?? "https://firebasestorage.googleapis.com/v0/b/musicx-d2c45.appspot.com/o/Image%2F3.jpg"
+        let surahName = downloadedSurahs?[indexPath.row].surahName ?? "There is no Songs"
         
         cell.layout()
-        cell.updateCell(songImageUrl: songImgUrl, songName: songName, songTime: "21:02")
+        cell.updateCell(songImageUrl: surahImage, songName: surahName, songTime: "21:02")
         
         return cell
         
@@ -85,14 +94,15 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         return headerCell
     }
 
-
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
+    }
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 70
     }
 
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
+ 
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         
@@ -105,7 +115,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
         let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
             // handle action by updating model with deletion
             print("Deleted Cell")
-            if let songName = self.downloadedSongs?[indexPath.row].nameOfFile {
+            if let songName = self.downloadedSurahs?[indexPath.row].nameOfFile {
                 DataManager().deleteFilesFromDirectory(fileName: songName, handler: { (success) in
 //                    if success {
 //                        DispatchQueue.main.async {
@@ -120,7 +130,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
                 
                 
                 do {
-                    let song = self.downloadedSongs?[indexPath.row]
+                    let song = self.downloadedSurahs?[indexPath.row]
                     try self.realm.write {
                         self.realm.delete(song!)
                     }
@@ -153,7 +163,7 @@ extension DownloadedSongsVC : UITableViewDataSource, UITableViewDelegate , Swipe
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let SongViewController = segue.destination as?  SongViewController {
-            SongViewController.indexCell = downloadedSongs?[indexCell].songID ?? 1
+            SongViewController.indexCell = downloadedSurahs?[indexCell].surahID ?? 1
         }
         
     }

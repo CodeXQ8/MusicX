@@ -15,5 +15,6 @@ class DownloadedSurahs : Object {
     @objc dynamic var surahImage = ""
     @objc dynamic var nameOfFile = ""
     @objc dynamic var surahID : Int = 0
+    var reciter = LinkingObjects(fromType: Reciters.self, property: "downloadedSurah")
     
 }
