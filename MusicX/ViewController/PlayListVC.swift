@@ -31,6 +31,18 @@ class PlayListVC: UIViewController {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration)
         
+        SurahAPI.getSurahs { (resultsAPI: [SurahAPI]) in
+         
+               print("1")
+            print(resultsAPI)
+
+            for result in resultsAPI {
+                print("\(result.ayahs)\n\n")
+            }
+        }
+        
+        
+        
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
         print(Realm.Configuration.defaultConfiguration)

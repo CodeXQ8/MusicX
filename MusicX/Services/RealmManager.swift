@@ -16,7 +16,13 @@ class RealmManager {
     var surahs : Results<ReciterSurahs>?
     var downloadedSurahs : Results<DownloadedSurahs>?
     
-    static let sharedInstance = RealmManager()
+    
+     static let sharedInstance = RealmManager()
+    
+    
+    func getSurahs() -> Results<ReciterSurahs>?{
+        return surahs
+    }
     
     func saveToRealmReciter(reciter : Reciters) {
         do {

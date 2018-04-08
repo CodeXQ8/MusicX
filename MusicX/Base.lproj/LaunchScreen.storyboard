@@ -18,12 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Rectangle 6" translatesAutoresizingMaskIntoConstraints="NO" id="dSC-is-UBN">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="667" id="8rx-jO-E05"/>
-                                </constraints>
-                            </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="quranLogo1" translatesAutoresizingMaskIntoConstraints="NO" id="Tqn-sN-t5J">
                                 <rect key="frame" x="77" y="97" width="221" height="300"/>
                                 <constraints>
@@ -35,10 +29,7 @@
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Tqn-sN-t5J" secondAttribute="trailing" constant="77" id="GxT-nR-Rjf"/>
                             <constraint firstItem="Tqn-sN-t5J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="77" id="UGX-6U-ATd"/>
-                            <constraint firstItem="dSC-is-UBN" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Xnc-Sm-Ewj"/>
-                            <constraint firstItem="dSC-is-UBN" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="-20" id="hnW-mW-kgc"/>
                             <constraint firstItem="Tqn-sN-t5J" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="77" id="kAy-mM-kZ3"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dSC-is-UBN" secondAttribute="trailing" id="nvl-45-IM5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -49,7 +40,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Rectangle 6" width="414" height="736"/>
         <image name="quranLogo1" width="263" height="268"/>
     </resources>
 </document>

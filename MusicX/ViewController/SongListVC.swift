@@ -96,7 +96,7 @@ extension SongListVC : listCellDelegate {
                 }
             }
         }
-     //   tabelView.reloadData()
+        //   tabelView.reloadData()
     }
     
     
@@ -114,7 +114,6 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
             return (surahs?.count)!
         case 1:
             return (downloadedSurahs?.count)!
-            
         default :
             break
         }
@@ -125,17 +124,17 @@ extension SongListVC : UITableViewDelegate , UITableViewDataSource  {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         guard let cell = tabelView.dequeueReusableCell(withIdentifier: "listCell") as? listCell else { return listCell() }
-       
+        
         guard let swipleCell = tabelView.dequeueReusableCell(withIdentifier: "swipleCell") as? SwipleCell else { return SwipleCell() }
         
         switch segmentControl.selectedSegmentIndex{
-           
+            
         case 0:
             if let surah = surahs?[indexPath.row] {
                 cell.updateCell(nameLbl: surah.surahName , indexLbl: indexPath.row)
                 cell.saveBtn.tag = indexPath.row
                 cell.delegate = self
-              return  cell
+                return  cell
             }
             break 
         case 1:
@@ -190,39 +189,29 @@ extension SongListVC : SwipeTableViewCellDelegate {
             
             let deleteAction = SwipeAction(style: .destructive, title: "Delete") { action, indexPath in
                 // handle action by updating model with deletion
-                print("Deleted Cell")
+                
                 if let nameOfFile = self.downloadedSurahs?[indexPath.row].nameOfFile {
                     DataManager().deleteFilesFromDirectory(fileName: nameOfFile, handler: { (success) in
                         if success {
-                            DispatchQueue.main.async {
-                                let alertController = SCLAlertView()
-                                
-                                alertController.showCustom("Delete", subTitle: "Song is deleted", color:
-                                    #colorLiteral(red: 0.1764705926, green: 0.4980392158, blue: 0.7568627596, alpha: 1) , icon: UIImage(named: "ic_favorite_48px")!)
-                                
-                                
+                            if let surah = self.downloadedSurahs?[indexPath.row] {
                                 do {
-                                    let surah = self.downloadedSurahs?[indexPath.row]
                                     try self.realm.write {
-                                        self.realm.delete(surah!)
+                                        self.realm.delete(surah)
+                                        print("delete")
                                     }
                                 } catch {
-                                    print("Couldn't move from realm")
+                                    print("Couldn't remove from realm")
                                 }
-                             
                             }
                         }
                     })
-                    
-                    
-        
                 }
                 
             }
             
             // customize the action appearance
             deleteAction.image = UIImage(named: "delete")
-            
+            print("deleteAction")
             return [deleteAction]
         }else {
             return nil
